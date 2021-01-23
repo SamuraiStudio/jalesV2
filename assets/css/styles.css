@@ -1,0 +1,185 @@
+/*URL necesaria para el tiepo de letra Raleway*/
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+
+label.error {
+    color: red;
+    font-size: 1rem;
+    display: block;
+    margin-top: 40px;
+}
+
+input.error {
+    border: 1px dashed red;
+    font-weight: 300;
+    color: red;
+}
+
+input.error, textarea.error {
+    border: 1px dashed red;
+    font-weight: 300;
+    color: red;
+}
+
+/*Color y tamaño de los íconos*/
+ion-icon {
+   font-size : 50px;
+   color: white;
+}
+
+/*Tipo y tamaño de la fuente.
+<<<<<<< HEAD
+  Esta modificación solo estará en el div de clase texto en el archivo: modal_categorias.html
+  empleos_usuarios.html, empleos_mirones.html e interesados.
+  NOTA: Solo se colocó en algunas partes, como son en columnas o h1/h2 para cer si funcionan
+=======
+  Esta modificación solo estará en el div de clase texto en el archivo: profile_user.php (completamente)
+  en otros archivos solo esta por partes como es en: modal_categorias.html empleos_usuarios.html, empleos_mirones.html
+  e interesados.php
+>>>>>>> 367924236644d43cc7bf1612da0bd9b30fc87a75
+*/
+.texto h1{
+  font-family: 'Raleway';
+  font-size: 50px;
+  font-variant: Thin;
+}
+
+/*Ttilo en empleos disponibles en empleos_punlico*/
+.texto h2{
+  font-family: 'Raleway';
+  font-size: 45px;
+  font-variant: Thin;
+}
+
+/*Titulo en profile_user*/
+.texto h3{
+  font-family: 'Raleway';
+  font-size: 40px;
+  font-variant: Thin;
+}
+
+.texto h4{
+  font-family: 'Raleway';
+  font-size: 35px;
+  font-variant: Thin;
+}
+
+/*Subtitulos azules en profile_user*/
+.texto h5{
+  font-family: 'Raleway';
+  font-size: 28px;
+  font-variant: Thin;
+}
+
+.texto h6{
+  font-family: 'Raleway';
+  font-size: 20px;
+  font-variant: Thin;
+}
+
+/*Tanto enlaces "label" como "textarea" deben tener el mismo tamaño*/
+
+/*Titulos de los labels en profile_user, titulos de textarea en empleos_publico,
+ subtitulos de los labels en empelos_usuario*/
+.texto{
+  font-family: 'Raleway', thin;
+  font-size: 19px;
+  font-variant: Thin;
+  line-height: 17px;
+}
+/*Titulos de Registro*/
+.titulo{
+  font-family: 'Raleway', thin;
+  font-size: 19px;
+  font-variant: Thin;
+  line-height: 17px;
+  font-weight: bold;
+}
+
+/*Texto de los textararea, contenido de labels,
+empleos_usuarios, emplos_publicos, */
+.subtitulo {
+  font-family: 'Raleway', thin;
+  font-size: 16px;
+  font-variant: Thin;
+  line-height: 17px;
+}
+
+/*Label con información profile_user*/
+.labelchiquita {
+  font-family: 'Raleway', thin;
+  font-size: 16px;
+  font-variant: Thin;
+  line-height: 17px;
+}
+
+.texto textarea{
+  font-family: 'Raleway', thin;
+  font-size: 12px;
+  font-variant: Thin;
+  line-height: 17px;
+}
+
+/*Texto de descripción en Profile_user*/
+.des{
+  font-family: 'Raleway', thin;
+  font-size: 16px;
+  font-variant: Thin;
+  line-height: 17px;
+}
+
+/*Texto del comentario*/
+.pchiquito{
+  font-family: 'Raleway', thin;
+  font-size: 18px;
+  font-variant: Thin;
+}
+
+/*Titulo del comentario1 en Profile_user*/
+.pmediano{
+  font-family: 'Raleway', thin;
+  font-size: 20px;
+  font-variant: Thin;
+}
+
+.texto ul{
+  font-family: 'Raleway', thin;
+  font-size: 16px;
+  font-variant: Thin;
+  line-height: 17px;
+}
+
+
+/*Tanto enlaces "a" como "button" deben tener el mismo tamaño*/
+
+.texto a{
+  font-family: 'Raleway', thin;
+  font-size: 16px;
+  font-variant: Thin;
+  line-height: 17px;
+}
+/*Botón me interesa en empleos_usuarios y empleos_publico*/
+.mi a{
+  font-family: 'Raleway', thin;
+  font-size: 15px;
+  font-variant: Thin;
+  line-height: 22px;
+}
+/*Botones en profile_user*/
+.texto button{
+  font-family: 'Raleway', thin;
+  font-size: 16px;
+  font-variant: Thin;
+  line-height: 17px;
+}
+
+/*Estilo para los numero s de la barra de progreso*/
+.barra{
+  font-family:'Raleway', thin;
+}
+
+.texto ul{
+  font-family: 'Raleway', thin;
+  font-size: 1zpx;
+  font-variant: Thin;
+  line-height: 17px;
+}

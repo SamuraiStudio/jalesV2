@@ -1,0 +1,182 @@
+<!--  EL JALE. SECCIÓN: REGISTRO Y LOGIN  -->
+
+<!DOCTYPE html>
+<html>
+
+  <!--ENCABEZADO-->
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+    <link rel="icon" type="image/png" href="assets/img/Logo/color.png">
+    <title>Bienvenido</title>
+
+    <!--Enlaces-->
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
+    <link rel="stylesheet" href="assets/css/Header-Blue.css">
+    <link rel="stylesheet" href="assets/css/Registration-Form-with-Photo.css">
+    <link rel="stylesheet" href="assets/css/floating-labels.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+  </head>
+
+  <!--CUERPO-->
+  <body style="background: #E6E1E1;">
+    <header>
+      <div class="py-2" style="background: #FFFFFF;">
+          <div class="container">
+            <center><a href="empleos_publico.php"><img src="assets/img/Logo/color.png" class="img-fluid mr-3" style="width: 120px; height: 85px;"></a></center>
+          </div>
+        </div>
+    </header>
+    <!--MODAL DE COOKIES-->
+    <div class="modal" id="galletas" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header texto">
+            <h3 class="modal-title"><strong>AVISO DE COOKIES</strong></h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body subtitulo mr-2 text-justify">
+            <p>Este sitio utiliza cookies de terceros para mejorar la experiencia del usuario y nuestros servicios
+              Si cierra la ventana usted confirmará el uso de ellas.<br><br>
+            <strong>De click en "Aceptar" para brindarle un mejor servicio</strong>.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="agalleta" class="btn btn-primary" data-dismiss="modal" style="width: 120px;">Aceptar</button>
+            <button type="button" id="ngalleta" class="btn btn-secondary"  data-dismiss="modal" style="width: 120px;">No aceptar</button>
+          </div>
+        </div>
+      </div>
+    </div><!--FIN DEL MODAL COOKIES-->
+
+    <div class="container py-4"><!-- Contenedor principal-->
+      <div class="card shadow-lg o-hidden my-4">
+        <div class="card-body p-0">
+          <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+              <div class="p-5">
+
+                <!--Título principal-->
+                <div class="text-center texto">
+                  <h1 class="text-dark mb-4 " style="font-size:42px;"><strong>Bienvenido a "El Jale"</strong></h1><br>
+
+                  <!--Subtítulo-->
+                  <h3 class="text-center" style="text-align: center; font-size:35px;">¿Qué deseas realizar?</h3>
+                </div>
+
+                <!-- Formulario para iniciar sesión -->
+                <form>
+
+                  <!--Botones. Iniciar sesión o Registro-->
+                  <div class="section1 text-center">
+                    <center><br>
+                    <!--1. Ver trabajos-->
+                    <button href="empleos_publico.php" class="btn btn-lg text-white texto" role="button" id="ver" style="background: #00ACD8; border-radius: 50px;width: 200px; text-align: center; height: 50px;">Ver trabajos</button>
+
+                    <br><br>
+
+                    <!--2. Botón de iniciar sesión-->
+                    <button href="login.php" class="btn btn-lg texto text-white" role="button" id="inicia" style="background: #23B4A0; border-radius: 50px;width: 200px; text-align: center; height: 50px;">Inicia Sesión</button>
+
+                    </center>
+                    <br>
+                    <!--3. Botón de registrarse-->
+                    <button href="register_user.php" class="btn btn-lg text-white texto" role="button" id="registra" style="background: #EF5A10; border-radius: 50px;width: 200px; text-align: center; height: 50px;">Regístrate</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--BOTON DE TERMINOS Y CONDICIONES-->
+        <button type="button"  class="btn btn-primary subtitulo" data-toggle="modal" data-target="#term">
+          Consulta nuestros términos y condiciones
+        </button>
+
+        <!-- Modal TERMINOS Y CONDICIONES -->
+        <div class="modal fade" id="term" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header texto">
+                <h3 class="modal-title" id="titu"><strong>Términos y condiciones</strong></h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body subtitulo">
+                Para nosotros tus datos son lo más importante para consultar nuestros términos y condiciones
+                <strong>haz click en "Ir"</strong> para saber un poco más
+              </div>
+              <div class="modal-footer texto">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" style="width: 100px;">Cerrar</button>
+                <button type="button" id="terminos" class="btn btn-primary" style="width: 100px;">Ir</button>
+              </div>
+            </div>
+          </div>
+        </div><!--Modal terminos-->
+      </div>
+    </div>
+    <!-- Button trigger modal -->
+
+
+    <footer class="text-center text-lg-start text-white" style="background: #000000;">
+
+      <!-- Copyright -->
+      <div class="text-center p-3 texto" >
+        ©️ 2021 Copyright:
+        <a class="text-white" href="https://samuraistudio.com.mx/" target="_blank">Samurai Studio</a>
+      </div>
+    </footer>
+
+    <!--Scripts-->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.validate.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+
+    <!--Botones para iniciar o registrarse-->
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $("#inicia").click(function(){
+        event.preventDefault();
+        $(location).attr('href', 'login.php');
+      });
+
+      $("#registra").click(function(){
+        event.preventDefault();
+        $(location).attr('href', 'register_user.php');
+        });
+
+      $("#ver").click(function(){
+        event.preventDefault();
+        $(location).attr('href', 'empleos_publico.php');
+        });
+
+      $("#terminos").click(function(){
+        event.preventDefault();
+        $(location).attr('href', '');
+        });
+
+      //SI ACEPTA LAS COOKIES
+      $("#agalleta").click(function(){
+        event.preventDefault();
+
+        });
+
+      //SI NO ACEPTA LAS COOKIES
+      $("#ngalleta").click(function(){
+        event.preventDefault();
+
+        });
+
+      //muestra el aviso de cookies
+      var bander=0;
+      if(bander != 1){
+        $('#galletas').modal('show');
+      }
+      });
+    </script>
+  </body>
+</html>

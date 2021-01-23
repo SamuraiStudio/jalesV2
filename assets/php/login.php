@@ -10,7 +10,7 @@ if (isset($_POST['email'])) {
     $password = $_POST['cont'];
 
     /* Ejecuta una sentencia preparada pasando un array de valores */
-    $query = "SELECT cont, id, nivid FROM usuario WHERE correo = ?";
+    $query = "SELECT cont, id, nivid, apodo, correo FROM usuario WHERE correo = ?";
     $stmt = $pdo->prepare($query);
     $stmt->execute([$email]);
 
@@ -27,6 +27,8 @@ if (isset($_POST['email'])) {
             // propiedades de la sesión del usuario
             $_SESSION['usuario']['id'] = $user['id'];
             $_SESSION['usuario']['nivel'] = $user['nivid'];
+            $_SESSION['usuario']['apodo'] = $user['apodo'];
+            $_SESSION['usuario']['correo'] = $user['correo'];
             // respuesta al cliente
             $respuesta['datos_correctos'] = true;
         }

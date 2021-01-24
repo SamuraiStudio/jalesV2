@@ -1,16 +1,15 @@
-<!--  SITIO - INICIO DE SESIÓN Prueba de que me sirve aun la rama-->
-<!--?php
-/*require('assets/php/conection.php');
+<!--  SITIO - INICIO DE SESIÓN -->
+<?php
+require('assets/php/conection.php');
 $db = new DB();
 $pdo = $db->connect();
 $stmt;
 // Constante. Nombre de la tabla de usuarios
-$USER_TABLE = 'area';
-$query = "SELECT * FROM $USER_TABLE";
+$TABLE = 'area';
+$query = "SELECT * FROM $TABLE";
 $stmt = $pdo -> prepare($query);
 $stmt -> execute(array());
-
- ?>*/-->
+?>
 <html>
 
     <!--ENCABEZADO-->
@@ -247,18 +246,16 @@ $stmt -> execute(array());
                                         <!--Área a la que va dirigida el usuario-->
                                         <div class="col-sm-6 mb-3 mb-sm-0"><label class="titulo">&nbsp;&nbsp;Área que te interesa: *</label>
                                           <select class="form-control form-control labelchiquita" name="empArea" id="empArea" style="border-radius: 50px;">
-                                            <optgroup class="labelchiquita" label="Areas disponibles">
+                                            <option class="labelchiquita" value="" selected disabled>Áreas disponibles</option>  
                                               <?php
-                                                $cont = 0;
                                                 foreach ($stmt as $row){
                                                ?>
                                                 <!--Nombre del área del usuario-->
-                                                <option class="labelchiquita" value="<?php echo $cont; ?>"><?php echo $row["nombre"]; ?></option>
+                                                <option class="labelchiquita" value="<?php echo($row['id']); ?>"><?php echo $row["nombre"]; ?></option>
                                               <?php
-                                              $cont += 1;
-                                            }
+                                                }
+                                                $pdo = null; // cierra conexión
                                                ?>
-                                              </optgroup>
                                         </select>
                                       </div>
                                             <!--Especialidad del usuario-->

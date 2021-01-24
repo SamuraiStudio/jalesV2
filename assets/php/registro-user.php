@@ -8,6 +8,7 @@
   // Constante. Nombre de la tabla de usuarios
   $USER_TABLE = 'usuario';
     // Datos POST de entrada
+     $apodo = $_POST['n_name'];
      $firsname = $_POST['nombre'];
      $lastnamep = $_POST['a_paterno'];
      $lastnamem = $_POST['a_materno'];
@@ -23,12 +24,13 @@
      $sex = $_POST['genero'];
 
       $query = "INSERT INTO $USER_TABLE
-      (nom, app, apm, correo, cont, fecnac, arid, esp, telefono, sexo, rfc, ine, descripcion)
-      VALUES (:nom, :app, :apm, :correo, :cont, :fecnac, :arid, :esp,
+      (apodo, nom, app, apm, correo, cont, fecnac, arid, esp, telefono, sexo, rfc, ine, descripcion)
+      VALUES (:apodo, :nom, :app, :apm, :correo, :cont, :fecnac, :arid, :esp,
       :tel, :sexo, :rfc, :ine, :des)";
       // Arreglo asociativo con valores para execute()
       // Une el Script SQL con los datos
       $binding = [
+        ':apodo' => $apodo,
         ':nom' => $firsname,
         ':app' => $lastnamep,
         ':apm' => $lastnamem,
@@ -48,5 +50,3 @@
       $stmt = $pdo->prepare($query);
       // Ejecuta la declaración
       $stmt->execute($binding);
-    
-?>

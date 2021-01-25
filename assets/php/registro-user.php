@@ -22,6 +22,7 @@
      $ine = $_POST['ine'];
      $des = $_POST['descripcion'];
      $sex = $_POST['genero'];
+     $nivel_usuario = 2;
 
       $query = "INSERT INTO $USER_TABLE
       (apodo, nom, app, apm, correo, cont, fecnac, arid, esp, telefono, sexo, rfc, ine, descripcion)

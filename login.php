@@ -155,7 +155,7 @@
               toastr["warning"]("No se puedo iniciar sesión", "Usuario o contraseña incorrectos");
               toastr.options = toastOptions;
             } else {
-              window.location.href = 'empleos_publico.php';
+              window.location.href = 'empleos_usuarios.php';
             }
           },
           error: function(jqXHR, exception, errorThrown) {

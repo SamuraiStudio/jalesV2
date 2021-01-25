@@ -25,9 +25,9 @@
      $nivel_usuario = 2;
 
       $query = "INSERT INTO $USER_TABLE
-      (apodo, nom, app, apm, correo, cont, fecnac, arid, esp, telefono, sexo, rfc, ine, descripcion)
+      (apodo, nom, app, apm, correo, cont, fecnac, arid, esp, telefono, sexo, rfc, ine, descripcion, nivid)
       VALUES (:apodo, :nom, :app, :apm, :correo, :cont, :fecnac, :arid, :esp,
-      :tel, :sexo, :rfc, :ine, :des)";
+      :tel, :sexo, :rfc, :ine, :des, :nivus)";
       // Arreglo asociativo con valores para execute()
       // Une el Script SQL con los datos
       $binding = [
@@ -44,7 +44,8 @@
         ':sexo' => $sex,
         ':rfc' => $rfc,
         ':ine' => $ine,
-        ':des' => $des
+        ':des' => $des,
+        ':nivus' => $nivel_usuario
       ];
 
       // Declaración preparada (evita inyecciones SQL)

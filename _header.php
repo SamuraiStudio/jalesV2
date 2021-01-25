@@ -1,5 +1,3 @@
-<?php session_start(); ?>
-
 <header>
     <div class="py-2" style="background: #FFFFFF;">
         <div class="container">

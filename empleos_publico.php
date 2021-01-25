@@ -15,7 +15,11 @@
 
   <!-- CUERPO -->
   <body style="background-color: #E6E1E1;">
-
+    <?php 
+      if (session_status() == PHP_SESSION_NONE) {
+        header('Location: empleos_usuarios.php');
+      }
+    ?>
     <!-----------------------------------------------MENÚ / BARRA DE NAVEGACIÓN ----------------------------------------------->
     <header>
 

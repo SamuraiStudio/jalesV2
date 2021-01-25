@@ -1,7 +1,7 @@
-
 <?php
 session_start();
-if(isset($_SESSION['usuario'])){
+if(!isset($_SESSION['usuario']))
+  Header("Location: login.php");
 ?>
 <!--  SITIO - PUBLICACIONES. EL USUARIO PUEDE VISUALIZAR LAS PUBLICACIONES QUE HA REALIZADO. TAMBIÉN PODRÁ EDITAR DICHO EMPLEO O VISUALIZAR AQUELLOS USUARIOS INTERESADOS EN SU PUBLICACIÓN  -->
 <html>
@@ -273,8 +273,3 @@ if(isset($_SESSION['usuario'])){
 
   </body>
 </html>
-<?php
-} else{
-  Header("Location: login.php");
-}
-?>

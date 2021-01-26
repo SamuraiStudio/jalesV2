@@ -31,7 +31,7 @@
                     <li class="nav-item"><a class="nav-link" href="publicaciones_user.php">Mis publicaciones</a></li>
                     <li class="nav-item"><a class="nav-link" href="profile_user.php">Mi perfil</a></li>
                     <!-- TODO: logout -->
-                    <li class="nav-item"><a class="nav-link" href="empleos_publico.php"><span class="fas fa-door-open" style="font-size: 20px;"></span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="assets\php\logout.php"><span class="fas fa-door-open" style="font-size: 20px;"></span></a></li>
                 </ul>
             </div>
         </div>

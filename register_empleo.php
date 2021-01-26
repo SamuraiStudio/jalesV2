@@ -145,13 +145,10 @@
                       <div class="col-sm-6 mb-3 mb-sm-0"><label class="titulo"><strong>&nbsp;&nbsp;Área del empleo: *</strong></label>
                         <select class="form-control form-control" name="empArea" id="empArea" style="border-radius: 50px;">
                           <optgroup class="labelchiquita" label="This is a group">
-
                             <!--Nombre del área del empleo-->
-                            <option value="0" selected="">Ingenieria</option>
-                            <option value="1">Arquitectura</option>
-                            <option value="2">Medicina</option>
-                            <option value="3">Profesor</option>
-                            <option value="4">Artes Plasticas</option>
+                            <?php 
+                              include 'assets/php/empleos.php'
+                            ?>
                           </optgroup>
                         </select>
                       </div>

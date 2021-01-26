@@ -332,17 +332,17 @@
 
         <script type="text/javascript">
           $(document).ready(function(){
-
-            $("#baccept").submit(function(event){
+            $("#empleoregister").submit(function(event){
+              let inputs = $('#empleoregister').serialize();
               event.preventDefault();
               $.ajax({
                 type: "POST",
                 url: "assets/php/empleo_registro.php",
-                data: $('#baccept').serialize(),
-                dataType: "JSON",
-                success: function(data)
-                {
-                  console.log(datos);
+                data: inputs,
+                success: function () {
+                  document.write('Bien');
+                },error:function () {
+                  document.write('Mal');
                 }
               });
             });

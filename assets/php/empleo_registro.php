@@ -6,14 +6,6 @@
     $db = new DB();
     $pdo = $db->connect();
 
-    echo("<pre>");
-    print_r($_POST);
-    echo("</pre>");
-
-    echo("<pre>");
-    print_r($_FILES);
-    echo("</pre>");
-
     $empleo = $_POST['empleo'];
     $empleador = $_POST['empleador'];
     $empArea = $_POST['empArea'];

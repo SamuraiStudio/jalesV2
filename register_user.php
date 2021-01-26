@@ -313,17 +313,17 @@ $stmt -> execute(array());
                                           <div class="form-group row">
                                               <div class="col-sm-4 mb-3 mb-sm-8">
                                                  <div class="form-check">
-                                                    <input class="form-check-input" type="radio" id="formCheck-3" value="femenino" name="genero"/><label>Femenino</label>
+                                                    <input class="form-check-input" type="radio" id="formCheck-3" value="Femenino" name="genero"/><label>Femenino</label>
                                                  </div>
                                               </div>
                                              <div class="col-sm-4 mb-3 mb-sm-8">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" id="formCheck-2" value="masculino" name="genero"/><label>Masculino</label>
+                                                    <input class="form-check-input" type="radio" id="formCheck-2" value="Masculino" name="genero"/><label>Masculino</label>
                                                 </div>
                                              </div>
                                              <div class="col-sm-4 mb-3 mb-sm-8">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" id="formCheck-1" value="otro" name="genero" checked /><label>Otro</label>
+                                                    <input class="form-check-input" type="radio" id="formCheck-1" value="Otro" name="genero" checked /><label>Otro</label>
                                                 </div>
                                             </div>
                                           </div>

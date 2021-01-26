@@ -1,4 +1,9 @@
 
+<?php
+session_start();
+if(!isset($_SESSION['usuario']))
+  Header("Location: login.php");
+?>
 <!--  SITIO - PEFIL DE VISITA / VISITADO POR OTRO(S) USUARIO(S) QUE NO ES EL "PROPIETARIO / DUEÑO" DE LA CUENTA.  -->
 <html>
 
@@ -12,6 +17,7 @@
       <!--Iconos - Estrellas + puerta-->
       <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
       <link rel="stylesheet" href="assets/css/styles.css">
+      <link rel="stylesheet" href="assets/css/toastr.min.css">
   </head>
 
   <!-- CUERPO -->
@@ -119,7 +125,7 @@
                                           <h4 class="modal-title"><strong>Crear comentario.</strong></h4>
                                           <button type="button" class="close" data-dismiss="modal">&times;</button>
                                         </div>
-
+                                        <form id="comentarios" name="comentarios" method="post">
                                         <!--1.f. Cuerpo del modal-->
                                         <div class="modal-body ml-2 mr-1">
                                           <p class="pchiquito m-1"style="text-align: justify;">Agrega un comentario para que todos conozcan el desempeño de este usuario.</p><br>
@@ -130,28 +136,31 @@
                                               <div class="m-1">
                                                 <label class="pchiquito" for="">Dale una calificación:</label>
                                                 <!--Íconos de estrella-->
-                                                  <span class="fa fa-star ml-1" id="1estrella" onclick="calificar(this)"></span>
-                                                  <span class="fa fa-star" id="2estrella" onclick="calificar(this)"></span>
-                                                  <span class="fa fa-star" id="3estrella" onclick="calificar(this)"></span>
-                                                  <span class="fa fa-star" id="4estrella" onclick="calificar(this)"></span>
-                                                  <span class="fa fa-star" id="5estrella" onclick="calificar(this)"></span>
+                                                  <span class="fa fa-star ml-1" id="1estrella" value="1" onclick="calificar(this)"></span>
+                                                  <span class="fa fa-star" id="2estrella"  value="2" onclick="calificar(this)"></span>
+                                                  <span class="fa fa-star" id="3estrella"  value="3" onclick="calificar(this)"></span>
+                                                  <span class="fa fa-star" id="4estrella"  value="4" onclick="calificar(this)"></span>
+                                                  <span class="fa fa-star" id="5estrella"  value="5" onclick="calificar(this)"></span>
                                               </div>
 
                                             </div>
 
                                             <!--Comentario-->
                                             <div class="row form-label-group pt-1">
-                                              <textarea class="form-control pchiquito" type="text" id="crearComent" name="comentario" placeholder="" style="border-radius: 18px; height: 150px;"></textarea><br>
+                                              <textarea class="form-control pchiquito" type="text" id="coment" maxlength="2000" name="coment" placeholder="" style="border-radius: 18px; height: 150px;"></textarea><br>
                                             </div>
 
                                             <!--Botón - Enviar comentario-->
-                                            <div class="mb-3 texto"><br><button class="bnt btn-success text-white" style="border-radius: 18px; height: 45px; width: 180px;" name="button">Enviar comentario</button>
+                                            <div class="mb-3 texto"><br><button class="bnt btn-success text-white" type="submit" id="crea" style="border-radius: 18px; height: 45px; width: 180px;" name="crea">Enviar comentario</button>
                                             </div>
                                           </div>
+
                                         </div>
+                                       </form>
                                       </div>
                                     </div>
                                   </div>
+
                                 </div>
 
                                 <!--Columna 2. Botón/Modal "Ver comentarios"-->
@@ -519,6 +528,7 @@
       </footer>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js"></script>
+      <script src="assets/js/toastr.min.js"></script>
       <script type="text/javascript">
         if ($(window).width() > 992) {
           $(window).scroll(function(){
@@ -531,6 +541,42 @@
             }
           });
         } // end if
+      </script>
+
+      <script type="text/javascript">
+      $(document).ready(function () {
+          $('#crea').click(function(){
+              // XMLHttpRequest
+              event.preventDefault();
+              var url1 = "assets/php/comentarios.php";
+                $.ajax({
+                   type: "POST",
+                   url: url1,
+                   data: $("#comentarios").serialize(),
+                   success: function(data)
+                   {
+                           toastr["success"]("Excelente", "Se ha publicado tu comentario");
+                           toastr.options = {
+                                    "closeButton": true,
+                                    "debug": false,
+                                    "newestOnTop": false,
+                                    "progressBar": false,
+                                    "positionClass": "toast-top-center",
+                                    "preventDuplicates": false,
+                                    "showDuration": "3000",
+                                    "hideDuration": "1000",
+                                    "timeOut": "5000",
+                                    "extendedTimeOut": "1000",
+                                    "showEasing": "swing",
+                                    "hideEasing": "linear",
+                                    "showMethod": "fadeIn",
+                                    "hideMethod": "fadeOut"
+                                  }
+
+                       }
+               });
+          });
+      });
       </script>
 
       <!--Script para las estrellas de evaluaciión

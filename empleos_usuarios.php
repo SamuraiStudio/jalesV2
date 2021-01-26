@@ -17,7 +17,7 @@
   <!-- CUERPO -->
   <body style="background-color: #E6E1E1;">
 
-  <?php include "_header.php"; echo?>
+  <?php include "_header.php";?>
 
     <!--------------------------------------------------------------------- Publicaciones - Usuarios  -------------------------------------------------------->
 

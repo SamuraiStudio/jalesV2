@@ -2,12 +2,16 @@
     session_start();
     $usid = $_SESSION['usuario']['id'];
 
-    include('assets/php/conection.php');
+    include('conection.php');
     $db = new DB();
     $pdo = $db->connect();
 
     echo("<pre>");
     print_r($_POST);
+    echo("</pre>");
+
+    echo("<pre>");
+    print_r($_FILES);
     echo("</pre>");
 
     $empleo = $_POST['empleo'];

@@ -74,7 +74,7 @@
                   </div>
 
                   <!-- Formulario para registrar un empleo -->
-                  <form id="empleoregister" enctype="multipart/form-data" action= "empleo_registro.php" method="post">
+                  <form id="empleoregister" enctype="multipart/form-data">
 
                     <!--Boton para pedir foto relacionada al empleo/---->
                     <div class="text-center">
@@ -170,7 +170,7 @@
                       <div class="col-sm-6"><label class="titulo">&nbsp;&nbsp;Tipo de jornada: *</label><input class="form-control form-control-user labelchiquita my-2" type="text" id="jornada" name="jornada" style="border-radius: 50px;"/></div>
 
                       <!--Salario-->
-                      <div class="col-sm-6"><label class="titulo">&nbsp;&nbsp;Salario: *</label><input class="form-control form-control-user labelchiquita my-2" type="text" id="salario" name="salario" style="border-radius: 50px;"/></div>
+                      <div class="col-sm-6"><label class="titulo">&nbsp;&nbsp;Salario: *</label><input class="form-control form-control-user labelchiquita my-2" type="number" id="salario" name="salario" style="border-radius: 50px;"/></div>
                     </div>
                     <br>
                     <!--Ubicación/-->
@@ -335,8 +335,19 @@
 
         <script type="text/javascript">
           $(document).ready(function(){
-            $("#baccept").click(function(){
-              // event.preventDefault();
+
+            $("#baccept").submit(function(event){
+              event.preventDefault();
+              $.ajax({
+                type: "POST",
+                url: "assets/php/empleo_registro.php",
+                data: $('#baccept').serialize(),
+                dataType: "JSON",
+                success: function(data)
+                {
+                  console.log(datos);
+                }
+              });
             });
           });
 

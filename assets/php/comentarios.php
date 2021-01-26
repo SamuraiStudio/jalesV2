@@ -11,14 +11,11 @@
      /*
      $usiddir = $_GET['id'];
      // Datos POST de entrada*/
-     session_start();
-     $_SESSION['usuario']['id'] = $usiddo['id'];
 
      $usiddir = 62;
-     $usiddo = 52;
+     $usiddo = $_POST['usiddo'];//$_POST['usiddo'];
      $comentario = $_POST['coment'];
-     $calif = 4;
-
+     $calif = $_POST['estrellas'];
 
 
       $query = "INSERT INTO $USER_TABLE

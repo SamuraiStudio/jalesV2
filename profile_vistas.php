@@ -143,10 +143,12 @@ if(!isset($_SESSION['usuario']))
                                                   <span class="fa fa-star" id="5estrella"  value="5" onclick="calificar(this)"></span>
                                               </div>
 
-                                              <input type="text" name="usiddir" value="<?php echo $_SESSION['usuario']['id'] ?>">
-                                              <input type="text" name="usiddo" value="<?php echo $_GET['id'] ?>">
-
                                             </div>
+
+                                            <!--Nos muestra las estrellas-->
+                                            <input name="estrellas" style="display:none" id="estrellas"></input>
+                                            <!--Asigna el valor del usiddo-->
+                                            <input name="usiddo" style="display:none;" value="<?php echo $_SESSION['usuario']['id']?>"> </input>
 
                                             <!--Comentario-->
                                             <div class="row form-label-group pt-1">
@@ -551,14 +553,11 @@ if(!isset($_SESSION['usuario']))
           $('#crea').click(function(){
               // XMLHttpRequest
               event.preventDefault();
-              var formData = new FormData(this);
-              formData.append('calif', calificacion);
               var url1 = "assets/php/comentarios.php";
                 $.ajax({
                    type: "POST",
                    url: url1,
-                   //data: $("#comentarios").serialize(),
-                   data: formData,
+                   data: $("#comentarios").serialize(),
                    success: function(data)
                    {
                            toastr["success"]("Excelente", "Se ha publicado tu comentario");
@@ -584,16 +583,17 @@ if(!isset($_SESSION['usuario']))
           });
       });
       </script>
-
       <!--Script para las estrellas de evaluaciión
           Para mayor info: https://www.youtube.com/watch?v=KcwqodH4bGU-->
       <script type="text/javascript">
-        var calificacion = 0;
+
         var contador; //Se crea un variable llamada contador
         function calificar(item){ //Función calificar (mencionadas en los íconos de estrella)
+           var calificacion = 0;
           console.log(item); //Muestra en consola las estrellas seleccionadas
           contador=item.id[0]; //Solo toma el valor del primer caracter (1 al 5)
           calificacion = parseInt(contador);
+          console.log(calificacion);
           let nombre=item.id.substring(1); //Toma los valores después del primer caracter (después del 1,...,5), es decir 'estrella'
           for (let i=0;i<5;i++){
             if (i<contador){
@@ -603,7 +603,9 @@ if(!isset($_SESSION['usuario']))
               document.getElementById((i+1)+nombre).style.color ="black"; //Pintará las cantidad de estrellas seleccionadas
             }
           }
+        comentarios.estrellas.value = calificacion;
         }
       </script>
+
   </body>
 </html>

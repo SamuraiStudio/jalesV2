@@ -12,6 +12,6 @@
     $arr = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     foreach($arr as $row){
-        echo '<option value="1">' . $row['nombre'] . '</option>';
+        echo '<option value="'. $row['id'] .'">' . $row['nombre'] . '</option>';
     }
 ?>

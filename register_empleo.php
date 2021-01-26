@@ -74,7 +74,7 @@
                   </div>
 
                   <!-- Formulario para registrar un empleo -->
-                  <form id="empleoregister" enctype="multipart/form-data">
+                  <form id="empleoregister" enctype="multipart/form-data" action= "empleo_registro.php" method="post">
 
                     <!--Boton para pedir foto relacionada al empleo/---->
                     <div class="text-center">
@@ -147,9 +147,11 @@
                           <optgroup class="labelchiquita" label="This is a group">
 
                             <!--Nombre del área del empleo-->
-                            <option value="12" selected="">This is item 1</option>
-                            <option value="13">This is item 2</option>
-                            <option value="14">This is item 3</option>
+                            <option value="0" selected="">Ingenieria</option>
+                            <option value="1">Arquitectura</option>
+                            <option value="2">Medicina</option>
+                            <option value="3">Profesor</option>
+                            <option value="4">Artes Plasticas</option>
                           </optgroup>
                         </select>
                       </div>
@@ -334,7 +336,7 @@
         <script type="text/javascript">
           $(document).ready(function(){
             $("#baccept").click(function(){
-              event.preventDefault();
+              // event.preventDefault();
             });
           });
 

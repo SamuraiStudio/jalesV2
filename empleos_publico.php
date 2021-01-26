@@ -1,3 +1,8 @@
+<?php 
+  if (session_status() == PHP_SESSION_NONE) {
+    header('Location: empleos_usuarios.php');
+  }
+?>
 <!--  SITIO - EMPLEOS DISPONIBLES PARA MIRONES. EL USUARIO PUEDE VISUALIZAR SIN MUCHOS DETALLES LOS EMPLEOS DISPONIBLES PUBLICADOS Y EN CASO DE POSTULACIÓN LA REDIRECCIONARA AL LOGIN-->
 <html>
 
@@ -15,11 +20,6 @@
 
   <!-- CUERPO -->
   <body style="background-color: #E6E1E1;">
-    <?php 
-      if (session_status() == PHP_SESSION_NONE) {
-        header('Location: empleos_usuarios.php');
-      }
-    ?>
     <!-----------------------------------------------MENÚ / BARRA DE NAVEGACIÓN ----------------------------------------------->
     <header>
 

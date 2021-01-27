@@ -16,6 +16,8 @@
         <link rel="stylesheet" href="assets/css/Header-Blue.css">
         <link rel="stylesheet" href="assets/css/Registration-Form-with-Photo.css">
         <link rel="stylesheet" href="assets/css/floating-labels.min.css">
+        <!-- plugin toastr -->
+        <link rel="stylesheet" href="assets/css/toastr.min.css">
         <!--Iconos - Puerta-->
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
         <link rel="stylesheet" href="assets/css/styles.css">
@@ -219,6 +221,8 @@
       <!--Scripts-->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js"></script>
+      <!-- js toastr -->
+      <script src="assets/js/toastr.min.js"></script>
       <script type="text/javascript">
         if ($(window).width() > 992) {
           $(window).scroll(function(){
@@ -340,9 +344,9 @@
                 url: "assets/php/empleo_registro.php",
                 data: inputs,
                 success: function () {
-                  document.write('Bien');
+                  toastr["success"]("Felicidades, el trabajo se agrego correctamente.", "Trabajo agregado.");
                 },error:function () {
-                  document.write('Mal');
+                  toastr["error"]("Lo siento, algo a salido mal y no se agrego el trabajo.", "Error.");
                 }
               });
             });

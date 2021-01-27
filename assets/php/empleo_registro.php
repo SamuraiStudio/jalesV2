@@ -15,7 +15,9 @@
     $empUbicacion = $_POST['empUbicacion'];
     $empDescripcion = $_POST['empDescripcion'];
     $empRequisitos = $_POST['empRequisitos'];
-    $foto = 1; // Modificar
+    // $foto = $_FILES['tmp_name']; // Modificar
+    $foto = 1;
+    
 
     $data = [
         'empleo' => $empleo,

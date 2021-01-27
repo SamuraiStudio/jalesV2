@@ -1,5 +1,8 @@
 <?php
-
+session_start();
+if(!isset($_SESSION['usuario']))
+  Header("Location: login.php");
+?>
  ?>
 <html>
 
@@ -15,7 +18,19 @@
     <link rel="stylesheet" href="assets/css/styles.css">
   </head>
 
-  <?php include "_header.php"; ?>
+  <?php
+  include "_header.php"; 
+  require('assets/php/conection.php');
+  $db = new DB();
+  $pdo = $db->connect();
+  $stmt;
+  // extrae datos del usuario de la bd
+  $VIEW = 'view_profile_privado';
+  $query = "SELECT * FROM $VIEW WHERE usid = ?";
+  $stmt = $pdo -> prepare($query);
+  $stmt -> execute([$_SESSION['usuario']['id']]);
+  $user= $stmt->fetch();
+  ?>
 
   <!-- CUERPO -->
   <body style="background: #E6E1E1;"><br>
@@ -287,9 +302,11 @@
                                           <!--Nickname-->
                                           <div class="col-xs-12 col-md-6">
                                             <div class="form-group texto">
-                                              <label for=""><strong>Nickname</strong></label>
+                                              <label for=""><strong>Apodo</strong></label>
                                               <br>
-                                              <label class="form-control-plaintext labelchiquita" id="n_name" type="text" value="" readonly style="border-bottom-color:#ada2a2;">Marina_12</label>
+                                              <label class="form-control-plaintext labelchiquita" id="n_name" type="text" value="" readonly style="border-bottom-color:#ada2a2;">
+                                                <?php echo $user['apodo'];?>
+                                              </label>
                                             </div>
                                           </div>
 
@@ -298,7 +315,9 @@
                                             <div class="form-group texto">
                                               <label for=""><strong>Nombre</strong></label>
                                               <br>
-                                              <label class="form-control-plaintext labelchiquita" id="puser" type="text" value="" readonly style="border-bottom-color:#ada2a2;">Marina</label>
+                                              <label class="form-control-plaintext labelchiquita" id="puser" type="text" value="" readonly style="border-bottom-color:#ada2a2;">
+                                                <?php echo $user['nom'];?>
+                                              </label>
                                             </div>
                                           </div>
                                         </div>
@@ -312,7 +331,9 @@
                                               <div class="form-group texto">
                                                 <label for=""><strong>Apellido paterno</strong></label>
                                                 <br>
-                                                <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;">Salas</label>
+                                                <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;">
+                                                  <?php echo $user['app'];?>
+                                                </label>
                                               </div>
                                             </div>
 
@@ -321,7 +342,9 @@
                                               <div class="form-group texto">
                                                 <label for=""><strong>Apellido Materno</strong></label>
                                                 <br>
-                                                <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;">García</label>
+                                                <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;">
+                                                  <?php echo $user['apm'];?>
+                                                </label>
                                               </div>
                                             </div>
                                         </div>
@@ -335,7 +358,9 @@
                                             <div class="form-group texto">
                                               <label for=""><strong>Correo</strong></label>
                                               <br>
-                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;">ecr230799@gmail.com</label>
+                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;">
+                                                <?php echo $user['correo'];?>
+                                              </label>
                                             </div>
                                           </div>
                                         </div>
@@ -348,7 +373,9 @@
                                             <div class="form-group texto">
                                               <label for=""><strong>Sexo</strong></label>
                                               <br>
-                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;">Femenino</label>
+                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;">
+                                                <?php echo $user['sexo'];?>
+                                              </label>
                                             </div>
                                           </div>
 
@@ -357,7 +384,9 @@
                                             <div class="form-group texto">
                                               <label for=""><strong>Fecha de nacimiento</strong></label>
                                               <br>
-                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;">22</label>
+                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;">
+                                                <?php echo $user['fecnac'];?>
+                                              </label>
                                             </div>
                                           </div>
                                         </div>
@@ -370,7 +399,14 @@
                                             <div class="form-group texto">
                                               <label for=""><strong>Área</strong></label>
                                               <br>
-                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style=" border-bottom-color:#ada2a2;">Ciencias e ingeniería</label>
+                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style=" border-bottom-color:#ada2a2;">
+                                              <?php 
+                                              
+                                              
+                                              
+                                              
+                                              echo $user['apodo'];?>
+                                              </label>
                                             </div>
                                           </div>
 
@@ -379,7 +415,9 @@
                                             <div class="form-group texto">
                                               <label for=""><strong>Especialidad</strong></label>
                                               <br>
-                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;">Ing. TIC´s</label>
+                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;">
+                                              <?php echo $user['esp'];?>
+                                              </label>
                                             </div>
                                           </div>
                                         </div>
@@ -392,7 +430,9 @@
                                             <div class="form-group texto">
                                               <label for=""><strong>Estado</strong></label>
                                               <br>
-                                              <label class="form-control-plaintext labelchiquita" type="text" id="estado" value="" readonly style=" border-bottom-color:#ada2a2;">Puebla</label>
+                                              <label class="form-control-plaintext labelchiquita" type="text" id="estado" value="" readonly style=" border-bottom-color:#ada2a2;">
+                                                <?php echo $user['estado'];?>
+                                              </label>
                                             </div>
                                           </div>
 
@@ -401,7 +441,9 @@
                                             <div class="form-group texto">
                                               <label for=""><strong>Ciudad</strong></label>
                                               <br>
-                                              <label class="form-control-plaintext labelchiquita" type="text" id="ciudad" value="" readonly style="border-bottom-color:#ada2a2;">Puebla de Zaragoza</label>
+                                              <label class="form-control-plaintext labelchiquita" type="text" id="ciudad" value="" readonly style="border-bottom-color:#ada2a2;">
+                                                <?php echo $user['ciudad'];?>
+                                              </label>
                                             </div>
                                           </div>
                                         </div>
@@ -414,7 +456,7 @@
                                             <center>
                                              <div class="form-group texto">
                                                <label class="form-control-plaintext labelchiquita" type="text" id="facebook" value="" readonly style="border-bottom-color:#ada2a2;">
-                                               <a style="color: black;" href="https://www.facebook.com/"><span class="fab fa-facebook-square" style="font-size: 30px;">&nbsp;&nbsp;</span><u>Da click para contactar por facebook</u></a></label>
+                                                <a style="color: black;" href="https://www.facebook.com/<?php echo $user['fbref'];?>"><span class="fab fa-facebook-square" style="font-size: 30px;">&nbsp;&nbsp;</span><u>Da click para contactar por facebook</u></a></label>
                                                <br>
                                              </div>
                                             </center>
@@ -429,7 +471,7 @@
                                             <div class="form-group">
                                               <label class="texto" for=""><strong>Descripción</strong></label>
                                               <p class="des" style="text-align: justify;" type="text">
-                                                Estudiante universitaría, conocimientos avanzados sobre bases de datos, redes y programación.
+                                              <?php echo $user['descripcion'];?>
                                               </p>
                                             </div>
                                           </div>

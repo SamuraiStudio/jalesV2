@@ -149,6 +149,7 @@ if(!isset($_SESSION['usuario']))
                                             <input name="estrellas" style="display:none" id="estrellas"></input>
                                             <!--Asigna el valor del usiddo-->
                                             <input name="usiddo" style="display:none;" value="<?php echo $_SESSION['usuario']['id']?>"> </input>
+                                              <input name="usiddo" style="display:none;" value="<?php $_POST['estrellas']?>"> </input>
 
                                             <!--Comentario-->
                                             <div class="row form-label-group pt-1">

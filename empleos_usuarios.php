@@ -1,3 +1,8 @@
+<?php
+session_start();
+if(!isset($_SESSION['usuario']))
+  Header("Location: login.php");
+?>
 <!--  SITIO PUBLICACION DE EMPLEO DISPONIBLES, EL USUARIO REGISTRADO PUEDE ACCEDER A ELLOS SE LE DA UNA Descripción DETALLADA -->
 <html>
 

@@ -1,8 +1,18 @@
 <?php
 session_start();
-if(!isset($_SESSION['usuario']))
+if(!isset($_SESSION['usuario'])){
   Header("Location: login.php");
-?>
+}else {
+  include('assets/php/conection.php');
+
+  // Conecta a la bd
+  $db = new DB();
+  $pdo = $db->connect();
+  $username = $_SESSION['usuario']['id'];
+  $query = "SELECT usiddo, apodo, comentario, id FROM uscoment, usuario WHERE uscoment.usiddir = ".($username)." AND  usuario.id = ".($username)."";
+  $stmt = $pdo -> prepare($query);
+  $stmt -> execute(array());
+
  ?>
 <html>
 
@@ -16,21 +26,11 @@ if(!isset($_SESSION['usuario']))
     <!--Iconos - Estrellas + puerta-->
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <link rel="stylesheet" href="assets/css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js"></script>
   </head>
 
-  <?php
-  include "_header.php"; 
-  require('assets/php/conection.php');
-  $db = new DB();
-  $pdo = $db->connect();
-  $stmt;
-  // extrae datos del usuario de la bd
-  $VIEW = 'view_profile_privado';
-  $query = "SELECT * FROM $VIEW WHERE usid = ?";
-  $stmt = $pdo -> prepare($query);
-  $stmt -> execute([$_SESSION['usuario']['id']]);
-  $user= $stmt->fetch();
-  ?>
+  <?php include "_header.php"; ?>
 
   <!-- CUERPO -->
   <body style="background: #E6E1E1;"><br>
@@ -73,12 +73,18 @@ if(!isset($_SESSION['usuario']))
 
               <!--Contenedor de la sección-->
               <div class="card-body" style="height:333px; overflow: scroll;">
+                <?php foreach ($stmt as $result) {
+                  // code...
+
+                ?>
+
                 <div class="container bg-light">
 
                   <!--Comentario 1-->
+                  <h6 id="jefe" style=""><?php echo ($result['usiddo']);?></h6>
                   <div class="row mb-3 py-2 ml-2 texto">
-                    <h6>Nombre del Jefe 1.</h6> <!--Nombre de quién realiza el comentario-->
-                    <label class="text-muted"><small>Fecha de publicación</small></label>
+                     <!--Nombre de quién realiza el comentario-->
+                     <h6 id="nombrejefe"></h6>
                   </div>
 
                   <!--Calificación - Estrellas-->
@@ -95,9 +101,28 @@ if(!isset($_SESSION['usuario']))
 
                   <!--Comentario-->
                   <div class="row texto ml-2 mr-1">
-                    <p class="pmediano" style="text-align: justify;" >Comentario 1.</p><br><p class="pchiquito" style="text-align: justify;" >Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
+                    <p class="pmediano" style="text-align: justify;" >Comentario.</p><br>
+                    <p class="pchiquito" style="text-align: justify;" ><?php echo $result['comentario'] ?> </p>
                   </div>
                 </div>
+                <script type="text/javascript">
+
+                    $("#jefe.last").ready(function(){
+                      var jefe = "";
+                      jefe = $("#jefe").html();
+                      $.ajax({
+                        type: "POST",
+                        url: "assets/php/comentariofk.php",
+                        data: {"jefe":jefe},
+                        success: function(data){
+                          $('#nombrejefe').html(data);
+                          console.log(data);
+                        }
+                      });
+                    });
+
+                </script>
+              <?php } ?>
               </div>
               <br>
 
@@ -134,10 +159,11 @@ if(!isset($_SESSION['usuario']))
                             <div class="container">
 
                               <!--Comentario 1-->
+
                               <div class="row bg-light">
                                 <!--Nombre de quién realiza el comentario-->
                                 <div class="col texto" style="text-align: left;">
-                                  <h6 class="py-2"><strong>Nombre del Jefe 1.</strong></h6>
+                                  <h6 class="py-2"><strong>.</strong></h6>
                                   <label class="text-muted py-1"><small>Fecha de publicación</small></label><br>
                                   <label>Estrellas</label>&nbsp;
 
@@ -153,84 +179,6 @@ if(!isset($_SESSION['usuario']))
                               </div>
                               <br>
 
-                              <!--Comentario 2-->
-                              <div class="row bg-light">
-                                <!--Nombre de quién realiza el comentario-->
-                                <div class="col texto" style="text-align: left;">
-                                  <h6 class="py-2"><strong>Nombre del Jefe 2.</strong></h6>
-                                  <label class="text-muted py-1"><small>Fecha de publicación</small></label><br>
-                                  <label>Estrellas</label>&nbsp;
-
-                                  <!--Íconos de estrella-->
-                                  <span class="fa fa-star"></span>
-                                  <span class="fa fa-star"></span>
-                                  <span class="fa fa-star"></span>
-                                  <span class="fa fa-star"></span>
-                                  <span class="fa fa-star"></span>
-                                  <br><br>
-                                  <p class="pchiquito" style="text-align: justify;">Comentario 2. <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
-                                </div>
-                              </div>
-                              <br>
-
-                              <!--Comentario 3-->
-                              <div class="row bg-light">
-                                <!--Nombre de quién realiza el comentario-->
-                                <div class="col texto" style="text-align: left;">
-                                  <h6 class="py-2"><strong>Nombre del Jefe 3.</strong></h6>
-                                  <label class="text-muted py-1"><small>Fecha de publicación</small></label><br>
-                                  <label>Estrellas</label>&nbsp;
-
-                                  <!--Íconos de estrella-->
-                                  <span class="fa fa-star"></span>
-                                  <span class="fa fa-star"></span>
-                                  <span class="fa fa-star"></span>
-                                  <span class="fa fa-star"></span>
-                                  <span class="fa fa-star"></span>
-                                  <br><br>
-                                  <p class="pchiquito" style="text-align: justify;">Comentario 3. <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
-                                </div>
-                              </div>
-                              <br>
-
-                              <!--Comentario 4-->
-                              <div class="row bg-light">
-                                <!--Nombre de quién realiza el comentario-->
-                                <div class="col texto" style="text-align: left;">
-                                  <h6 class="py-2"><strong>Nombre del Jefe 4.</strong></h6>
-                                  <label class="text-muted py-1"><small>Fecha de publicación</small></label><br>
-                                  <label>Estrellas</label>&nbsp;
-
-                                  <!--Íconos de estrella-->
-                                  <span class="fa fa-star"></span>
-                                  <span class="fa fa-star"></span>
-                                  <span class="fa fa-star"></span>
-                                  <span class="fa fa-star"></span>
-                                  <span class="fa fa-star"></span>
-                                  <br><br>
-                                  <p class="pchiquito" style="text-align: justify;">Comentario 4. <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
-                                </div>
-                              </div>
-                              <br>
-
-                              <!--Comentario 5-->
-                              <div class="row bg-light">
-                                <!--Nombre de quién realiza el comentario-->
-                                <div class="col texto" style="text-align: left;">
-                                  <h6 class="py-2"><strong>Nombre del Jefe 5.</strong></h6>
-                                  <label class="text-muted py-1"><small>Fecha de publicación</small></label><br>
-                                  <label>Estrellas</label>&nbsp;
-
-                                  <!--Íconos de estrella-->
-                                  <span class="fa fa-star"></span>
-                                  <span class="fa fa-star"></span>
-                                  <span class="fa fa-star"></span>
-                                  <span class="fa fa-star"></span>
-                                  <span class="fa fa-star"></span>
-                                  <br><br>
-                                  <p class="pchiquito" style="text-align: justify;">Comentario 5. <br>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
-                                </div>
-                              </div>
                             </div>
                           </div>
                         </div>
@@ -302,11 +250,9 @@ if(!isset($_SESSION['usuario']))
                                           <!--Nickname-->
                                           <div class="col-xs-12 col-md-6">
                                             <div class="form-group texto">
-                                              <label for=""><strong>Apodo</strong></label>
+                                              <label for=""><strong>Nickname</strong></label>
                                               <br>
-                                              <label class="form-control-plaintext labelchiquita" id="n_name" type="text" value="" readonly style="border-bottom-color:#ada2a2;">
-                                                <?php echo $user['apodo'];?>
-                                              </label>
+                                              <label class="form-control-plaintext labelchiquita" id="n_name" type="text" value="" readonly style="border-bottom-color:#ada2a2;">Marina_12</label>
                                             </div>
                                           </div>
 
@@ -315,9 +261,7 @@ if(!isset($_SESSION['usuario']))
                                             <div class="form-group texto">
                                               <label for=""><strong>Nombre</strong></label>
                                               <br>
-                                              <label class="form-control-plaintext labelchiquita" id="puser" type="text" value="" readonly style="border-bottom-color:#ada2a2;">
-                                                <?php echo $user['nom'];?>
-                                              </label>
+                                              <label class="form-control-plaintext labelchiquita" id="puser" type="text" value="" readonly style="border-bottom-color:#ada2a2;">Marina</label>
                                             </div>
                                           </div>
                                         </div>
@@ -331,9 +275,7 @@ if(!isset($_SESSION['usuario']))
                                               <div class="form-group texto">
                                                 <label for=""><strong>Apellido paterno</strong></label>
                                                 <br>
-                                                <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;">
-                                                  <?php echo $user['app'];?>
-                                                </label>
+                                                <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;">Salas</label>
                                               </div>
                                             </div>
 
@@ -342,9 +284,7 @@ if(!isset($_SESSION['usuario']))
                                               <div class="form-group texto">
                                                 <label for=""><strong>Apellido Materno</strong></label>
                                                 <br>
-                                                <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;">
-                                                  <?php echo $user['apm'];?>
-                                                </label>
+                                                <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;">García</label>
                                               </div>
                                             </div>
                                         </div>
@@ -358,9 +298,7 @@ if(!isset($_SESSION['usuario']))
                                             <div class="form-group texto">
                                               <label for=""><strong>Correo</strong></label>
                                               <br>
-                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;">
-                                                <?php echo $user['correo'];?>
-                                              </label>
+                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;">ecr230799@gmail.com</label>
                                             </div>
                                           </div>
                                         </div>
@@ -373,9 +311,7 @@ if(!isset($_SESSION['usuario']))
                                             <div class="form-group texto">
                                               <label for=""><strong>Sexo</strong></label>
                                               <br>
-                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;">
-                                                <?php echo $user['sexo'];?>
-                                              </label>
+                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;">Femenino</label>
                                             </div>
                                           </div>
 
@@ -384,9 +320,7 @@ if(!isset($_SESSION['usuario']))
                                             <div class="form-group texto">
                                               <label for=""><strong>Fecha de nacimiento</strong></label>
                                               <br>
-                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;">
-                                                <?php echo $user['fecnac'];?>
-                                              </label>
+                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;">22</label>
                                             </div>
                                           </div>
                                         </div>
@@ -399,14 +333,7 @@ if(!isset($_SESSION['usuario']))
                                             <div class="form-group texto">
                                               <label for=""><strong>Área</strong></label>
                                               <br>
-                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style=" border-bottom-color:#ada2a2;">
-                                              <?php 
-                                              
-                                              
-                                              
-                                              
-                                              echo $user['apodo'];?>
-                                              </label>
+                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style=" border-bottom-color:#ada2a2;">Ciencias e ingeniería</label>
                                             </div>
                                           </div>
 
@@ -415,9 +342,7 @@ if(!isset($_SESSION['usuario']))
                                             <div class="form-group texto">
                                               <label for=""><strong>Especialidad</strong></label>
                                               <br>
-                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;">
-                                              <?php echo $user['esp'];?>
-                                              </label>
+                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;">Ing. TIC´s</label>
                                             </div>
                                           </div>
                                         </div>
@@ -430,9 +355,7 @@ if(!isset($_SESSION['usuario']))
                                             <div class="form-group texto">
                                               <label for=""><strong>Estado</strong></label>
                                               <br>
-                                              <label class="form-control-plaintext labelchiquita" type="text" id="estado" value="" readonly style=" border-bottom-color:#ada2a2;">
-                                                <?php echo $user['estado'];?>
-                                              </label>
+                                              <label class="form-control-plaintext labelchiquita" type="text" id="estado" value="" readonly style=" border-bottom-color:#ada2a2;">Puebla</label>
                                             </div>
                                           </div>
 
@@ -441,9 +364,7 @@ if(!isset($_SESSION['usuario']))
                                             <div class="form-group texto">
                                               <label for=""><strong>Ciudad</strong></label>
                                               <br>
-                                              <label class="form-control-plaintext labelchiquita" type="text" id="ciudad" value="" readonly style="border-bottom-color:#ada2a2;">
-                                                <?php echo $user['ciudad'];?>
-                                              </label>
+                                              <label class="form-control-plaintext labelchiquita" type="text" id="ciudad" value="" readonly style="border-bottom-color:#ada2a2;">Puebla de Zaragoza</label>
                                             </div>
                                           </div>
                                         </div>
@@ -456,7 +377,7 @@ if(!isset($_SESSION['usuario']))
                                             <center>
                                              <div class="form-group texto">
                                                <label class="form-control-plaintext labelchiquita" type="text" id="facebook" value="" readonly style="border-bottom-color:#ada2a2;">
-                                                <a style="color: black;" href="https://www.facebook.com/<?php echo $user['fbref'];?>"><span class="fab fa-facebook-square" style="font-size: 30px;">&nbsp;&nbsp;</span><u>Da click para contactar por facebook</u></a></label>
+                                               <a style="color: black;" href="https://www.facebook.com/"><span class="fab fa-facebook-square" style="font-size: 30px;">&nbsp;&nbsp;</span><u>Da click para contactar por facebook</u></a></label>
                                                <br>
                                              </div>
                                             </center>
@@ -471,7 +392,7 @@ if(!isset($_SESSION['usuario']))
                                             <div class="form-group">
                                               <label class="texto" for=""><strong>Descripción</strong></label>
                                               <p class="des" style="text-align: justify;" type="text">
-                                              <?php echo $user['descripcion'];?>
+                                                Estudiante universitaría, conocimientos avanzados sobre bases de datos, redes y programación.
                                               </p>
                                             </div>
                                           </div>
@@ -498,8 +419,7 @@ if(!isset($_SESSION['usuario']))
                 </div>
           </div>
       </div>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js"></script>
+
 
       <script type="text/javascript">
         if ($(window).width() > 992) {
@@ -535,6 +455,8 @@ if(!isset($_SESSION['usuario']))
         });
       </script>
 
+
+    <?php } ?>
   </body>
   <footer class="text-center text-lg-start text-white" style="background: #000000;">
       <!-- Copyright -->

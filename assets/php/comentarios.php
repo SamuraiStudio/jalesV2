@@ -13,24 +13,52 @@
      // Datos POST de entrada*/
 
      $usiddir = 62;
-     $usiddo = $_POST['usiddo'];//$_POST['usiddo'];
+     $usiddo = (int)$_POST['usiddo'];//$_POST['usiddo'];
      $comentario = $_POST['coment'];
      $calif = $_POST['estrellas'];
 
 
-      $query = "INSERT INTO $USER_TABLE
-      (usiddir, usiddo, comentario, calif)
-      VALUES (:usiddir, :usiddo, :comentario, :calif)";
-      // Arreglo asociativo con valores para execute()
-      // Une el Script SQL con los datos
-      $binding = [
-        ':usiddir' => $usiddir,
-        ':usiddo' => $usiddo,
-        ':comentario' => $comentario,
-        ':calif' => $calif
-      ];
+         $douser = (int)$_POST['usiddo'];
 
-      // Declaración preparada (evita inyecciones SQL)
-      $stmt = $pdo->prepare($query);
-      // Ejecuta la declaración
-      $stmt->execute($binding);
+         $consulta = $pdo->query(
+             'SELECT * FROM uscoment WHERE usiddir = "'.($usiddir).'" AND  usiddo = "'.($douser).'" '
+         );
+
+         if ($consulta->fetchColumn() > 0) {
+           $query = "UPDATE $USER_TABLE SET
+           comentario = :comentario, calif = :calif WHERE usiddo = :usiddo AND usiddir = :usiddir";
+
+           // Arreglo asociativo con valores para execute()
+           // Une el Script SQL con los datos
+           $binding = [
+             ':usiddir' => $usiddir,
+             ':usiddo' => $usiddo,
+             ':comentario' => $comentario,
+             ':calif' => $calif
+           ];
+
+           // Declaración preparada (evita inyecciones SQL)
+           $stmt = $pdo->prepare($query);
+           // Ejecuta la declaración
+           $stmt->execute($binding);
+
+         } else {
+           $query = "INSERT INTO $USER_TABLE
+           (usiddir, usiddo, comentario, calif)
+           VALUES (:usiddir, :usiddo, :comentario, :calif)";
+           // Arreglo asociativo con valores para execute()
+           // Une el Script SQL con los datos
+           $binding = [
+             ':usiddir' => $usiddir,
+             ':usiddo' => $usiddo,
+             ':comentario' => $comentario,
+             ':calif' => $calif
+           ];
+
+           // Declaración preparada (evita inyecciones SQL)
+           $stmt = $pdo->prepare($query);
+           // Ejecuta la declaración
+           $stmt->execute($binding);
+
+
+         }

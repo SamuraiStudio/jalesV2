@@ -1,3 +1,8 @@
+<?php
+session_start();
+if(isset($_SESSION['usuario']))
+  Header("Location: empleos_usuarios.php");
+?>
 <!--  SITIO - INICIO DE SESIÓN -->
 <!DOCTYPE html>
 <html>

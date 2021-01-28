@@ -13,10 +13,15 @@ if(!isset($_SESSION['usuario'])){
   $username = $_SESSION['usuario']['id'];
   //$query = "SELECT usiddo, apodo, comentario, id FROM uscoment, usuario WHERE uscoment.usiddir = ".($username)." AND  usuario.id = ".($username)."";
   $query=
-      'SELECT uscoment.comentario, usuario.apodo FROM uscoment INNER JOIN usuario ON  uscoment.usiddo = usuario.id WHERE uscoment.usiddir = "'.($username).'"';
-  echo $query;
+      'SELECT uscoment.comentario, uscoment.calif, usuario.apodo FROM uscoment INNER JOIN usuario ON  uscoment.usiddo = usuario.id WHERE uscoment.usiddir = "'.($username).'"';
   $stmt = $pdo -> prepare($query);
   $stmt -> execute(array());
+  //Nos devuelve informacion del usuario
+  $VIEW = 'view_profile_privado';
+  $query2 = "SELECT * FROM $VIEW WHERE usid = ?";
+  $smtp = $pdo -> prepare($query2);
+  $smtp -> execute([$_SESSION['usuario']['id']]);
+  $user= $smtp->fetch();
  ?>
 <!--  SITIO - PEFIL DE VISITA / VISITADO POR OTRO(S) USUARIO(S) QUE NO ES EL "PROPIETARIO / DUEÑO" DE LA CUENTA.  -->
 <html>
@@ -92,6 +97,7 @@ if(!isset($_SESSION['usuario'])){
 
                               <!--Nombre de quién realiza el comentario-->
                                 <h6><strong>Usuario: </strong>"<?php echo ($result['apodo']);?>"</h6>
+                                <p><?php echo $result['calif'];?></p>
 
                             </div>
 
@@ -106,6 +112,29 @@ if(!isset($_SESSION['usuario'])){
                               <span class="fa fa-star"></span>
                               <span class="fa fa-star"></span>
                             </div>
+                            <!--Script para las estrellas de evaluaciión
+                                Para mayor info: https://www.youtube.com/watch?v=KcwqodH4bGU-->
+                            <script type="text/javascript">
+
+                              var contador; //Se crea un variable llamada contador
+                              function calificar(item){ //Función calificar (mencionadas en los íconos de estrella)
+                                 var calificacion = 0;
+                                console.log(item); //Muestra en consola las estrellas seleccionadas
+                                contador=item.id[0]; //Solo toma el valor del primer caracter (1 al 5)
+                                calificacion = parseInt(contador);
+                                console.log(calificacion);
+                                let nombre=item.id.substring(1); //Toma los valores después del primer caracter (después del 1,...,5), es decir 'estrella'
+                                for (let i=0;i<5;i++){
+                                  if (i<contador){
+                                    document.getElementById((i+1)+nombre).style.color ="orange"; //Pintará las cantidad de estrellas seleccionadas
+                                  }
+                                  else{
+                                    document.getElementById((i+1)+nombre).style.color ="black"; //Pintará las cantidad de estrellas seleccionadas
+                                  }
+                                }
+                              comentarios.estrellas.value = calificacion;
+                              }
+                            </script>
 
                             <!--Comentario-->
                             <div class="row texto ml-2 mr-1">
@@ -391,7 +420,7 @@ if(!isset($_SESSION['usuario'])){
                                             <div class="form-group texto">
                                               <label for=""><strong>Nickname</strong></label>
                                               <br>
-                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;">Mar</label>
+                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;"><?php echo $user['apodo'];?></label>
                                             </div>
                                           </div>
 
@@ -400,7 +429,7 @@ if(!isset($_SESSION['usuario'])){
                                             <div class="form-group texto">
                                               <label for=""><strong>Nombre</strong></label>
                                               <br>
-                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;">Marina</label>
+                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;"><?php echo $user['nom'];?></label>
                                             </div>
                                           </div>
                                         </div>
@@ -413,7 +442,7 @@ if(!isset($_SESSION['usuario'])){
                                               <div class="form-group texto">
                                                 <label for=""><strong>Apellido paterno</strong></label>
                                                 <br>
-                                                <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;">Salas</label>
+                                                <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;"><?php echo $user['app'];?></label>
                                               </div>
                                             </div>
 
@@ -422,7 +451,7 @@ if(!isset($_SESSION['usuario'])){
                                               <div class="form-group texto">
                                                 <label for=""><strong>Apellido Materno</strong></label>
                                                 <br>
-                                                <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;">García</label>
+                                                <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;"><?php echo $user['apm'];?></label>
                                               </div>
                                             </div>
                                         </div>
@@ -436,7 +465,7 @@ if(!isset($_SESSION['usuario'])){
                                             <div class="form-group texto">
                                               <label for=""><strong>Correo</strong></label>
                                               <br>
-                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;">ecr230799@gmail.com</label>
+                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;"><?php echo $user['correo'];?></label>
                                             </div>
                                           </div>
                                         </div>
@@ -449,7 +478,7 @@ if(!isset($_SESSION['usuario'])){
                                             <div class="form-group texto">
                                               <label for=""><strong>Sexo</strong></label>
                                               <br>
-                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;">Femenino</label>
+                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;"><?php echo $user['sexo'];?></label>
                                             </div>
                                           </div>
 
@@ -458,7 +487,7 @@ if(!isset($_SESSION['usuario'])){
                                             <div class="form-group texto">
                                               <label for=""><strong>Fecha de nacimiento</strong></label>
                                               <br>
-                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;">22</label>
+                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;"><?php echo $user['fecnac'];?></label>
                                             </div>
                                           </div>
                                         </div>
@@ -471,7 +500,7 @@ if(!isset($_SESSION['usuario'])){
                                             <div class="form-group texto">
                                               <label for=""><strong>Área</strong></label>
                                               <br>
-                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style=" border-bottom-color:#ada2a2;">Ciencias e ingeniería</label>
+                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style=" border-bottom-color:#ada2a2;"><?php echo $user['arnom'];?></label>
                                             </div>
                                           </div>
 
@@ -480,7 +509,7 @@ if(!isset($_SESSION['usuario'])){
                                             <div class="form-group texto">
                                               <label for=""><strong>Especialidad</strong></label>
                                               <br>
-                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;">Ing. TIC´s</label>
+                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;"><?php echo $user['esp'];?></label>
                                             </div>
                                           </div>
                                         </div>
@@ -493,7 +522,7 @@ if(!isset($_SESSION['usuario'])){
                                             <div class="form-group texto">
                                               <label for=""><strong>Estado</strong></label>
                                               <br>
-                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style=" border-bottom-color:#ada2a2;">Puebla</label>
+                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style=" border-bottom-color:#ada2a2;"><?php echo $user['estado'];?></label>
                                             </div>
                                           </div>
 
@@ -502,7 +531,7 @@ if(!isset($_SESSION['usuario'])){
                                             <div class="form-group texto">
                                               <label for=""><strong>Ciudad</strong></label>
                                               <br>
-                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;">Puebla de Zaragoza</label>
+                                              <label class="form-control-plaintext labelchiquita" type="text" value="" readonly style="border-bottom-color:#ada2a2;"><?php echo $user['ciudad'];?></label>
                                             </div>
                                           </div>
                                         </div>
@@ -515,7 +544,7 @@ if(!isset($_SESSION['usuario'])){
                                             <center>
                                              <div class="form-group texto">
                                                <label class="form-control-plaintext labelchiquita" type="text" id="facebook" value="" readonly style="border-bottom-color:#ada2a2;">
-                                               <a style="color: black;" href="https://www.facebook.com/"><span class="fab fa-facebook-square" style="font-size: 30px;">&nbsp;&nbsp;</span><u>Da click para contactar por facebook</u></a></label>
+                                               <a style="color: black;" href="<?php echo $user['fbref'];?>"><span class="fab fa-facebook-square" style="font-size: 30px;">&nbsp;&nbsp;</span><u>Da click para contactar por facebook</u></a></label>
                                                <br>
                                              </div>
                                             </center>
@@ -530,7 +559,7 @@ if(!isset($_SESSION['usuario'])){
                                             <div class="form-group">
                                               <label class="texto" class="texto" for=""><strong>Descripción</strong></label>
                                               <p class="des" style="text-align: justify;" type="text">
-                                                Estudiante universitaría, conocimientos avanzados sobre bases de datos, redes y programación.
+                                                <?php echo $user['descripcion'];?>
                                               </p>
                                             </div>
                                           </div>

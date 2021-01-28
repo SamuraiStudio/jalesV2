@@ -67,24 +67,6 @@ class ImageHandler
         return $stmt->execute();
     }
 
-    public function selectBlob($idImagen) {
-
-        $sql = "SELECT mime,
-                        data
-                   FROM files
-                  WHERE idimg = :id;";
-
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute(array(":id" => $idImagen));
-        $stmt->bindColumn(1, $mime);
-        $stmt->bindColumn(2, $data, PDO::PARAM_LOB);
-
-        $stmt->fetch(PDO::FETCH_BOUND);
-
-        return array("mime" => $mime,
-            "data" => $data);
-    }
-
     public function selectImagen($idImagen) {
 
         $sql = "SELECT * FROM files WHERE id = :id;";

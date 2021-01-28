@@ -637,7 +637,8 @@ $stmt->execute(array());
           processData: false,
           success: function(data) {            
             if (data == 'true') {
-              toastr["success"]("Se ha completado tu registro");
+              // registro exitoso, redirecciona
+              window.location.href = 'login.php';
             } else {
               toastr["warning"]("No se ha podido registrar el usuario");
               console.debug(data);

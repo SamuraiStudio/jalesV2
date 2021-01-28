@@ -66,7 +66,7 @@ if ($imageHandler->insertImagen()) {
   if($stmt->execute($binding)){
     echo 'true';
   } else {
-    echo json_encode($binding);
+    echo $pdo->errorInfo();
   }
 }
 

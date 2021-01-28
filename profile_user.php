@@ -59,7 +59,7 @@ if(!isset($_SESSION['usuario']))
                 </div>
 
                 <!--Foto del usuario-->
-                <img class="rounded-circle mb-3 mt-4" src="assets/img/dogs/image3.jpeg" width="185" height="190">
+                <img class="rounded-circle mb-3 mt-4" src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($user['foto']); ?>" width="185" height="190">
               </div>
             </div>
 

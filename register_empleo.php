@@ -337,12 +337,15 @@
         <script type="text/javascript">
           $(document).ready(function(){
             $("#empleoregister").submit(function(event){
-              let inputs = $('#empleoregister').serialize();
+              let inputs = new FormData(this);
               event.preventDefault();
               $.ajax({
                 type: "POST",
                 url: "assets/php/empleo_registro.php",
                 data: inputs,
+                cache:false,
+                contentType: false,
+                processData: false,
                 success: function () {
                   toastr["success"]("Felicidades, el trabajo se agrego correctamente.", "Trabajo agregado.");
                 },error:function () {

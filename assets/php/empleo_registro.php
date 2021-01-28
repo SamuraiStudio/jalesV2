@@ -5,6 +5,8 @@
     include('conection.php');
     $db = new DB();
     $pdo = $db->connect();
+    
+    // echo 'hola';
 
     $empleo = $_POST['empleo'];
     $empleador = $_POST['empleador'];
@@ -15,8 +17,8 @@
     $empUbicacion = $_POST['empUbicacion'];
     $empDescripcion = $_POST['empDescripcion'];
     $empRequisitos = $_POST['empRequisitos'];
-    // $foto = $_FILES['tmp_name']; // Modificar
-    $foto = 1;
+    
+    $foto = addslashes(file_get_contents($_FILES['inpFile']['tmp_name']));
     
 
     $data = [
@@ -36,5 +38,7 @@
             VALUES(:empleo,:empArea,:empDescripcion,:empEspecialidad,:jornada,:salario,:empUbicacion,:empRequisitos,:usid,:foto)";
     
     $stmt = $pdo->prepare($sql);
+
     $stmt->execute($data);
+
 ?>

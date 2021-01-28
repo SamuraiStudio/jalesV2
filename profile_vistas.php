@@ -1,9 +1,23 @@
 
+
 <?php
 session_start();
-if(!isset($_SESSION['usuario']))
+if(!isset($_SESSION['usuario'])){
   Header("Location: login.php");
-?>
+}else {
+  include('assets/php/conection.php');
+
+  // Conecta a la bd
+  $db = new DB();
+  $pdo = $db->connect();
+  $username = $_SESSION['usuario']['id'];
+  //$query = "SELECT usiddo, apodo, comentario, id FROM uscoment, usuario WHERE uscoment.usiddir = ".($username)." AND  usuario.id = ".($username)."";
+  $query=
+      'SELECT uscoment.comentario, usuario.apodo FROM uscoment INNER JOIN usuario ON  uscoment.usiddo = usuario.id WHERE uscoment.usiddir = "'.($username).'"';
+  echo $query;
+  $stmt = $pdo -> prepare($query);
+  $stmt -> execute(array());
+ ?>
 <!--  SITIO - PEFIL DE VISITA / VISITADO POR OTRO(S) USUARIO(S) QUE NO ES EL "PROPIETARIO / DUEÑO" DE LA CUENTA.  -->
 <html>
 
@@ -67,14 +81,18 @@ if(!isset($_SESSION['usuario']))
 
                       <!--Contenedor de la sección-->
                       <div class="card-body" style="height:315px; overflow: scroll;">
+                        <?php foreach ($stmt as $result) {
+
+                        ?>
+
                           <div class="container bg-light">
 
                             <!--Comentario 1-->
                             <div class="row mb-3 py-2 ml-2 texto">
 
                               <!--Nombre de quién realiza el comentario-->
-                                <h6>Nombre del Jefe 1.</h6>
-                                <label class="text-muted"><small>Fecha de publicación</small></label>
+                                <h6><strong>Usuario: </strong>"<?php echo ($result['apodo']);?>"</h6>
+
                             </div>
 
                             <!--Calificación - Estrellas-->
@@ -91,9 +109,11 @@ if(!isset($_SESSION['usuario']))
 
                             <!--Comentario-->
                             <div class="row texto ml-2 mr-1">
-                              <p class="pmediano" style="text-align: justify;" >Comentario 1.</p><br><p class="pchiquito" style="text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
+                              <p class="pmediano" style="text-align: justify;" ><strong>Comentario:</strong><br><br> <?php echo $result['comentario'] ?></p>
                             </div>
                           </div>
+                          <hr>
+                          <?php } ?>
                       </div>
 
                       <!-- Botones - Crear y Más comentario(s) -->
@@ -149,7 +169,7 @@ if(!isset($_SESSION['usuario']))
                                             <input name="estrellas" style="display:none" id="estrellas"></input>
                                             <!--Asigna el valor del usiddo-->
                                             <input name="usiddo" style="display:none;" value="<?php echo ($_SESSION['usuario']['id'])?>"> </input>
-                                            <input name="estrellas" style="display:none;"> </input>
+
 
                                             <!--Comentario-->
                                             <div class="row form-label-group pt-1">
@@ -608,6 +628,6 @@ if(!isset($_SESSION['usuario']))
         comentarios.estrellas.value = calificacion;
         }
       </script>
-
+<?php } ?>
   </body>
 </html>

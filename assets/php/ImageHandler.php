@@ -42,6 +42,7 @@ class ImageHandler
             $this->generatedID = $this->pdo->lastInsertId();
             return true;
         } 
+
         return false;       
     }
 

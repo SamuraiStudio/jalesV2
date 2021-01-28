@@ -64,7 +64,7 @@ if ($imageHandler->insertImagen()) {
 
   // Ejecuta la declaración
   if($stmt->execute($binding)){
-    echo json_encode(['op' => 'true']);
+    echo 'true';
   } else {
     echo json_encode($binding);
   }

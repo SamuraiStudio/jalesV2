@@ -635,15 +635,37 @@ $stmt->execute(array());
           cache: false,
           contentType: false,
           processData: false,
-          dataType: 'JSON',
-          success: function(respuesta) {
-            if (respuesta['op']) {
+          success: function(data) {            
+            if (data == 'true') {
               toastr["success"]("Se ha completado tu registro");
             } else {
-              toastr["warning"]("Hubo un error al registrar");
-              console.log(respuesta);
+              toastr["warning"]("No se ha podido registrar el usuario");
+              console.debug(data);
             }
-            toastr.options = {
+            
+          },
+          error: function(jqXHR, exception, errorThrown) {
+            var msg = '';
+            if (jqXHR.status === 0) {
+              msg = 'Not connect.\n Verify Network.';
+            } else if (jqXHR.status == 404) {
+              msg = 'Requested page not found. [404]';
+            } else if (jqXHR.status == 500) {
+              msg = 'Internal Server Error [500].';
+            } else if (exception === 'parsererror') {
+              msg = 'Requested JSON parse failed.';
+            } else if (exception === 'timeout') {
+              msg = 'Time out error.';
+            } else if (exception === 'abort') {
+              msg = 'Ajax request aborted.';
+            } else {
+              msg = 'Uncaught Error.\n' + jqXHR.responseText;
+            }
+            toastr["error"]("Hubo un error al registrar");
+            console.debug("Error: " + errorThrown);
+          }
+        });
+        toastr.options = {
               "closeButton": false,
               "debug": false,
               "newestOnTop": false,
@@ -660,8 +682,6 @@ $stmt->execute(array());
               "showMethod": "fadeIn",
               "hideMethod": "fadeOut"
             }
-          }
-        });
       });
     });
   </script>
@@ -699,7 +719,6 @@ $stmt->execute(array());
         previewImage.style.display = "block";
 
         reader.addEventListener("load", function() {
-          console.log(this);
           previewImage.setAttribute("src", this.result);
         });
         reader.readAsDataURL(file);

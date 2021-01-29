@@ -83,38 +83,39 @@ $cardComentarios = $stmt->fetchAll();
 
             <!--Contenedor de la sección-->
             <div class="card-body" style="height:333px; overflow: scroll;">
-              <!--Comentario(s)-->
+              <!-- Sección de comentario(s)-->
               <?php foreach ($cardComentarios as $coment) { ?>
-                          <div class="row bg-light mb-4">
-                            <!--Nombre de quién realiza el comentario-->
-                            <div class="col texto" style="text-align: left;">
-                              <h6 class="py-2"><strong><?php echo $coment['apodo']; ?></strong></h6>
-                              <label class="text-muted py-1">
-                                <small>
-                                  <?php echo  $coment['fecha']; ?>
-                                </small>
-                              </label><br>
-                              <!-- <label>Estrellas</label>&nbsp;<br> -->
+                <div class="row bg-light mb-4">
+                  <!-- apodo del comentador -->
+                  <div class="col texto" style="text-align: left;">
+                    <h6 class="my-2">
+                      <strong><?php echo $coment['apodo']; ?></strong>
+                    </h6>
+                    <label class="text-muted mb-2">
+                      <small>
+                        <?php echo  $coment['fecha']; ?>
+                      </small>
+                    </label><br>
+                    <?php
 
-                              <!--Íconos de estrella-->
-                              <?php
-                              $STARS = 5; //  total de estrellas
+                    $STARS = 5; //  total de estrellas
 
-                              for ($i = 0; $i < $STARS; $i++) {
-                                $color = "black";
-                                if ($i < $coment['calif']) { // estrellas naranjas
-                                  $color = "orange";
-                                } ?>
-                                <span class="fa fa-star" style=color:<?php echo $color ?>></span>
-                              <?php
-                              } ?>
-                              <br><br>
-                              <p class="pchiquito" style="text-align: justify;">
-                                <?php echo $coment['comentario']; ?>
-                              </p>
-                            </div>
-                          </div>
-                        <?php } ?>
+                    for ($i = 0; $i < $STARS; $i++) {
+                      $color = "black";
+                      if ($i < $coment['calif']) { // estrellas naranjas
+                        $color = "orange";
+                      } ?>
+                      <!-- imprime las estrellas segun el color -->
+                      <span class="fa fa-star" style=color:<?php echo $color ?>></span>
+                    <?php
+                    } ?>
+                    <!-- comentario -->
+                    <p class="pchiquito mt-3" style="text-align: justify;">
+                      <?php echo $coment['comentario']; ?>
+                    </p>
+                  </div>
+                </div>
+              <?php } ?>
             </div>
             <br>
 
@@ -151,21 +152,21 @@ $cardComentarios = $stmt->fetchAll();
                     <div class="card-body">
                       <div class="container">
 
-                        <!--Comentario(s)-->
+                         <!-- Sección de comentario(s)-->
                         <?php foreach ($cardComentarios as $coment) { ?>
                           <div class="row bg-light mb-4">
-                            <!--Nombre de quién realiza el comentario-->
+                            <!-- apodo del comentador -->
                             <div class="col texto" style="text-align: left;">
-                              <h6 class="py-2"><strong><?php echo $coment['apodo']; ?></strong></h6>
-                              <label class="text-muted py-1">
+                              <h6 class="my-2">
+                                <strong><?php echo $coment['apodo']; ?></strong>
+                              </h6>
+                              <label class="text-muted mb-2">
                                 <small>
                                   <?php echo  $coment['fecha']; ?>
                                 </small>
                               </label><br>
-                              <!-- <label>Estrellas</label>&nbsp;<br> -->
-
-                              <!--Íconos de estrella-->
                               <?php
+
                               $STARS = 5; //  total de estrellas
 
                               for ($i = 0; $i < $STARS; $i++) {
@@ -173,11 +174,12 @@ $cardComentarios = $stmt->fetchAll();
                                 if ($i < $coment['calif']) { // estrellas naranjas
                                   $color = "orange";
                                 } ?>
+                                <!-- imprime las estrellas segun el color -->
                                 <span class="fa fa-star" style=color:<?php echo $color ?>></span>
                               <?php
                               } ?>
-                              <br><br>
-                              <p class="pchiquito" style="text-align: justify;">
+                              <!-- comentario -->
+                              <p class="pchiquito mt-3" style="text-align: justify;">
                                 <?php echo $coment['comentario']; ?>
                               </p>
                             </div>

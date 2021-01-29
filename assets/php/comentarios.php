@@ -11,8 +11,8 @@
      /*
      $usiddir = $_GET['id'];
      // Datos POST de entrada*/
-
-     $usiddir = 57;
+     $usiddir = (int)$_POST['usiddir'];
+     echo $usiddir;
      $usiddo = (int)$_POST['usiddo'];//$_POST['usiddo'];
      $comentario = $_POST['coment'];
      $calif = $_POST['estrellas'];

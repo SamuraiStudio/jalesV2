@@ -9,7 +9,9 @@ if(!isset($_SESSION['usuario'])){
   // Conecta a la bd
   $db = new DB();
   $pdo = $db->connect();
-  $username = $_SESSION['usuario']['id'];
+  //$username = $_SESSION['usuario']['id'];
+  $username = (int)$_GET['idu'];
+
   //$query = "SELECT usiddo, apodo, comentario, id FROM uscoment, usuario WHERE uscoment.usiddir = ".($username)." AND  usuario.id = ".($username)."";
   $query=
       'SELECT uscoment.comentario, uscoment.calif, usuario.apodo FROM uscoment INNER JOIN usuario ON  uscoment.usiddo = usuario.id WHERE uscoment.usiddir = "'.($username).'"';
@@ -21,7 +23,7 @@ if(!isset($_SESSION['usuario'])){
   $VIEW = 'view_profile_privado';
   $query2 = "SELECT * FROM $VIEW WHERE usid = ?";
   $smtp = $pdo -> prepare($query2);
-  $smtp -> execute([$_SESSION['usuario']['id']]);
+  $smtp -> execute([$_GET['idu']]);
   $user= $smtp->fetch();
  ?>
 <!--  SITIO - PEFIL DE VISITA / VISITADO POR OTRO(S) USUARIO(S) QUE NO ES EL "PROPIETARIO / DUEÑO" DE LA CUENTA.  -->
@@ -89,6 +91,7 @@ if(!isset($_SESSION['usuario'])){
                       <div class="card-body" style="height:315px; overflow: scroll;">
                         <?php
                         foreach ($stmt as $result) {
+
                         ?>
                           <div class="container bg-light">
 
@@ -224,6 +227,8 @@ if(!isset($_SESSION['usuario'])){
                                             <input name="estrellas" style="display:none" id="estrellas"></input>
                                             <!--Asigna el valor del usiddo-->
                                             <input name="usiddo" style="display:none;" value="<?php echo ($_SESSION['usuario']['id'])?>"> </input>
+                                            <!--Manda el usiddir-->
+                                            <input name="usiddir" style="display:none;" value="<?php echo $username?>" </input>
 
 
                                             <!--Comentario-->

@@ -26,6 +26,7 @@
     
     $data = [
         'empleo' => $empleo,
+        'empleador' => $empleador,
         'empArea' => $empArea,
         'empDescripcion' => $empDescripcion,
         'empEspecialidad' => $empEpecialidad,
@@ -38,8 +39,8 @@
     ];
     
 
-    $sql = "INSERT INTO trabajos (nombre,arid,descripcion,espec,tipojor,sal,ubi,requisitos,usid,idImagen)
-            VALUES(:empleo,:empArea,:empDescripcion,:empEspecialidad,:jornada,:salario,:empUbicacion,:empRequisitos,:usid,:idImagen)";
+    $sql = "INSERT INTO trabajos (nombre,empleador,arid,descripcion,espec,tipojor,sal,ubi,requisitos,usid,foto)
+            VALUES(:empleo,:empleador,:empArea,:empDescripcion,:empEspecialidad,:jornada,:salario,:empUbicacion,:empRequisitos,:usid,:idImagen)";
     
     $stmt = $pdo->prepare($sql);
 

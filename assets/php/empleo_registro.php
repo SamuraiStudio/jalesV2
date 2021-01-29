@@ -3,6 +3,7 @@
     $usid = $_SESSION['usuario']['id'];
 
     include('conection.php');
+    require('ImageHandler.php');
     $db = new DB();
     $pdo = $db->connect();
     
@@ -17,10 +18,12 @@
     $empUbicacion = $_POST['empUbicacion'];
     $empDescripcion = $_POST['empDescripcion'];
     $empRequisitos = $_POST['empRequisitos'];
-    
-    $foto = addslashes(file_get_contents($_FILES['inpFile']['tmp_name']));
-    
 
+    $imageHandler = new ImageHandler($_FILES['inpFile']);
+    $imageHandler->insertImagen();
+    $idImagen = $imageHandler->getId();
+    
+    
     $data = [
         'empleo' => $empleo,
         'empArea' => $empArea,
@@ -31,13 +34,15 @@
         'empUbicacion' => $empUbicacion,
         'empRequisitos' => $empRequisitos,
         'usid' => $usid,
-        'foto' => $foto
+        'idImagen' => $idImagen
     ];
+    
 
-    $sql = "INSERT INTO trabajos (nombre,arid,descripcion,espec,tipojor,sal,ubi,requisitos,usid,foto)
-            VALUES(:empleo,:empArea,:empDescripcion,:empEspecialidad,:jornada,:salario,:empUbicacion,:empRequisitos,:usid,:foto)";
+    $sql = "INSERT INTO trabajos (nombre,arid,descripcion,espec,tipojor,sal,ubi,requisitos,usid,idImagen)
+            VALUES(:empleo,:empArea,:empDescripcion,:empEspecialidad,:jornada,:salario,:empUbicacion,:empRequisitos,:usid,:idImagen)";
     
     $stmt = $pdo->prepare($sql);
+
 
     $stmt->execute($data);
 

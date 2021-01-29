@@ -1,3 +1,19 @@
+
+<?php
+session_start();
+if(!isset($_SESSION['usuario'])){
+  Header("Location: login.php");
+}else {
+  include('assets/php/conection.php');
+  // Conecta a la bd
+  $db = new DB();
+  $pdo = $db->connect();
+  $username = $_SESSION['usuario']['id'];
+  $VIEW = 'view_profile_privado';
+  $query = "SELECT * FROM $VIEW";
+  $stmt = $pdo -> prepare($query);
+  $stmt -> execute(array());//Para sacar los comentarios en la seccion principal
+ ?>
 <!--  SITIO - LISTA DE INTERESADOS EN ALGUNA PUBLICACIÓN DEL USUARIO.  -->
 
 <html>
@@ -12,6 +28,9 @@
       <!--Iconos - Estrellas + puerta-->
       <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
       <link rel="stylesheet" href="assets/css/styles.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js"></script>
+      <script  src = "https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"> </script>
   </head>
 
   <!-- CUERPO -->
@@ -32,6 +51,9 @@
       <!--Div espaciador-->
       <div class="py-2"></div>
 
+      <?php
+      foreach ($stmt as $result) {
+      ?>
       <!--Fila 1- Inicio. Usuario interesado-->
       <div class="card shadow container">
         <div class="row py-3">
@@ -39,7 +61,7 @@
           <!--Columna de la foto-->
           <div class="col-md-6 col-lg-4 texto item align-self-center" >
             <img class="rounded-circle img-thumbnail mx-auto d-block" style="height: 180px; width: 180px;" src="assets/img/1.jpg"><br>
-            <label class="form-control-plaintext" type="text" value="" readonly style="text-align: center;"><strong>Nombre usuario</strong></label>
+            <label class="form-control-plaintext" type="text" value="" readonly style="text-align: center;"><strong><?php echo $result['apodo']; ?></strong></label>
           </div>
 
           <!--Columna con fila incluida-->
@@ -49,7 +71,7 @@
             <div class="row">
               <div class="col texto">
                 <label type="text"><strong>Área:</strong></label>
-                <label class="form-control-plaintext subtitulo" readonly style="border-bottom-color:#ada2a2; text-align: justify;"> Ingeniería y tecnología</label>
+                <label class="form-control-plaintext subtitulo" readonly style="border-bottom-color:#ada2a2; text-align: justify;"><?php echo $result['arnom']; ?></label>
               </div>
             </div>
             <br>
@@ -58,22 +80,15 @@
             <div class="row">
               <div class="col texto">
                 <label type="text"><strong>Especialidad:</strong></label>
-                <label class="form-control-plaintext subtitulo" readonly style="border-bottom-color:#ada2a2; text-align: justify;"> Programacion</label>
+                <label class="form-control-plaintext subtitulo" readonly style="border-bottom-color:#ada2a2; text-align: justify;"><?php echo $result['esp']; ?></label>
               </div>
             </div>
             <br>
 
-            <!--Fila de estrellas-->
+            <!--Pa que se vea chulo-->
             <div class="row">
               <div class="col texto">
-                <label class="text" style="text-align: justify;"><strong>Estrellas</strong></label>
-
-                  <!--Íconos de estrella-->
-                  <span class="fa fa-star"></span>
-                  <span class="fa fa-star"></span>
-                  <span class="fa fa-star"></span>
-                  <span class="fa fa-star"></span>
-                  <span class="fa fa-star"></span>
+                <label class="text" style="text-align: justify;"><strong></strong></label>
                 </div>
               </div>
             </div>
@@ -81,166 +96,34 @@
             <!--Columna del los botones-->
             <div class="col-md-6 col-lg-4 item align-self-center">
 
-              <!--Botón - Editar publicación-->
+              <!--Botón - contactar-->
               <div class="row">
                 <div class="col section1 text-center texto">
-                  <button class="btn text-white" type="button" style="background: #0B6811; border-radius: 50px; width: 160px; height: 45px;">Contactar <ion-icon name="logo-whatsapp" size="small"></ion-icon></button>
+                  <a target="blank" href="https://api.whatsapp.com/send?phone=+52<?php echo $result['telefono'];?>&text=¡Hola vi tu perfil en 'El Jale', veo que te intereso mi oferta!" id="contacto" class="btn text-white" type="button" style="background: #0B6811; border-radius: 50px; width: 160px; height: 45px;">Contactar <ion-icon name="logo-whatsapp" size="small"></ion-icon></a>
                 </div>
               </div>
+
+
               <br><br>
 
               <!--Botón - Interesados-->
               <div class="row">
                 <div class="col texto section1 text-center">
-                  <button class="btn btn-info" id="visitar" style="border-radius: 50px; width: 160px; height: 45px; text-align:center;">Visitar perfil&nbsp;<ion-icon name="enter" size="small"></ion-icon></button>
+                  <a target="blank" class="btn btn-info" href="profile_vistas.php?idu=<?php echo (int)$result['usid'];?>" id="visitar" style="border-radius: 50px; width: 160px; height: 45px; text-align:center;">Visitar perfil&nbsp;<ion-icon name="enter" size="small"></ion-icon></a>
+
                 </div>
               </div>
             </div>
           </div>
         </div> <!--Fila 1 - Fin. Usuario interesado-->
         <br>
+          <?php } ?>
 
-        <!--Fila 2 - Inicio. Usuario interesado-->
-        <div class="card shadow container">
-          <div class="row py-3">
-
-            <!--Columna de la foto-->
-            <div class="col-md-6 col-lg-4 texto item align-self-center" >
-              <img class="rounded-circle img-thumbnail mx-auto d-block" style="height: 180px; width: 180px;" src="assets/img/2.jpg">
-              <br>
-              <label class="form-control-plaintext" type="text" value="" readonly style="text-align: center;"><strong>Nombre usuario</strong></label>
-            </div>
-
-            <!--Columna con fila incluida-->
-            <div class="col-md-6 col-lg-4 item align-self-center">
-
-              <!--Fila de área-->
-                <div class="row">
-                    <div class="col texto">
-                      <label type="text"><strong>Área:</strong></label>
-                      <label class="form-control-plaintext subtitulo" readonly style="border-bottom-color:#ada2a2; text-align: justify;"> Diseño grafico</label>
-                    </div>
-                  </div>
-                    <br>
-
-                    <!--Fila de especialidad-->
-                    <div class="row">
-                    <div class="col texto">
-                      <label type="text"><strong>Especialidad:</strong></label>
-                      <label class="form-control-plaintext subtitulo" readonly style="border-bottom-color:#ada2a2; text-align: justify;"> Digital</label>
-                    </div>
-                  </div>
-                    <br>
-
-                    <!--Fila de estrellas-->
-                    <div class="row">
-                      <div class="col texto">
-                        <label class="text" style="text-align: justify;"><strong>Estrellas</strong></label>
-                        <!--Íconos de estrella-->
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                      </div>
-                    </div>
-                </div>
-
-                <!--Columna del los botones-->
-                <div class="col-md-6 col-lg-4 item align-self-center">
-
-                  <!--Botón - contactar-->
-                  <div class="row">
-                      <div class="col section1 text-center texto">
-                        <button class="btn text-white" type="button" style="background: #0B6811; border-radius: 50px; width: 160px; height: 45px;">Contactar <ion-icon name="logo-whatsapp" size="small"></ion-icon></button>
-                      </div>
-                  </div>
-                  <br><br>
-
-                  <!--Botón - visitar perfil-->
-                  <div class="row">
-                      <div class="col section1 texto text-center">
-                        <button class="btn btn-info" id="visitar" style="border-radius: 50px; width: 160px; height: 45px; text-align:center;">Visitar perfil&nbsp;<ion-icon name="enter" size="small"></ion-icon></button>
-                      </div>
-                  </div>
-              </div>
-            </div>
-          </div>
-          <br>
-
-          <!--Fila 3 - Inicio. Usuario interesado-->
-          <div class="card shadow container">
-            <div class="row py-3">
-
-              <!--Columna de la foto-->
-              <div class="col-md-6 col-lg-4 texto item align-self-center" >
-                <img class="rounded-circle img-thumbnail mx-auto d-block" style="height: 180px; width: 180px;" src="assets/img/3.jpg">
-                <br>
-                <label class="form-control-plaintext" type="text" value="" readonly style="text-align: center;"><strong>Nombre usuario</strong></label>
-              </div>
-
-              <!--Columna con fila incluida-->
-              <div class="col-md-6 col-lg-4 item align-self-center">
-
-                  <!--Fila de área-->
-                  <div class="row">
-                  <div class="col texto">
-                    <label type="text"><strong>Área:</strong></label>
-                    <label class="form-control-plaintext subtitulo" readonly style="border-bottom-color:#ada2a2; text-align: justify;">Administración</label>
-                  </div>
-                </div>
-                  <br>
-
-                  <!--Fila de especialidad-->
-                  <div class="row">
-                  <div class="col texto">
-                    <label type="text"><strong>Especialidad:</strong></label>
-                    <label class="form-control-plaintext subtitulo" readonly style="border-bottom-color:#ada2a2; text-align: justify;">Empresas</label>
-                  </div>
-                </div>
-                  <br>
-
-                  <!--Fila de estrellas-->
-                  <div class="row">
-                    <div class="col texto">
-                      <label class="text" style="text-align: justify;"><strong>Estrellas</strong></label>
-                      <!--Íconos de estrella-->
-                      <span class="fa fa-star"></span>
-                      <span class="fa fa-star"></span>
-                      <span class="fa fa-star"></span>
-                      <span class="fa fa-star"></span>
-                      <span class="fa fa-star"></span>
-                    </div>
-                  </div>
-              </div>
-
-
-              <!--Columna del los botones-->
-              <div class="col-md-6 col-lg-4 item align-self-center">
-
-                <!--Botón - Editar Contactar-->
-                <div class="row">
-                    <div class="col section1 text-center texto">
-                      <button class="btn text-white" type="button" style="background: #0B6811; border-radius: 50px; width: 160px; height: 45px;">Contactar <ion-icon name="logo-whatsapp" size="small"></ion-icon></button>
-                    </div>
-                </div>
-                <br><br>
-
-                <!--Botón - Perfil-->
-                <div class="row">
-                    <div class="col texto section1 text-center">
-                      <button class="btn btn-info" id="visitar" style="border-radius: 50px; width: 160px; height: 45px; text-align:center;">Visitar perfil&nbsp;<ion-icon name="enter" size="small"></ion-icon></button>
-                    </div>
-                </div>
-            </div>
-          </div>
-        </div>
         <br>
       </div>
 
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js"></script>
-      <script  src = "https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"> </script>
+
+
       <script type="text/javascript">
         if ($(window).width() > 992) {
           $(window).scroll(function(){
@@ -255,16 +138,8 @@
         } // end if
       </script>
 
-      <!--Nos redirecciona al perfil = Botón Ver perfil-->
-      <script type="text/javascript">
-        $(document).ready(function(){
-          $("#visitar").click(function(){
-            event.preventDefault();
-          $(location).attr('href', 'profile_vistas.php');
-          });
-        });
-      </script>
 
+<?php } ?>
   </body>
   <br>
 

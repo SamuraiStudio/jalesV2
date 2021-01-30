@@ -9,10 +9,11 @@ class DB
 
     public function __construct()
     { // se crea el metodo constructor
-        $this->host     = 'localhost'; // se asigna el valor al atributo host
-        $this->db       = 'chambas'; // se asigna el valor al atributo db
-        $this->user     = 'root'; // se asigna el valor al atributo user
-        $this->password = ""; // se asigna el valor al atributo password
+        $this->host     = '162.241.60.205;port=3306'; // se asigna el valor al atributo host
+        $this->db       = 'samurai1_eljale'; // se asigna el valor al atributo db
+        $this->user     = "samurai1_admin"; // se asigna el valor al atributo user
+        $this->password = "admineljale"; // se asigna el valor al atributo password
+        // ?M+^y44Bh+Rq
     }
 
     function connect()
@@ -20,7 +21,6 @@ class DB
         // Se utiliza una excepcion
         try {
             $connection = "mysql:host=" . $this->host . ";dbname=" . $this->db; // se conecta a la bd
-            // Se crea un array asociativo donde se guardan con PDO
             $options = [
                 PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_EMULATE_PREPARES   => false,
@@ -29,7 +29,7 @@ class DB
             $pdo = new PDO($connection, $this->user, $this->password, $options);
             // set the character set properly.
             $pdo->query('SET NAMES gbk');
-            // retr=orna el resultado del objeto
+            // retorna el resultado del objeto
             return $pdo;
         } catch (PDOException $e) { // se atrapa el error
             print_r('Error connection: ' . $e->getMessage()); // se imprime el error

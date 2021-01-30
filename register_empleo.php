@@ -271,7 +271,7 @@
                 },
                 salario: {
                   required: true,
-                  minlength: 5
+                  minlength: 2
                 },
                 empEspecialidad: {
                   minlength: 4
@@ -304,7 +304,7 @@
                 },
                 salario: {
                   required: "Ingresa el salario del empleo",
-                  minlength: "Al menos 5 caracteres debe de llevar el salario"
+                  minlength: "Al menos 2 caracteres debe de llevar el salario"
                 },
                 empEspecialidad: {
                   minlength: "Al menos 4 caracteres debe de llevar la especialidad"
@@ -346,10 +346,13 @@
                 cache:false,
                 contentType: false,
                 processData: false,
-                success: function () {
-                  toastr["success"]("Felicidades, el trabajo se agrego correctamente.", "Trabajo agregado.");
-                },error:function () {
-                  toastr["error"]("Lo siento, algo a salido mal y no se agrego el trabajo.", "Error.");
+                success: function (data) {
+                  if(data == true){
+                    toastr["success"]("Felicidades, el trabajo se agrego correctamente.", "Trabajo agregado.");
+                  }else{
+                    toastr["error"]("Lo siento, algo a salido mal y no se agrego el trabajo.", "Error.");
+
+                  }
                 }
               });
             });

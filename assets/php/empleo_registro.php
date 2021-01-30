@@ -45,6 +45,11 @@
     $stmt = $pdo->prepare($sql);
 
 
-    $stmt->execute($data);
+    if($stmt->execute($data)){
+        echo true;
+    }else{
+        echo false;
+    }
+
 
 ?>

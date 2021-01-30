@@ -165,8 +165,15 @@
                     <!--Salario y tipo de jornada-->
                     <div class="form-group row">
 
-                      <!--Jornada-->
-                      <div class="col-sm-6"><label class="titulo">&nbsp;&nbsp;Tipo de jornada: *</label><input class="form-control form-control-user labelchiquita my-2" type="text" id="jornada" name="jornada" style="border-radius: 50px;"/></div>
+                      <!-- Jornada MEDIA, COMPLETA Y DOBLE -->
+                      <div class="col-sm-6"><label class="titulo">&nbsp;&nbsp;Tipo de jornada: *</label>
+                        <select class="form-control form-control" name="jornada" id="jornada" style="border-radius: 50px;">
+                          <option value="media">Media Jornada</option>
+                          <option value="completa">Jornada Completa</option>
+                          <option value="doble">Jornada Doble</option>
+                        </select>
+                        <!-- <input class="form-control form-control-user labelchiquita my-2" type="text" id="jornada" name="jornada" style="border-radius: 50px;"/> -->
+                      </div>
 
                       <!--Salario-->
                       <div class="col-sm-6"><label class="titulo">&nbsp;&nbsp;Salario: *</label><input class="form-control form-control-user labelchiquita my-2" type="number" id="salario" name="salario" style="border-radius: 50px;"/></div>
@@ -197,7 +204,7 @@
 
                       <!--Botón para registrar un empleo-->
                       <div class="col-sm-6">
-                        <button class="btn btn-block text-white btn-user texto" style="background: #23B439; border-radius: 50px;"id="baccept" type="submit">Publicar</button><hr></div>
+                        <button class="btn btn-block text-white btn-user texto" style="background: #23B439; border-radius: 50px;" id="baccept" type="submit">Publicar</button><hr></div>
 
                         <!--Botón para cancelar un empleo-->
                         <div class="col-sm-6"><a href="empleos_usuarios.php" class="btn btn-block text-white btn-user texto" role="button" style="background: #EF5A10; border-radius: 50px;">Cancelar</a><hr></div>
@@ -257,6 +264,10 @@
 
             $("#empleoregister").validate({
               rules: {
+                // inpFile:{
+                //   required: true,
+                //   minlength:1
+                // },
                 empleo: {
                   required: true,
                   minlength: 3
@@ -267,11 +278,10 @@
                 },
                 jornada: {
                   required: true,
-                  minlength: 10
                 },
                 salario: {
                   required: true,
-                  minlength: 5
+                  minlength: 2
                 },
                 empEspecialidad: {
                   minlength: 4
@@ -290,6 +300,10 @@
                 }
               },
               messages : {
+                // inpFile:{
+                //   required: "Ingrese una imagen",
+                //   minlength:"Ingrese alguna imagen"
+                // },
                 empleo: {
                   required: "Ingresa el nombre del empleo",
                   minlength: "<br><br>Al menos 3 letras debe de llevar el nombre del empleo"
@@ -300,11 +314,10 @@
                 },
                 jornada: {
                   required: "Ingresa el tipo de jornada",
-                  minlength: "Al menos 10 caracteres debe llevar el tipo de jornada"
                 },
                 salario: {
                   required: "Ingresa el salario del empleo",
-                  minlength: "Al menos 5 caracteres debe de llevar el salario"
+                  minlength: "Al menos 2 caracteres debe de llevar el salario"
                 },
                 empEspecialidad: {
                   minlength: "Al menos 4 caracteres debe de llevar la especialidad"
@@ -346,10 +359,12 @@
                 cache:false,
                 contentType: false,
                 processData: false,
-                success: function () {
-                  toastr["success"]("Felicidades, el trabajo se agrego correctamente.", "Trabajo agregado.");
-                },error:function () {
-                  toastr["error"]("Lo siento, algo a salido mal y no se agrego el trabajo.", "Error.");
+                success: function (data) {
+                  if(data == true){
+                    toastr["success"]("Felicidades, el trabajo se agrego correctamente.", "Trabajo agregado.");
+                  }else{
+                    toastr["error"]("Lo siento, algo a salido mal y no se agrego el trabajo.", "Error.");
+                  }
                 }
               });
             });

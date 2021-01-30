@@ -19,10 +19,11 @@
     $empDescripcion = $_POST['empDescripcion'];
     $empRequisitos = $_POST['empRequisitos'];
 
-    $imageHandler = new ImageHandler($_FILES['inpFile']);
-    $imageHandler->insertImagen();
-    $idImagen = $imageHandler->getId();
-    
+    if($_FILES['inpFile']['name']){
+        $imageHandler = new ImageHandler($_FILES['inpFile']);
+        $imageHandler->insertImagen();
+        $idImagen = $imageHandler->getId();
+    }
     
     $data = [
         'empleo' => $empleo,
@@ -45,6 +46,11 @@
     $stmt = $pdo->prepare($sql);
 
 
-    $stmt->execute($data);
+    if($stmt->execute($data)){
+        echo true;
+    }else{
+        echo false;
+    }
+
 
 ?>

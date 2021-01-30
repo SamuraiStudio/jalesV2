@@ -157,8 +157,7 @@ if(isset($_SESSION['usuario']))
           dataType: "JSON",
           success: function(respuesta) {
             if (respuesta['datos_correctos'] == false) {
-              toastr["warning"]("No se puedo iniciar sesión", "Usuario o contraseña incorrectos");
-              toastr.options = toastOptions;
+              toastr["warning"]("Usuario o contraseña incorrectos", "No se pudo iniciar sesión");
             } else {
               window.location.href = 'empleos_usuarios.php';
             }
@@ -180,9 +179,11 @@ if(isset($_SESSION['usuario']))
             } else {
               msg = 'Uncaught Error.\n' + jqXHR.responseText;
             }
+            toastr["error"]('Ha ocurrido un error');
             console.log("Error: " + errorThrown);
           }
         });
+        toastr.options = toastOptions;
       });
     });
   </script>

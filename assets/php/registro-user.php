@@ -1,37 +1,46 @@
 <?php
-
 include('conection.php');
 require('ImageHandler.php');
 // Conecta a la bd
 $db = new DB();
 $pdo = $db->connect();
-$stmt;
+// objeto de respuesta a cliente
+$jsonRes = [
+  'status' => false,
+  'msg' => null
+];
 
-// Constante. Nombre de la tabla de usuarios
-$USER_TABLE = 'usuario';
+// verifica exista post
+if (isset($_POST['email'])) {
 
-// Datos POST de entrada
-$imageHandler = new ImageHandler($_FILES['inpFile']);
-$apodo = $_POST['n_name'];
-$firsname = $_POST['nombre'];
-$lastnamep = $_POST['a_paterno'];
-$lastnamem = $_POST['a_materno'];
-$email = $_POST['email'];
-$contr = password_hash($_POST['cont'], PASSWORD_DEFAULT);
-$fecnaci = date("y-m-d", strtotime($_POST['fecha']));
-$arids = (int)$_POST['empArea'];
-$espid = $_POST['empEspecialidad'];
-$tel = $_POST['telefono'];
-$rfc = $_POST['rfc'];
-$ine = $_POST['ine'];
-$des = $_POST['descripcion'];
-$sex = $_POST['genero'];
-$facebook = $_POST['facebook'];
-$nivel_usuario = 2;
-$dirid = 1;
+  // Constante. Nombre de la tabla de usuarios
+  $USER_TABLE = 'usuario';
 
-// sube imagen a la bd
-if ($imageHandler->insertImagen()) {
+  // Datos POST de entrada
+  $imageHandler = new ImageHandler($_FILES['inpFile']);
+  $apodo = $_POST['n_name'];
+  $firsname = $_POST['nombre'];
+  $lastnamep = $_POST['a_paterno'];
+  $lastnamem = $_POST['a_materno'];
+  $email = $_POST['email'];
+  $contr = password_hash($_POST['cont'], PASSWORD_DEFAULT);
+  $fecnaci = date("y-m-d", strtotime($_POST['fecha']));
+  $arids = (int)$_POST['empArea'];
+  $espid = $_POST['empEspecialidad'];
+  $tel = $_POST['telefono'];
+  $rfc = $_POST['rfc'];
+  $ine = $_POST['ine'];
+  $des = $_POST['descripcion'];
+  $sex = $_POST['genero'];
+  $facebook = $_POST['facebook'];
+  $nivel_usuario = 2;
+  $dirid = 1;
+
+  // analiza si se subió imagen
+  if (is_uploaded_file($_FILES['inpFile']['tmp_name'])) {
+    // sube imagen
+    $imageHandler->insertImagen();
+  }
 
   $query = "INSERT INTO $USER_TABLE
       (apodo, nom, app, apm, correo, cont, fecnac, arid, esp, telefono, sexo, rfc, ine, descripcion, nivid, foto, fblink, dirid)
@@ -63,11 +72,10 @@ if ($imageHandler->insertImagen()) {
   $stmt = $pdo->prepare($query);
 
   // Ejecuta la declaración
-  if($stmt->execute($binding)){
-    echo 'true';
+  if ($stmt->execute($binding)) {
+    $jsonRes['status'] = true;
   } else {
-    echo $pdo->errorInfo();
+    $jsonRes['msg'] = $pdo->errorInfo();
   }
 }
-
-
+echo json_encode($jsonRes);

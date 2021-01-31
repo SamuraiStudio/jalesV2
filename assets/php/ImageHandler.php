@@ -1,5 +1,4 @@
 <?php
-
 class ImageHandler
 {
 
@@ -12,8 +11,9 @@ class ImageHandler
         $this->IMG = $imageFile;
         $db = new DB();
         $this->pdo = $db->connect();
-        $this->generatedID = -1;
+        $this->generatedID = 2;
     }
+
     public function __destruct()
     {
         // close the database connection

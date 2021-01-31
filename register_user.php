@@ -104,10 +104,6 @@ $stmt->execute(array());
                   <label class="texto" for="nombre">Nombre *</label>
                 </div>
                 <br>
-                <!--<div class="">
-                                        <br>
-                                      </div>-->
-
                 <!--Apellido paterno/-->
                 <div class="form-group form-label-group">
                   <input class="form-control labelchiquita" maxlength="100" type="text" id="a_paterno" name="a_paterno" pattern="[a-zA-Z]+" placeholder="Apellido paterno" style="border-radius: 50px;" />
@@ -130,7 +126,7 @@ $stmt->execute(array());
                 <br>
                 <!--Red social-->
                 <div class="form-group form-label-group">
-                  <input class="form-control labelchiquita" maxlength="100" type="text" id="facebook" name="facebook" pattern="[a-zA-Z]+" placeholder="Facebook" style="border-radius: 50px;" />
+                  <input class="form-control labelchiquita" maxlength="100" type="text" id="facebook" name="facebook" pattern="[a-zA-Z]+" value="https://www.facebook.com/" style="border-radius: 50px;" />
                   <label class="texto" for="facebook">Link de Facebook</label>
                 </div>
 
@@ -635,15 +631,16 @@ $stmt->execute(array());
           cache: false,
           contentType: false,
           processData: false,
-          success: function(data) {            
-            if (data == 'true') {
+          dataType: 'JSON',
+          success: function(data) {
+            if (data['status'] == true) {
               // registro exitoso, redirecciona
               window.location.href = 'login.php';
             } else {
               toastr["warning"]("No se ha podido registrar el usuario");
               console.debug(data);
             }
-            
+
           },
           error: function(jqXHR, exception, errorThrown) {
             var msg = '';
@@ -667,22 +664,22 @@ $stmt->execute(array());
           }
         });
         toastr.options = {
-              "closeButton": false,
-              "debug": false,
-              "newestOnTop": false,
-              "progressBar": true,
-              "positionClass": "toast-top-right",
-              "preventDuplicates": false,
-              "onclick": null,
-              "showDuration": "300",
-              "hideDuration": "1000",
-              "timeOut": "2000",
-              "extendedTimeOut": "1000",
-              "showEasing": "swing",
-              "hideEasing": "linear",
-              "showMethod": "fadeIn",
-              "hideMethod": "fadeOut"
-            }
+          "closeButton": false,
+          "debug": false,
+          "newestOnTop": false,
+          "progressBar": true,
+          "positionClass": "toast-top-right",
+          "preventDuplicates": false,
+          "onclick": null,
+          "showDuration": "300",
+          "hideDuration": "1000",
+          "timeOut": "2000",
+          "extendedTimeOut": "1000",
+          "showEasing": "swing",
+          "hideEasing": "linear",
+          "showMethod": "fadeIn",
+          "hideMethod": "fadeOut"
+        }
       });
     });
   </script>

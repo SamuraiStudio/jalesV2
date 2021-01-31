@@ -1,8 +1,16 @@
-<?php 
-  if (session_status() == PHP_SESSION_NONE) {
-    header('Location: empleos_usuarios.php');
-  }
-?>
+<?php
+require('assets/php/conection.php');
+$db = new DB();
+$pdo = $db->connect();
+$stmt;
+// Constante. Nombre de la tabla de usuarios
+$TABLE = 'trabajos';
+$VIEW = 'view_profile_privado';
+$query = "SELECT * FROM $TABLE INNER JOIN $VIEW WHERE $VIEW.usid = $TABLE.usid";
+$stmt = $pdo->prepare($query);
+$stmt->execute(array());
+
+ ?>
 <!--  SITIO - EMPLEOS DISPONIBLES PARA MIRONES. EL USUARIO PUEDE VISUALIZAR SIN MUCHOS DETALLES LOS EMPLEOS DISPONIBLES PUBLICADOS Y EN CASO DE POSTULACIÓN LA REDIRECCIONARA AL LOGIN-->
 <html>
 
@@ -151,6 +159,7 @@
           <br>
 
           <!-- Publicación 1 - Inicio. -->
+          <?php foreach ($stmt as $row) { ?>
           <div class="card shadow container bg-light p-4">
             <br>
             <div class="row">
@@ -159,9 +168,9 @@
               <div class="col-md-4 col-lg-4 item align-self-center texto">
 
                 <!-- Foto del empleo -->
-                <img class="card shadow img-thumbnail mx-auto d-block" style="height: 190px; width: 290px;" src="assets/img/empleos/empleo1.jpg">
+                <img class="card shadow img-thumbnail mx-auto d-block" style="height: 190px; width: 290px;" src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($row['foto']); ?>">
                 <!-- Nombre del empleo -->
-                <label class="form-control-plaintext texto pt-3" type="text" value="" readonly style="text-align: center;"><strong>Nombre del empleo</strong></label>
+                <label class="form-control-plaintext texto pt-3" type="text" value="" readonly style="text-align: center;"><strong><?php echo $row['nombre'] ?></strong></label>
 
                 <!-- Botón "Me interesa" -->
                 <div class="row py-3">
@@ -227,7 +236,7 @@
                   <div class="row">
                     <div class="col">
                       <label  class="texto" for=""><strong>Usuario o empresa</strong></label>
-                      <label class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify;">Nike</label>
+                      <label class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify;"><?php echo $row['apodo']."  ".$row['empleador']?></label>
                     </div>
                   </div>
                   <br>
@@ -236,7 +245,7 @@
                   <div class="row">
                     <div class="col">
                       <label class="texto" for=""><strong>Descripción del empleo</strong></label>
-                      <textarea class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify; height:100px;">Estamos buscamos al mejor talento para desempeñarse como vendedores/as en nuestra tienda de Nike Factory Store Puebla.</textarea>
+                      <textarea class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify; height:100px;"><?php echo $row['descripcion']; ?></textarea>
                     </div>
                   </div>
                   <br>
@@ -245,123 +254,14 @@
                   <div class="row">
                     <div class="col">
                       <label class="texto" for=""><strong>Ubicación</strong></label>
-                      <textarea class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify; height:100px;">Autopista México-Puebla Km. 115 Adelante De Planta Armadora Volkswagen, 72680 San Francisco Ocotlán, Pue.</textarea>
+                      <textarea class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify; height:100px;"><?php echo $row['ubi']; ?></textarea>
                     </div>
                   </div>
               </div>
             </div>
           <br>
         </div><!-- Publicación 1 - Fin. -->
-        <br><br>
-
-        <!-- Publicación 2 - Inicio. -->
-        <div class="card shadow container bg-light p-4">
-          <br>
-          <div class="row">
-
-            <!-- Columna lado izquierdo (Foto + botón) -->
-            <div class="col-md-4 col-lg-4 item align-self-center texto">
-
-              <!-- Foto del empleo -->
-              <img class="card shadow img-thumbnail mx-auto d-block" style="height: 190px; width: 290px;" src="assets/img/empleos/empleo3.jpg">
-              <!-- Nombre del empleo -->
-              <label class="form-control-plaintext texto pt-3" type="text" value="" readonly style="text-align: center;"><strong>Nombre del empleo</strong></label>
-
-              <!-- Botón "Me interesa" -->
-              <div class="row py-3">
-                <div class="col align-self-center section1 text-center">
-                  <button class="btn text-white" id="meInteresa" type="button" style="background: #23B439; border-radius: 50px; width: 160px; height: 45px;"  data-toggle="modal" data-target="#myModal2">Me interesa</button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Columna lado derecho -->
-            <div class="col-md-8 col-lg-8 pr-5 pt-3 item align-self-center">
-
-              <!-- Fila - Nombre del usuario o empresa -->
-              <div class="row">
-                <div class="col">
-                  <label  class="texto" for=""><strong>Usuario o empresa</strong></label>
-                  <label class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify;">Nike</label>
-                </div>
-              </div>
-              <br>
-
-              <!-- Fila - Descripcion del empleo -->
-              <div class="row">
-                <div class="col">
-                  <label class="texto" for=""><strong>Descripción del empleo</strong></label>
-                  <textarea class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify; height:100px;">Estamos buscamos al mejor talento para desempeñarse como vendedores/as en nuestra tienda de Nike Factory Store Puebla.</textarea>
-                </div>
-              </div>
-              <br>
-
-              <!-- Fila - Ubicación -->
-              <div class="row">
-                <div class="col">
-                  <label class="texto" for=""><strong>Ubicación</strong></label>
-                  <textarea class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify; height:100px;">Autopista México-Puebla Km. 115 Adelante De Planta Armadora Volkswagen, 72680 San Francisco Ocotlán, Pue.</textarea>
-                </div>
-              </div>
-            </div>
-          </div>
-          <br>
-        </div> <!-- Publicación 2 - Fin. -->
-        <br><br>
-
-        <!-- Publicación 3 - Inicio. -->
-        <div class="card shadow container bg-light p-4">
-          <br>
-          <div class="row">
-
-            <!-- Columna lado izquierdo (Foto + botón) -->
-            <div class="col-md-4 col-lg-4 item align-self-center texto">
-
-              <!-- Foto del empleo -->
-              <img class="card shadow img-thumbnail mx-auto d-block" style="height: 190px; width: 290px;" src="assets/img/empleos/empleo2.jpg">
-              <!-- Nombre del empleo -->
-              <label class="form-control-plaintext texto pt-3" type="text" value="" readonly style="text-align: center;"><strong>Nombre del empleo</strong></label>
-
-              <!-- Botón "Me interesa" -->
-              <div class="row py-3">
-                <div class="col align-self-center section1 text-center">
-                  <button class="btn text-white" id="meInteresa" type="button" style="background: #23B439; border-radius: 50px; width: 160px; height: 45px;"  data-toggle="modal" data-target="#myModal2">Me interesa</button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Columna lado derecho -->
-            <div class="col-md-8 col-lg-8 pr-5 pt-3 item align-self-center">
-
-              <!-- Fila - Nombre del usuario o empresa -->
-              <div class="row">
-                <div class="col">
-                  <label  class="texto" for=""><strong>Usuario o empresa</strong></label>
-                  <label class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify;">Nike</label>
-                </div>
-              </div>
-              <br>
-
-              <!-- Fila - Descripcion del empleo -->
-              <div class="row">
-                <div class="col">
-                  <label class="texto" for=""><strong>Descripción del empleo</strong></label>
-                  <textarea class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify; height:100px;">Estamos buscamos al mejor talento para desempeñarse como vendedores/as en nuestra tienda de Nike Factory Store Puebla.</textarea>
-                </div>
-              </div>
-              <br>
-
-              <!-- Fila - Ubicación -->
-              <div class="row">
-                <div class="col">
-                  <label class="texto" for=""><strong>Ubicación</strong></label>
-                  <textarea class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify; height:100px;">Autopista México-Puebla Km. 115 Adelante De Planta Armadora Volkswagen, 72680 San Francisco Ocotlán, Pue.</textarea>
-                </div>
-              </div>
-            </div>
-          </div>
-          <br>
-        </div> <!-- Publicación 3 - Fin. -->
+      <?php } ?>
         <br><br>
       </div>
     </div>

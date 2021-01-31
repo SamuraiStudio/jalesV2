@@ -109,8 +109,11 @@ if(!isset($_SESSION['usuario'])){
               <!--Botón - Interesados-->
               <div class="row">
                 <div class="col texto section1 text-center">
+                  <?php if($username != (int)$result['usid']){?>
                   <a target="blank" class="btn btn-info" href="profile_vistas.php?idu=<?php echo (int)$result['usid'];?>" id="visitar" style="border-radius: 50px; width: 160px; height: 45px; text-align:center;">Visitar perfil&nbsp;<ion-icon name="enter" size="small"></ion-icon></a>
-
+                <?php } else{?>
+                <a target="blank" class="btn btn-info" href="profile_user.php" id="visitar" style="border-radius: 50px; width: 160px; height: 45px; text-align:center;">Visitar perfil&nbsp;<ion-icon name="enter" size="small"></ion-icon></a>
+              <?php }?>
                 </div>
               </div>
             </div>

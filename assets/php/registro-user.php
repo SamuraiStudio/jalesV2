@@ -69,5 +69,3 @@ if ($imageHandler->insertImagen()) {
     echo $pdo->errorInfo();
   }
 }
-
-

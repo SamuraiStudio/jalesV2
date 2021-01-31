@@ -24,7 +24,7 @@
              'SELECT * FROM uscoment WHERE usiddir = "'.($usiddir).'" AND  usiddo = "'.($douser).'" '
          );
 
-         if ($consulta->fetchColumn() > 0) {
+         if ($consulta->fetchColumn() > 0 && $usiddir != $usiddo) {
            $query = "UPDATE $USER_TABLE SET
            comentario = :comentario, calif = :calif WHERE usiddo = :usiddo AND usiddir = :usiddir";
 
@@ -42,7 +42,8 @@
            // Ejecuta la declaración
            $stmt->execute($binding);
 
-         } else {
+         } else
+           if($usiddir != $usiddo){
            $query = "INSERT INTO $USER_TABLE
            (usiddir, usiddo, comentario, calif)
            VALUES (:usiddir, :usiddo, :comentario, :calif)";

@@ -11,7 +11,11 @@ if(!isset($_SESSION['usuario'])){
   $pdo = $db->connect();
   //$username = $_SESSION['usuario']['id'];
   $username = (int)$_GET['idu'];
-
+  $sesion = $_SESSION['usuario']['id'];
+  if($username == $sesion)
+  {
+    Header("Location: profile_user.php");
+  }
   //$query = "SELECT usiddo, apodo, comentario, id FROM uscoment, usuario WHERE uscoment.usiddir = ".($username)." AND  usuario.id = ".($username)."";
   $query=
       'SELECT uscoment.comentario, uscoment.calif, usuario.apodo FROM uscoment INNER JOIN usuario ON  uscoment.usiddo = usuario.id WHERE uscoment.usiddir = "'.($username).'"';

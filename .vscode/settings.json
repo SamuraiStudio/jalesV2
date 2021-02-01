@@ -1,0 +1,17 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "162.241.60.205",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "eljale",
+            "database": "samurai1_eljale",
+            "username": "samurai1_admin",
+            "password": "admineljale"
+        }
+    ]
+}

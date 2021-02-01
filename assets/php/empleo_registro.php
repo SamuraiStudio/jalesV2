@@ -3,12 +3,11 @@
     $usid = $_SESSION['usuario']['id'];
 
     include('conection.php');
-    require('ImageHandler.php');
     $db = new DB();
     $pdo = $db->connect();
     
     // echo 'hola';
-
+    
     $empleo = $_POST['empleo'];
     $empleador = $_POST['empleador'];
     $empArea = $_POST['empArea'];
@@ -18,13 +17,16 @@
     $empUbicacion = $_POST['empUbicacion'];
     $empDescripcion = $_POST['empDescripcion'];
     $empRequisitos = $_POST['empRequisitos'];
-
+    
     if($_FILES['inpFile']['name']){
+        require('ImageHandler.php');
         $imageHandler = new ImageHandler($_FILES['inpFile']);
         $imageHandler->insertImagen();
         $idImagen = $imageHandler->getId();
+    }else{
+        $idImagen = 2;
     }
-    
+
     $data = [
         'empleo' => $empleo,
         'empleador' => $empleador,

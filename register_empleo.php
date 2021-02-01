@@ -365,6 +365,8 @@
                   }else{
                     toastr["error"]("Lo siento, algo a salido mal y no se agrego el trabajo.", "Error.");
                   }
+                },error:function () {
+                  toastr["error"]("Lo siento, algo a salido mal y no se agrego el trabajo.", "Error.");
                 }
               });
             });

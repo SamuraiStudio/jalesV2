@@ -39,7 +39,7 @@ foreach($arr1 as $row){
   
                 <!--Columna lado izquierdo-->
                 <div class="col-md-4 col-lg-4 item align-self-center texto">
-                  <img class="card shadow img-thumbnail mx-auto d-block" style="height: 190px; width: 290px;" src="data:<?php echo $arr3['type']; ?>;base64,<?php echo  base64_encode($arr3['data']); ?>">
+                  <img class="card shadow img-thumbnail mx-auto d-block" style="height: 190px; width: 290px;" src="data:<?php echo $arr3['type']; ?>;base64,<?php echo  base64_encode($arr3['data']); ?>">"
                   <label class="form-control-plaintext texto pt-3" type="text" value="" readonly style="text-align: center;"><strong><?php echo $row['nombre']?></strong></label>
   
                   <!--Botones-->

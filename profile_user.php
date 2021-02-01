@@ -32,7 +32,7 @@ $stmt->execute([$_SESSION['usuario']['id']]);
 $user = $stmt->fetch();
 
 // comentarios hacia el usuario
-$query = "SELECT comentario, calif, apodo, usuario.created_at AS fecha
+$query = "SELECT comentario, calif, apodo, uscoment.created_at AS fecha
             FROM uscoment
             JOIN usuario ON usiddo = usuario.id
             WHERE usiddir = ?";

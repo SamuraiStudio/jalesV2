@@ -38,7 +38,7 @@ if(!isset($_SESSION['usuario']))
           <div class="py-2"></div>
 
           <?php include 'assets/php/misPublicaciones.php'?>
-          
+
         <br>
       </div>
       <br>
@@ -71,22 +71,24 @@ if(!isset($_SESSION['usuario']))
 
     <!--Nos redirecciona a la página = Botón Editar-->
     <script type="text/javascript">
+    /*
       $(document).ready(function(){
         $("#editarP").click(function(){
           event.preventDefault();
           $(location).attr('href', 'edit_empleo.php');
         });
-      });
+      });*/
     </script>
 
     <!--Nos redirecciona a la página = Botón Interesados-->
     <script type="text/javascript">
+    /*
       $(document).ready(function(){
         $("#interesados").click(function(){
           event.preventDefault();
           $(location).attr('href', 'interesados.php');
         });
-      });
+      });*/
     </script>
 
   </body>

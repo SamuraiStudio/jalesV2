@@ -1,4 +1,4 @@
-<?php 
+<?php
 include 'conection.php';
 require('ImageHandler.php');
 
@@ -10,7 +10,7 @@ $pdo = $db->connect();
 
 $sql1 = "SELECT * FROM trabajos WHERE usid = $usid";
 $stmt1 = $pdo->prepare($sql1);
-$stmt1->execute();  
+$stmt1->execute();
 $arr1 = $stmt1->fetchAll(PDO::FETCH_ASSOC);
 
 // echo "<pre>";
@@ -23,43 +23,47 @@ foreach($arr1 as $row){
   $idArea = $row['arid'];
   $sql2 = "SELECT nombre FROM area WHERE id = $idArea LIMIT 1";
   $stmt2 = $pdo->prepare($sql2);
-  $stmt2->execute(); 
+  $stmt2->execute();
   $arr2 = $stmt2->fetch();
 
   $idImage = $row['foto'];
   $sqlImagen = "SELECT * FROM imagen WHERE idimg = $idImage LIMIT 1";
   $stmt3 = $pdo->prepare($sqlImagen);
-  $stmt3->execute(); 
+  $stmt3->execute();
   $arr3 = $stmt3->fetch();
 
   ?>
   <div class="card shadow container bg-light p-4">
               <br>
               <div class="row">
-  
+
                 <!--Columna lado izquierdo-->
                 <div class="col-md-4 col-lg-4 item align-self-center texto">
-                  <img class="card shadow img-thumbnail mx-auto d-block" style="height: 190px; width: 290px;" src="data:<?php echo $arr3['type']; ?>;base64,<?php echo  base64_encode($arr3['data']); ?>">"
+                  <img class="card shadow img-thumbnail mx-auto d-block" style="height: 190px; width: 290px;" src="data:<?php echo $arr3['type']; ?>;base64,<?php echo  base64_encode($arr3['data']); ?>">
                   <label class="form-control-plaintext texto pt-3" type="text" value="" readonly style="text-align: center;"><strong><?php echo $row['nombre']?></strong></label>
-  
+
                   <!--Botones-->
-  
+
                   <div class="row pt-5">
                     <!--Editar-->
                     <div class="col align-self-center section1 text-center">
-                      <button class="btn text-white" id="editarP" type="button" style="background: #EF5A10; border-radius: 50px; width: 120px; height: 45px;">Editar</button>
+                      <a href="edit_empleo.php" target="blank">
+                          <input type="button" class="btn text-white" id="editarP" value="Editar" style="background: #EF5A10; border-radius: 50px; width: 120px; height: 45px; text-align:center;">
+                      </a>
                     </div>
-  
+
                     <!--Interesados-->
                     <div class="col align-self-center section1 text-center">
-                      <button class="btn text-white" id="interesados" type="button" style="background: #23B439;  border-radius: 50px; width: 120px; height: 45px;">Interesados</button>
+                      <a href="interesados.php?id=<?php echo (int)$row['idetrab'];?>" target="blank">
+                          <input type="button" class="btn text-white" id="interesados" value="Interesados" style="background: #23B439;  border-radius: 50px; width: 120px; height: 45px; text-align:center;">
+                      </a>
                     </div>
                   </div>
                 </div>
-  
+
                 <!--Columna lado derecho-->
                 <div class="col-md-8 col-lg-8 pr-5 pt-3 item align-self-center">
-  
+
                     <!--Fila del empleador-->
                     <div class="row">
                       <div class="col">
@@ -68,7 +72,7 @@ foreach($arr1 as $row){
                       </div>
                     </div>
                     <br>
-  
+
                     <!--Fila de área y especialidad-->
                     <div class="row">
                       <div class="col pb-2">
@@ -81,7 +85,7 @@ foreach($arr1 as $row){
                       </div>
                     </div>
                     <br>
-  
+
                     <!--Jornada y sueldo-->
                     <div class="row">
                       <div class="col">
@@ -94,7 +98,7 @@ foreach($arr1 as $row){
                       </div>
                     </div>
                     <br>
-  
+
                     <!--Fila de Ubicación-->
                     <div class="row pb-3">
                       <div class="col">
@@ -102,7 +106,7 @@ foreach($arr1 as $row){
                         <textarea readonly class="form-control-plaintext subtitulo" type="text" value="" style="height: 100px; text-align: justify;"><?php echo $row['ubi'] ?></textarea>
                       </div>
                     </div>
-  
+
                     <!--Fila de descripcion-->
                     <div class="row">
                       <div class="col">
@@ -111,7 +115,7 @@ foreach($arr1 as $row){
                       </div>
                     </div>
                     <br>
-  
+
                     <!--Fila de Requisitos-->
                     <div class="row">
                       <div class="col">

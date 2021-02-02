@@ -8,9 +8,13 @@ if(!isset($_SESSION['usuario'])){
   // Conecta a la bd
   $db = new DB();
   $pdo = $db->connect();
+  $trabajo = (int)$_GET['id'];
   $username = $_SESSION['usuario']['id'];
   $VIEW = 'view_profile_privado';
-  $query = "SELECT * FROM $VIEW";
+  $query = "SELECT view_profile_privado.apodo, view_profile_privado.arnom, view_profile_privado.esp, view_profile_privado.telefono, interesado.userid
+              FROM view_profile_privado
+              JOIN interesado ON view_profile_privado.usid = interesado.userid
+              WHERE interesado.trabid = '$trabajo'";
   $stmt = $pdo -> prepare($query);
   $stmt -> execute(array());//Para sacar los comentarios en la seccion principal
  ?>
@@ -109,8 +113,8 @@ if(!isset($_SESSION['usuario'])){
               <!--Botón - Interesados-->
               <div class="row">
                 <div class="col texto section1 text-center">
-                  <?php if($username != (int)$result['usid']){?>
-                  <a target="blank" class="btn btn-info" href="profile_vistas.php?idu=<?php echo (int)$result['usid'];?>" id="visitar" style="border-radius: 50px; width: 160px; height: 45px; text-align:center;">Visitar perfil&nbsp;<ion-icon name="enter" size="small"></ion-icon></a>
+                  <?php if($username != (int)$result['userid']){?>
+                  <a target="blank" class="btn btn-info" href="profile_vistas.php?idu=<?php echo (int)$result['userid'];?>" id="visitar" style="border-radius: 50px; width: 160px; height: 45px; text-align:center;">Visitar perfil&nbsp;<ion-icon name="enter" size="small"></ion-icon></a>
                 <?php } else{?>
                 <a target="blank" class="btn btn-info" href="profile_user.php" id="visitar" style="border-radius: 50px; width: 160px; height: 45px; text-align:center;">Visitar perfil&nbsp;<ion-icon name="enter" size="small"></ion-icon></a>
               <?php }?>

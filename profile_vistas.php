@@ -545,7 +545,7 @@ if(!isset($_SESSION['usuario'])){
                                     "progressBar": false,
                                     "positionClass": "toast-top-center",
                                     "preventDuplicates": false,
-                                    //"onclick": $(location).attr('href','profile_vistas.php'),
+                                    "onclick": $(location).attr('href','profile_vistas.php?idu=<?php echo $username ?>'),
                                     "showDuration": "3000",
                                     "hideDuration": "1000",
                                     "timeOut": "5000",

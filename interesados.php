@@ -103,7 +103,7 @@ if(!isset($_SESSION['usuario'])){
               <!--Botón - contactar-->
               <div class="row">
                 <div class="col section1 text-center texto">
-                  <a target="blank" href="https://api.whatsapp.com/send?phone=+52<?php echo $result['telefono'];?>&text=¡Hola vi tu perfil en 'El Jale', veo que te intereso mi oferta!" id="contacto" class="btn text-white" type="button" style="background: #0B6811; border-radius: 50px; width: 160px; height: 45px;">Contactar <ion-icon name="logo-whatsapp" size="small"></ion-icon></a>
+                  <a target="_blank" href="https://api.whatsapp.com/send?phone=+52<?php echo $result['telefono'];?>&text=¡Hola vi tu perfil en 'El Jale', veo que te intereso mi oferta!" id="contacto" class="btn text-white" type="button" style="background: #0B6811; border-radius: 50px; width: 160px; height: 45px;">Contactar <ion-icon name="logo-whatsapp" size="small"></ion-icon></a>
                 </div>
               </div>
 
@@ -114,9 +114,9 @@ if(!isset($_SESSION['usuario'])){
               <div class="row">
                 <div class="col texto section1 text-center">
                   <?php if($username != (int)$result['userid']){?>
-                  <a target="blank" class="btn btn-info" href="profile_vistas.php?idu=<?php echo (int)$result['userid'];?>" id="visitar" style="border-radius: 50px; width: 160px; height: 45px; text-align:center;">Visitar perfil&nbsp;<ion-icon name="enter" size="small"></ion-icon></a>
+                  <a target="_blank" class="btn btn-info" href="profile_vistas.php?idu=<?php echo (int)$result['userid'];?>" id="visitar" style="border-radius: 50px; width: 160px; height: 45px; text-align:center;">Visitar perfil&nbsp;<ion-icon name="enter" size="small"></ion-icon></a>
                 <?php } else{?>
-                <a target="blank" class="btn btn-info" href="profile_user.php" id="visitar" style="border-radius: 50px; width: 160px; height: 45px; text-align:center;">Visitar perfil&nbsp;<ion-icon name="enter" size="small"></ion-icon></a>
+                <a target="_blank" class="btn btn-info" href="profile_user.php" id="visitar" style="border-radius: 50px; width: 160px; height: 45px; text-align:center;">Visitar perfil&nbsp;<ion-icon name="enter" size="small"></ion-icon></a>
               <?php }?>
                 </div>
               </div>

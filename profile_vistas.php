@@ -28,7 +28,13 @@ if(!isset($_SESSION['usuario'])){
   $query2 = "SELECT * FROM $VIEW WHERE usid = ?";
   $smtp = $pdo -> prepare($query2);
   $smtp -> execute([$_GET['idu']]);
-  $user= $smtp->fetch();
+  if($smtp -> rowCount() > 0)
+  {
+      $user= $smtp->fetch();
+  }else {
+    Header("Location: 404.php");
+  }
+
  ?>
 <!--  SITIO - PEFIL DE VISITA / VISITADO POR OTRO(S) USUARIO(S) QUE NO ES EL "PROPIETARIO / DUEÑO" DE LA CUENTA.  -->
 <html>

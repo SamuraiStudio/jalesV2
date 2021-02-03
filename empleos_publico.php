@@ -235,8 +235,8 @@ $stmt->execute(array());
                   <!-- Fila - Nombre del usuario o empresa -->
                   <div class="row">
                     <div class="col">
-                      <label  class="texto" for=""><strong>Usuario o empresa</strong></label>
-                      <label class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify;"><?php echo $row['apodo']."  ".$row['empleador']?></label>
+                      <label  class="texto" for=""><strong>Empresa</strong></label>
+                      <label class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify;"><?php echo $row['empleador'];?></label>
                     </div>
                   </div>
                   <br>

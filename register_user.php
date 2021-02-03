@@ -1,14 +1,8 @@
 <!--  SITIO - INICIO DE SESIÓN -->
 <?php
-require('assets/php/conection.php');
-$db = new DB();
-$pdo = $db->connect();
-$stmt;
-// Constante. Nombre de la tabla de usuarios
-$TABLE = 'area';
-$query = "SELECT * FROM $TABLE";
-$stmt = $pdo->prepare($query);
-$stmt->execute(array());
+require('assets/php/Queries.php');
+$queries = new Queries();
+$areas = $queries->GetAreas();
 ?>
 <html>
 
@@ -252,10 +246,10 @@ $stmt->execute(array());
                     <select class="form-control form-control labelchiquita" name="empArea" id="empArea" style="border-radius: 50px;">
                       <option class="labelchiquita" value="" selected disabled>Áreas disponibles</option>
                       <?php
-                      foreach ($stmt as $row) {
+                      foreach ($areas as $area) {
                       ?>
                         <!--Nombre del área del usuario-->
-                        <option class="labelchiquita" value="<?php echo ($row['id']); ?>"><?php echo $row["nombre"]; ?></option>
+                        <option class="labelchiquita" value="<?php echo ($area['id']); ?>"><?php echo $area["nombre"]; ?></option>
                       <?php
                       }
                       $pdo = null; // cierra conexión
@@ -684,8 +678,10 @@ $stmt->execute(array());
     });
   </script>
 
+<!-- VALIDACIONES -->
   <script type="text/javascript">
     $(document).ready(function() {
+
       $('#email').on('blur', function() {
         $('#result-username').html('<p> Toy cargando </p>').fadeOut(1000);
         var correo = $(this).val();
@@ -702,6 +698,7 @@ $stmt->execute(array());
       });
     });
   </script>
+
   <script>
     const inpFile = document.getElementById("inpFile");
     const previewContainer = document.getElementById("imagePreview");

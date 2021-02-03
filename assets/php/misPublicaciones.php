@@ -54,7 +54,7 @@ foreach($arr1 as $row){
 
                     <!--Interesados-->
                     <div class="col align-self-center section1 text-center">
-                      <a href="interesados.php?id=<?php echo (int)$row['idetrab'];?>" target="blank">
+                      <a href="interesados.php?trabajo=<?php echo (int)$row['idetrab'];?>" target="blank">
                           <input type="button" class="btn text-white" id="interesados" value="Interesados" style="background: #23B439;  border-radius: 50px; width: 120px; height: 45px; text-align:center;">
                       </a>
                     </div>

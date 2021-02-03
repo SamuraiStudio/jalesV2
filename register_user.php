@@ -91,6 +91,7 @@ $areas = $queries->GetAreas();
                   <input class="form-control labelchiquita" maxlength="20" type="text" id="n_name" name="n_name" pattern="[a-zA-Z]+" placeholder="Nickname" style="border-radius: 50px;" />
                   <label class="texto" for="n_name">Nickname *</label>
                 </div>
+                <div id="result-nickname"></div>
                 <br>
                 <!--Nombre del usuario/-->
                 <div class="form-group form-label-group">
@@ -116,15 +117,15 @@ $areas = $queries->GetAreas();
                   <input class="form-control labelchiquita" maxlength="100" type="email" id="email" name="email" placeholder="Correo electrónico" style="border-radius: 50px;" />
                   <label class="texto" for="email">Correo electrónico *</label>
                 </div>
-
+                <div id="result-username"></div>
                 <br>
                 <!--Red social-->
                 <div class="form-group form-label-group">
-                  <input class="form-control labelchiquita" maxlength="100" type="text" id="facebook" name="facebook" pattern="[a-zA-Z]+" value="https://www.facebook.com/" style="border-radius: 50px;" />
+                  <input class="form-control labelchiquita" maxlength="100" type="text" id="facebook" name="facebook" pattern="[a-zA-Z]+" style="border-radius: 50px;" />
                   <label class="texto" for="facebook">Link de Facebook</label>
                 </div>
 
-                <div id="result-username"></div>
+
                 <br>
                 <!--Barra de proceso-->
                 <div class="form-group">
@@ -698,7 +699,28 @@ $areas = $queries->GetAreas();
       });
     });
   </script>
+<<<<<<< HEAD
 
+=======
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#n_name').on('blur', function() {
+        $('#result-nickname').html('<p> Toy cargando </p>').fadeOut(1000);
+        var n_name = $(this).val();
+        $.ajax({
+          type: "POST",
+          url: "assets/php/nameexisteus.php",
+          data: {
+            "n_name": n_name
+          },
+          success: function(data) {
+            $('#result-nickname').fadeIn(1000).html(data);
+          }
+        });
+      });
+    });
+  </script>
+>>>>>>> c594814dd3839aa92463ea864700a72af2eac185
   <script>
     const inpFile = document.getElementById("inpFile");
     const previewContainer = document.getElementById("imagePreview");

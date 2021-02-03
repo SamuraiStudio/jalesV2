@@ -8,9 +8,13 @@ if(!isset($_SESSION['usuario'])){
   // Conecta a la bd
   $db = new DB();
   $pdo = $db->connect();
+  $trabajo = (int)$_GET['trabajo'];
   $username = $_SESSION['usuario']['id'];
   $VIEW = 'view_profile_privado';
-  $query = "SELECT * FROM $VIEW";
+  $query = "SELECT view_profile_privado.apodo, view_profile_privado.arnom, view_profile_privado.esp, view_profile_privado.telefono, view_profile_privado.foto, interesado.userid
+              FROM view_profile_privado
+              JOIN interesado ON view_profile_privado.usid = interesado.userid
+              WHERE interesado.trabid = '$trabajo'";
   $stmt = $pdo -> prepare($query);
   $stmt -> execute(array());//Para sacar los comentarios en la seccion principal
  ?>
@@ -60,7 +64,7 @@ if(!isset($_SESSION['usuario'])){
 
           <!--Columna de la foto-->
           <div class="col-md-6 col-lg-4 texto item align-self-center" >
-            <img class="rounded-circle img-thumbnail mx-auto d-block" style="height: 180px; width: 180px;" src="assets/img/1.jpg"><br>
+            <img class="rounded-circle img-thumbnail mx-auto d-block" style="height: 180px; width: 180px;" src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($result['foto']); ?>"><br>
             <label class="form-control-plaintext" type="text" value="" readonly style="text-align: center;"><strong><?php echo $result['apodo']; ?></strong></label>
           </div>
 
@@ -99,7 +103,7 @@ if(!isset($_SESSION['usuario'])){
               <!--Botón - contactar-->
               <div class="row">
                 <div class="col section1 text-center texto">
-                  <a target="blank" href="https://api.whatsapp.com/send?phone=+52<?php echo $result['telefono'];?>&text=¡Hola vi tu perfil en 'El Jale', veo que te intereso mi oferta!" id="contacto" class="btn text-white" type="button" style="background: #0B6811; border-radius: 50px; width: 160px; height: 45px;">Contactar <ion-icon name="logo-whatsapp" size="small"></ion-icon></a>
+                  <a target="_blank" href="https://api.whatsapp.com/send?phone=+52<?php echo $result['telefono'];?>&text=¡Hola vi tu perfil en 'El Jale', veo que te intereso mi oferta!" id="contacto" class="btn text-white" type="button" style="background: #0B6811; border-radius: 50px; width: 160px; height: 45px;">Contactar <ion-icon name="logo-whatsapp" size="small"></ion-icon></a>
                 </div>
               </div>
 
@@ -109,10 +113,10 @@ if(!isset($_SESSION['usuario'])){
               <!--Botón - Interesados-->
               <div class="row">
                 <div class="col texto section1 text-center">
-                  <?php if($username != (int)$result['usid']){?>
-                  <a target="blank" class="btn btn-info" href="profile_vistas.php?idu=<?php echo (int)$result['usid'];?>" id="visitar" style="border-radius: 50px; width: 160px; height: 45px; text-align:center;">Visitar perfil&nbsp;<ion-icon name="enter" size="small"></ion-icon></a>
+                  <?php if($username != (int)$result['userid']){?>
+                  <a target="_blank" class="btn btn-info" href="profile_vistas.php?idu=<?php echo (int)$result['userid'];?>" id="visitar" style="border-radius: 50px; width: 160px; height: 45px; text-align:center;">Visitar perfil&nbsp;<ion-icon name="enter" size="small"></ion-icon></a>
                 <?php } else{?>
-                <a target="blank" class="btn btn-info" href="profile_user.php" id="visitar" style="border-radius: 50px; width: 160px; height: 45px; text-align:center;">Visitar perfil&nbsp;<ion-icon name="enter" size="small"></ion-icon></a>
+                <a target="_blank" class="btn btn-info" href="profile_user.php" id="visitar" style="border-radius: 50px; width: 160px; height: 45px; text-align:center;">Visitar perfil&nbsp;<ion-icon name="enter" size="small"></ion-icon></a>
               <?php }?>
                 </div>
               </div>

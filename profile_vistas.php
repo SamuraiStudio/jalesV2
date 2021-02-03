@@ -18,7 +18,7 @@ if(!isset($_SESSION['usuario'])){
   }
   //$query = "SELECT usiddo, apodo, comentario, id FROM uscoment, usuario WHERE uscoment.usiddir = ".($username)." AND  usuario.id = ".($username)."";
   $query=
-      'SELECT uscoment.comentario, uscoment.calif, usuario.apodo FROM uscoment INNER JOIN usuario ON  uscoment.usiddo = usuario.id WHERE uscoment.usiddir = "'.($username).'"';
+      'SELECT uscoment.comentario, uscoment.created_at,uscoment.calif, usuario.apodo FROM uscoment INNER JOIN usuario ON  uscoment.usiddo = usuario.id WHERE uscoment.usiddir = "'.($username).'"';
   $stmt = $pdo -> prepare($query);
   $stmt -> execute(array());//Para sacar los comentarios en la seccion principal
   $ssss = $pdo -> prepare($query);
@@ -28,7 +28,13 @@ if(!isset($_SESSION['usuario'])){
   $query2 = "SELECT * FROM $VIEW WHERE usid = ?";
   $smtp = $pdo -> prepare($query2);
   $smtp -> execute([$_GET['idu']]);
-  $user= $smtp->fetch();
+  if($smtp -> rowCount() > 0)
+  {
+      $user= $smtp->fetch();
+  }else {
+    Header("Location: 404.php");
+  }
+
  ?>
 <!--  SITIO - PEFIL DE VISITA / VISITADO POR OTRO(S) USUARIO(S) QUE NO ES EL "PROPIETARIO / DUEÑO" DE LA CUENTA.  -->
 <html>
@@ -79,7 +85,7 @@ if(!isset($_SESSION['usuario'])){
                       </div>
 
                       <!--Foto del usuario-->
-                      <img class="rounded-circle mb-3 mt-4" src="assets/img/dogs/image3.jpeg" width="185" height="190">
+                      <img class="rounded-circle mb-3 mt-4" src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($user['foto']); ?>" width="185" height="190">
                     </div>
                   </div>
 
@@ -97,87 +103,45 @@ if(!isset($_SESSION['usuario'])){
                         foreach ($stmt as $result) {
 
                         ?>
-                          <div class="container bg-light">
+                          <div class="row bg-light mb-4">
 
                             <!--Comentario 1-->
-                            <div class="row mb-3 py-2 ml-2 texto">
+                            <div class="col texto" style="text-align: left;">
 
                               <!--Nombre de quién realiza el comentario-->
-                                <h6><strong>Usuario: </strong>"<?php echo ($result['apodo']);?>"</h6>
+                                <h6 class="my-2">
+                                  <strong><?php echo ($result['apodo']);?></strong>
+                                </h6>
 
-                            </div>
+                                <label class="text-muted mb-2" >
 
-                            <!--Calificación - Estrellas-->
-                            <div class="row mb-3 ml-2 texto">
-                              <label for="estrellas">Estrellas: </label>
-                              <?php
-                                  $estrella = $result['calif'];//TOMA EL VALOR DE LA CALIFICACIÓN
-                                  if($estrella==1){ //SI ES 1
-                              ?>
-                               <span class="fa fa-star ml-2" id="1es" style = color:orange></span>
-                               <span class="fa fa-star ml-2" id="2es" style = color:black></span>
-                               <span class="fa fa-star ml-2" id="3es" style = color:black></span>
-                               <span class="fa fa-star ml-2" id="4es" style = color:black></span>
-                               <span class="fa fa-star ml-2" id="5es" style = color:black></span>
-                              <?php
-                             }
-                              ?>
-                              <?php
-                                  if($estrella==2){ //SI ES 2
-                              ?>
-                               <span class="fa fa-star ml-2" id="1es" style = color:orange></span>
-                               <span class="fa fa-star ml-2" id="2es" style = color:orange></span>
-                               <span class="fa fa-star ml-2" id="3es" style = color:black></span>
-                               <span class="fa fa-star ml-2" id="4es" style = color:black></span>
-                               <span class="fa fa-star ml-2" id="5es" style = color:black></span>
-                              <?php
-                             }
-                              ?>
-                              <?php
-                                  if($estrella==3){ //SI ES 3
-                              ?>
-                               <span class="fa fa-star ml-2" id="1es" style = color:orange></span>
-                               <span class="fa fa-star ml-2" id="2es" style = color:orange></span>
-                               <span class="fa fa-star ml-2" id="3es" style = color:orange></span>
-                               <span class="fa fa-star ml-2" id="4es" style = color:black></span>
-                               <span class="fa fa-star ml-2" id="5es" style = color:black></span>
-                              <?php
-                             }
-                              ?>
-                              <?php
-                                  if($estrella==4){ //SI ES 4
-                              ?>
-                               <span class="fa fa-star ml-2" id="1es" style = color:orange></span>
-                               <span class="fa fa-star ml-2" id="2es" style = color:orange></span>
-                               <span class="fa fa-star ml-2" id="3es" style = color:orange></span>
-                               <span class="fa fa-star ml-2" id="4es" style = color:orange></span>
-                               <span class="fa fa-star ml-2" id="5es" style = color:black></span>
-                              <?php
-                             }
-                              ?>
-                              <?php
-                                  if($estrella==5){ //SI ES 5
-                              ?>
-                               <span class="fa fa-star ml-2" id="1es" style = color:orange></span>
-                               <span class="fa fa-star ml-2" id="2es" style = color:orange></span>
-                               <span class="fa fa-star ml-2" id="3es" style = color:orange></span>
-                               <span class="fa fa-star ml-2" id="4es" style = color:orange></span>
-                               <span class="fa fa-star ml-2" id="5es" style = color:orange></span>
-                              <?php
-                             }
-                              ?>
-                            </div>
+                                  <small>
+                                    <?php echo  $result['created_at']; ?> &nbsp;
+                                  </small>
+                                </label><br>
+                                <?php
 
+                                $STARS = 5; //  total de estrellas
+
+                                for ($i = 0; $i < $STARS; $i++) {
+                                  $color = "black";
+                                  if ($i < $result['calif']) { // estrellas naranjas
+                                    $color = "orange";
+                                  } ?>
+                                  <!-- imprime las estrellas segun el color -->
+                                  <span class="fa fa-star" style=color:<?php echo $color ?>></span>
+                                <?php
+                                } ?>
                             <!--Comentario-->
-                            <div class="row texto ml-2 mr-1">
-                              <p class="pmediano" style="text-align: justify;" ><strong>Comentario:</strong><br><br> <?php echo $result['comentario'] ?></p>
-                            </div>
+
+                              <p class="pchiquito mt-3" style="text-align: justify;" ><?php echo $result['comentario'] ?></p>
+
+                              </div>
                           </div>
-                          <hr>
+
                           <?php } ?>
-
                       </div>
-
+                      <br>
                       <!-- Botones - Crear y Más comentario(s) -->
                       <div class="form-group">
                         <div class="border border-light p-1 mb-2">
@@ -262,8 +226,8 @@ if(!isset($_SESSION['usuario'])){
                                   <!--2.b. Creación de la ventana del modal -->
                                   <div id="verComent" class="modal fade" role="dialog">
                                     <!--2.c. Permite ver el contenido del modal -->
-                                    <div class="modal-dialog" style="height:450px; overflow: scroll">
-
+                                    <!--<div class="modal-dialog" style="height:450px; overflow: scroll">-->
+                                    <div class="modal-dialog" role="document">
                                       <!--2.d Aquí se coloca en condenido del modal-->
                                       <div class="modal-content">
 
@@ -284,77 +248,34 @@ if(!isset($_SESSION['usuario'])){
                                               <div class="container">
 
                                                 <!--Comentario 1-->
-                                                <div class="row bg-light">
+                                                <div class="row bg-light mb-4">
                                                   <!--Nombre de quién realiza el comentario-->
                                                   <div class="col texto" style="text-align: left;">
-                                                    <h6 class="py-2"><strong>Usuario: </strong>"<?php echo ($hola['apodo']);?>"</h6>
+                                                    <h6 class="my-2"><strong><?php echo ($hola['apodo']);?></strong></h6>
+                                                    <label class="text-muted mb-2">
+                                                      <small>
+                                                        <?php echo  $hola['created_at']; ?>
+                                                      </small>
+                                                    </label><br>
+                                                    <?php
 
-                                                    <label>Estrellas</label>&nbsp;
+                                                    $STARS = 5; //  total de estrellas
 
-                                                    <!--Íconos de estrella-->
+                                                    for ($i = 0; $i < $STARS; $i++) {
+                                                      $color = "black";
+                                                      if ($i < $hola['calif']) { // estrellas naranjas
+                                                        $color = "orange";
+                                                      } ?>
+                                                      <!-- imprime las estrellas segun el color -->
+                                                      <span class="fa fa-star" style=color:<?php echo $color ?>></span>
                                                     <?php
-                                                        $estrella2 = $hola['calif'];//TOMA EL VALOR DE LA CALIFICACIÓN
-                                                        if($estrella2==1){ //SI ES 1
-                                                    ?>
-                                                     <span class="fa fa-star ml-2" id="1es" style = color:orange></span>
-                                                     <span class="fa fa-star ml-2" id="2es" style = color:black></span>
-                                                     <span class="fa fa-star ml-2" id="3es" style = color:black></span>
-                                                     <span class="fa fa-star ml-2" id="4es" style = color:black></span>
-                                                     <span class="fa fa-star ml-2" id="5es" style = color:black></span>
-                                                    <?php
-                                                   }
-                                                    ?>
-                                                    <?php
-                                                        if($estrella2==2){ //SI ES 2
-                                                    ?>
-                                                     <span class="fa fa-star ml-2" id="1es" style = color:orange></span>
-                                                     <span class="fa fa-star ml-2" id="2es" style = color:orange></span>
-                                                     <span class="fa fa-star ml-2" id="3es" style = color:black></span>
-                                                     <span class="fa fa-star ml-2" id="4es" style = color:black></span>
-                                                     <span class="fa fa-star ml-2" id="5es" style = color:black></span>
-                                                    <?php
-                                                   }
-                                                    ?>
-                                                    <?php
-                                                        if($estrella2==3){ //SI ES 3
-                                                    ?>
-                                                     <span class="fa fa-star ml-2" id="1es" style = color:orange></span>
-                                                     <span class="fa fa-star ml-2" id="2es" style = color:orange></span>
-                                                     <span class="fa fa-star ml-2" id="3es" style = color:orange></span>
-                                                     <span class="fa fa-star ml-2" id="4es" style = color:black></span>
-                                                     <span class="fa fa-star ml-2" id="5es" style = color:black></span>
-                                                    <?php
-                                                   }
-                                                    ?>
-                                                    <?php
-                                                        if($estrella2==4){ //SI ES 4
-                                                    ?>
-                                                     <span class="fa fa-star ml-2" id="1es" style = color:orange></span>
-                                                     <span class="fa fa-star ml-2" id="2es" style = color:orange></span>
-                                                     <span class="fa fa-star ml-2" id="3es" style = color:orange></span>
-                                                     <span class="fa fa-star ml-2" id="4es" style = color:orange></span>
-                                                     <span class="fa fa-star ml-2" id="5es" style = color:black></span>
-                                                    <?php
-                                                   }
-                                                    ?>
-                                                    <?php
-                                                        if($estrella2==5){ //SI ES 5
-                                                    ?>
-                                                     <span class="fa fa-star ml-2" id="1es" style = color:orange></span>
-                                                     <span class="fa fa-star ml-2" id="2es" style = color:orange></span>
-                                                     <span class="fa fa-star ml-2" id="3es" style = color:orange></span>
-                                                     <span class="fa fa-star ml-2" id="4es" style = color:orange></span>
-                                                     <span class="fa fa-star ml-2" id="5es" style = color:orange></span>
-                                                    <?php
-                                                   }
-                                                    ?>
-                                                    <br><br>
-                                                    <p class="pchiquito" style="text-align: justify;"><strong>Comentario</strong> <br><br> <?php echo $hola['comentario'] ?></p>
+                                                    } ?>
+                                                    <p class="pchiquito mt-3" style="text-align: justify;">
+                                                      <?php echo $hola['comentario'] ?>
+                                                    </p>
                                                   </div>
                                                 </div>
-                                                <br>
                                               </div>
-                                              <hr>
                                               <?php  } ?>
                                             </div>
                                           </div>
@@ -630,7 +551,7 @@ if(!isset($_SESSION['usuario'])){
                                     "progressBar": false,
                                     "positionClass": "toast-top-center",
                                     "preventDuplicates": false,
-                                    //"onclick": $(location).attr('href','profile_vistas.php'),
+                                    "onclick": $(location).attr('href','profile_vistas.php?idu=<?php echo $username ?>'),
                                     "showDuration": "3000",
                                     "hideDuration": "1000",
                                     "timeOut": "5000",

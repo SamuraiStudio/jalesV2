@@ -1,8 +1,8 @@
 <!--  SITIO - INICIO DE SESIÓN -->
 <?php
-require('assets/php/Queries.php');
-$queries = new Queries();
-$areas = $queries->GetAreas();
+require('assets/php/Consultas.php');
+$consultas = new Consultas();
+$areas = $consultas->GetAreas();
 ?>
 <html>
 

@@ -20,25 +20,17 @@ if (!isset($_SESSION['usuario']))
 
 <?php
 include "_header.php";
-require('assets/php/conection.php');
-$db = new DB();
-$pdo = $db->connect();
-$stmt;
+require('assets/php/Consultas.php');
+
+// variables
+$consultas = new Consultas();
+$idUsuario = $_SESSION['usuario']['id'];
+
 // datos del usuario
-$VIEW = 'view_profile_privado';
-$query = "SELECT * FROM $VIEW WHERE usid = ?";
-$stmt = $pdo->prepare($query);
-$stmt->execute([$_SESSION['usuario']['id']]);
-$user = $stmt->fetch();
+$user = $consultas->DatosUsuario($idUsuario);
 
 // comentarios hacia el usuario
-$query = "SELECT comentario, calif, apodo, uscoment.created_at AS fecha
-            FROM uscoment
-            JOIN usuario ON usiddo = usuario.id
-            WHERE usiddir = ?";
-$stmt = $pdo->prepare($query);
-$stmt->execute([$_SESSION['usuario']['id']]);
-$cardComentarios = $stmt->fetchAll();
+$cardComentarios = $consultas->ComentariosUsuario($idUsuario);
 ?>
 
 <!-- CUERPO -->

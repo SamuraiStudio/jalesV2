@@ -47,7 +47,7 @@ foreach($arr1 as $row){
                   <div class="row pt-5">
                     <!--Editar-->
                     <div class="col align-self-center section1 text-center">
-                      <a href="edit_empleo.php" target="blank">
+                      <a href="edit_empleo.php?id=<?php echo (int)$row['idetrab'];?>" target="blank">
                           <input type="button" class="btn text-white" id="editarP" value="Editar" style="background: #EF5A10; border-radius: 50px; width: 120px; height: 45px; text-align:center;">
                       </a>
                     </div>

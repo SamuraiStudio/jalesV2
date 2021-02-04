@@ -9,7 +9,7 @@ $jsonRes = [
   'status' => false,
   'msg' => null
 ];
-
+try{
 // verifica exista post
 if (isset($_POST['email'])) {
 
@@ -90,8 +90,12 @@ if (isset($_POST['email'])) {
     if ($stmt->execute($binding)) {
       $jsonRes['status'] = true;
     } else {
-      $jsonRes['msg'] = $pdo->errorInfo();
+      $jsonRes['msg'] = $stmt->errorInfo();
     }
   }
+}
+}
+catch (PDOException $e) {
+  $jsonRes['msg'] = $e->getMessage();
 }
 echo json_encode($jsonRes);

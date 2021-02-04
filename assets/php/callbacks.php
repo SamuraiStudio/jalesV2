@@ -7,7 +7,7 @@ $respuesta = [
     'msg' => null
 ];
 
-if (!empty($_POST['op'])) {
+if (!empty($_POST['operacion'])) {
     include('conection.php');
     // Conecta a la bd
     $db = new DB();
@@ -16,23 +16,40 @@ if (!empty($_POST['op'])) {
     // declaración de variables
     $sql;
     $stmt;
+    $alerta;
 
     // elige operacion
-    switch ($_POST['op']) {
+    switch ($_POST['operacion']) {
         case 'existe_correo':
             $sql = "SELECT * FROM usuario WHERE correo = ?";
+            $alerta =  '<div class="alert alert-danger">
+                            <strong>Oh no!</strong>
+                            Correo no disponible. Cámbialo, porfavor.
+                        </div>';
             break;
 
         case 'existe_apodo':
             $sql = "SELECT * FROM usuario WHERE apodo = ?";
+            $alerta =  '<div class="alert alert-danger">
+                            <strong>Upps!</strong>
+                            Apodo no disponible. Intenta con otro.
+                        </div>';
             break;
 
         case 'existe_rfc':
             $sql = "SELECT * FROM usuario WHERE rfc = ?";
+            $alerta =  '<div class="alert alert-danger">
+                            <strong>Oh no!</strong>
+                            RFC no disponible. Intenta con otro.
+                        </div>';
             break;
 
         case 'existe_ine':
             $sql = "SELECT * FROM usuario WHERE ine = ?";
+            $alerta =  '<div class="alert alert-danger">
+                            <strong>Upss!</strong>
+                            INE no disponible. Cámbiala, porfavor.
+                        </div>';
             break;
 
         default:
@@ -42,11 +59,18 @@ if (!empty($_POST['op'])) {
 
     // ejecuta declaración preparada
     $stmt = $pdo->prepare($sql);
-    if ($stmt->execute([$_POST['value']])) {
+    if ($stmt->execute([$_POST['valor']])) {
 
-        // analiza duplicado
-        $respuesta['duplicado'] = ($stmt->rowCount() > 0);
         $respuesta['error'] = false;
+
+         // analiza duplicado
+        $duplicado = ($stmt->rowCount() > 0) ? true: false;
+
+        // devuelve la alerta de duplicado
+        if($duplicado) $respuesta['msg'] = $alerta;
+
+        // respuesta de la consulta
+        $respuesta['duplicado'] = $duplicado;
     } else {
         // Mensaje de error SQL
         $respuesta['msg'] = 'ErrorSQL: ' . $stmt->errorInfo();

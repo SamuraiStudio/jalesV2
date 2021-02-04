@@ -91,7 +91,7 @@ $areas = $queries->GetAreas();
                   <input class="form-control labelchiquita" maxlength="20" type="text" id="n_name" name="n_name" pattern="[a-zA-Z]+" placeholder="Nickname" style="border-radius: 50px;" />
                   <label class="texto" for="n_name">Nickname *</label>
                 </div>
-                <div id="result-nickname"></div>
+                <div id="result-apodo"></div>
                 <br>
                 <!--Nombre del usuario/-->
                 <div class="form-group form-label-group">
@@ -117,11 +117,11 @@ $areas = $queries->GetAreas();
                   <input class="form-control labelchiquita" maxlength="100" type="email" id="email" name="email" placeholder="Correo electrónico" style="border-radius: 50px;" />
                   <label class="texto" for="email">Correo electrónico *</label>
                 </div>
-                <div id="result-username"></div>
+                <div id="result-correo"></div>
                 <br>
                 <!--Red social-->
                 <div class="form-group form-label-group">
-                  <input class="form-control labelchiquita" maxlength="100" type="text" id="facebook" name="facebook" pattern="[a-zA-Z]+" style="border-radius: 50px;" />
+                  <input class="form-control labelchiquita" value="https://www.facebook.com/" maxlength="100" type="text" id="facebook" name="facebook" pattern="[a-zA-Z]+" style="border-radius: 50px;" />
                   <label class="texto" for="facebook">Link de Facebook</label>
                 </div>
 
@@ -341,12 +341,14 @@ $areas = $queries->GetAreas();
                   <input class="form-control labelchiquita" maxlength="13" type="text" id="rfc" name="rfc" placeholder="RFC" style="border-radius: 50px;" />
                   <label class="texto" for="rfc">RFC *</label>
                 </div>
+                <div id="result-rfc"></div>
                 <br>
                 <!--Clave INE/-->
                 <div class="form-group form-label-group">
                   <input class="form-control labelchiquita" maxlength="13" type="text" id="ine" name="ine" placeholder="Clave INE" style="border-radius: 50px;" />
                   <label class="texto" for="ine">Clave INE *</label>
                 </div>
+                <div id="result-ine"></div>
                 <br>
                 <!--Descripcion-->
                 <div class="form-group form-label-group">
@@ -403,6 +405,8 @@ $areas = $queries->GetAreas();
           se habilita el boton para que este no de dos veces clic
 
           y puede continuar con el registro -->
+
+  <!-- jQuery validate() -->
   <script type="text/javascript">
     $(document).ready(function() {
       $("#bnext3").prop("disabled", true);
@@ -614,6 +618,7 @@ $areas = $queries->GetAreas();
     });
   </script>
 
+<!-- Envío de registro -->
   <script type="text/javascript">
     $(document).ready(function() {
       $('#registro').submit(function(event) {
@@ -633,27 +638,11 @@ $areas = $queries->GetAreas();
               window.location.href = 'login.php';
             } else {
               toastr["warning"]("No se ha podido registrar el usuario");
-              console.debug(data);
+              console.debug(data['msg']);
             }
 
           },
           error: function(jqXHR, exception, errorThrown) {
-            var msg = '';
-            if (jqXHR.status === 0) {
-              msg = 'Not connect.\n Verify Network.';
-            } else if (jqXHR.status == 404) {
-              msg = 'Requested page not found. [404]';
-            } else if (jqXHR.status == 500) {
-              msg = 'Internal Server Error [500].';
-            } else if (exception === 'parsererror') {
-              msg = 'Requested JSON parse failed.';
-            } else if (exception === 'timeout') {
-              msg = 'Time out error.';
-            } else if (exception === 'abort') {
-              msg = 'Ajax request aborted.';
-            } else {
-              msg = 'Uncaught Error.\n' + jqXHR.responseText;
-            }
             toastr["error"]("Hubo un error al registrar");
             console.debug("Error: " + errorThrown);
           }
@@ -679,48 +668,69 @@ $areas = $queries->GetAreas();
     });
   </script>
 
-<!-- VALIDACIONES -->
+  <!-- VALIDACIONES DE DUPLICADOS -->
   <script type="text/javascript">
     $(document).ready(function() {
 
+      // CORREO
       $('#email').on('blur', function() {
-        $('#result-username').html('<p> Toy cargando </p>').fadeOut(1000);
-        var correo = $(this).val();
-        $.ajax({
-          type: "POST",
-          url: "assets/php/query-existeus.php",
-          data: {
-            "correo": correo
-          },
-          success: function(data) {
-            $('#result-username').fadeIn(1000).html(data);
-          }
-        });
+        AnalizaDuplicado(
+          $(this).val(),
+          $('#result-correo'),
+          'existe_correo'
+        );
       });
-    });
-  </script>
-<<<<<<< HEAD
 
-=======
-  <script type="text/javascript">
-    $(document).ready(function() {
+      // APODO
       $('#n_name').on('blur', function() {
-        $('#result-nickname').html('<p> Toy cargando </p>').fadeOut(1000);
-        var n_name = $(this).val();
+        AnalizaDuplicado(
+          $(this).val(),
+          $('#result-apodo'),
+          'existe_apodo'
+        );
+      });
+
+      // INE
+      $('#ine').on('blur', function() {
+        AnalizaDuplicado(
+          $(this).val(),
+          $('#result-ine'),
+          'existe_ine'
+        );
+      });
+
+      // RFC
+      $('#rfc').on('blur', function() {
+        AnalizaDuplicado(
+          $(this).val(),
+          $('#result-rfc'),
+          'existe_rfc'
+        );
+      });
+
+      function AnalizaDuplicado(valor, divObject, operacion) {
+        divObject.html('<p> Toy cargando </p>').fadeOut(1000);
         $.ajax({
           type: "POST",
-          url: "assets/php/nameexisteus.php",
+          url: "assets/php/callbacks.php",
+          dataType: 'JSON',
           data: {
-            "n_name": n_name
+            operacion: operacion,
+            valor: valor
           },
           success: function(data) {
-            $('#result-nickname').fadeIn(1000).html(data);
+            if (!data['error'] && data['duplicado']) {
+              divObject.fadeIn(1000).html(data['msg']);
+            } else if (data['error']) {
+              console.debug(data['msg']);
+            }
           }
         });
-      });
+      }
+
     });
   </script>
->>>>>>> c594814dd3839aa92463ea864700a72af2eac185
+
   <script>
     const inpFile = document.getElementById("inpFile");
     const previewContainer = document.getElementById("imagePreview");

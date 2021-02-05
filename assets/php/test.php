@@ -2,6 +2,7 @@
 
 include('conection.php');
 
-$pdo = new DB();
+$db = new DB();
 
-$pdo->connect();
+$pdo = $db->connect();
+

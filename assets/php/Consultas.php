@@ -1,5 +1,5 @@
 <?php
-require('conection.php');
+require_once('conection.php');
 class Consultas
 {
     private $pdo;
@@ -45,5 +45,30 @@ class Consultas
         $stmt = $this->pdo->prepare($query);
         $stmt->execute([$idUser]);
         return $stmt->fetchAll();
+    }
+
+    public function GetSexos()
+    {
+        $sql = "SHOW COLUMNS FROM usuario LIKE 'sexo'";
+        $result = $this->pdo->prepare($sql);
+        $result->execute();
+        $row = $result->fetch();
+        $type = $row['Type'];
+        preg_match('/enum\((.*)\)$/', $type, $matches);
+        $vals = explode(',', $matches[1]);
+        $trimmedvals = array();
+        foreach ($vals as $key => $value) {
+            $value = trim($value, "'");
+            $trimmedvals[] = $value;
+        }
+        return $trimmedvals;
+    }
+
+    public function GetForaneasUsuario($idUser)
+    {
+        $sql = "SELECT arid, dirid, foto as imgid  FROM usuario WHERE id = ?";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$idUser]);
+        return $stmt->fetch();
     }
 }

@@ -403,7 +403,7 @@ $cardComentarios = $consultas->ComentariosUsuario($idUsuario);
                       <center>
                         <div class="form-group texto">
                           <label class="form-control-plaintext labelchiquita" type="text" id="facebook" value="" readonly style="border-bottom-color:#ada2a2;">
-                            <a style="color: black;" href="https://www.facebook.com/<?php echo $user['fbref']; ?>"><span class="fab fa-facebook-square" style="font-size: 30px;">&nbsp;&nbsp;</span><u>Da click para contactar por facebook</u></a></label>
+                            <a style="color: black;" target="_blank" href="<?php echo $user['fbref']; ?>"><span class="fab fa-facebook-square" style="font-size: 30px;">&nbsp;&nbsp;</span><u>Da click para contactar por facebook</u></a></label>
                           <br>
                         </div>
                       </center>

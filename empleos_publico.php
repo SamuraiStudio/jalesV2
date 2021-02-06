@@ -1,16 +1,3 @@
-<?php
-require('assets/php/conection.php');
-$db = new DB();
-$pdo = $db->connect();
-$stmt;
-// Constante. Nombre de la tabla de usuarios
-$TABLE = 'trabajos';
-$VIEW = 'view_profile_privado';
-$query = "SELECT * FROM $TABLE INNER JOIN $VIEW WHERE $VIEW.usid = $TABLE.usid";
-$stmt = $pdo->prepare($query);
-$stmt->execute(array());
-
- ?>
 <!--  SITIO - EMPLEOS DISPONIBLES PARA MIRONES. EL USUARIO PUEDE VISUALIZAR SIN MUCHOS DETALLES LOS EMPLEOS DISPONIBLES PUBLICADOS Y EN CASO DE POSTULACIÓN LA REDIRECCIONARA AL LOGIN-->
 <html>
 
@@ -50,8 +37,6 @@ $stmt->execute(array());
                 <li class="nav-item">
                   <form class="form-inline my-2 my-lg-0">
                       <input class="form-control mr-sm-2" type="search" placeholder="Busca un empleo" aria-label="Search"  style= "border-radius: 50px;">
-                      <button class="btn text-white btn-lg my-2 my-sm-0" type="submit" style="background: #95140A;  border-radius: 50px;">Buscar</button>
-                  </form>
                 </li>
               </ul>
               <ul class="navbar-nav">
@@ -116,40 +101,8 @@ $stmt->execute(array());
                           <br><label class="mt-2" style="text-align: center;"><small>Administración <br> y traducción</small></label>
                         </div>
 
-                        <!-- Botón - Diseño y áreas creativas -->
-                        <div class="col section1 text-center">
-                          <button id="diseno" class="rounded-circle btn section1 text-center" style="background: #D49623; width: 87px; height: 87px;" type="button" name="button"><ion-icon name="color-palette"></button>
-                          <br><label class="mt-2" style="text-align: center;"><small>Diseño y áreas <br> creativas</small></label>
-                        </div>
                       </div> <!-- Fin - 1ra fila -->
                       <br>
-
-                      <!-- Inicio - 2da fila -->
-                      <div class="row">
-
-                        <!-- Botón - Ingeniería en Tic´s -->
-                        <div class="col section1 text-center">
-                          <button id="tics" class="rounded-circle btn" style="background: #AAA7A5; width: 87px; height: 87px;" type="button" name="button"><ion-icon name="code-working"></ion-icon></button>
-                          <br><label class="mt-2" style="text-align: center;"><small>IT</small></label>
-                        </div>
-
-                        <!-- Botón - Marketing y ventas -->
-                        <div class="col section1 text-center">
-                          <button id="ventas" class="rounded-circle btn section1 text-center" style="background: #6F3B17; width: 87px; height: 87px;" type="button" name="button"><ion-icon name="pricetags"></ion-icon></button>
-                          <br><label class="mt-2" style="text-align: center;"><small>Marketing y ventas</small></label>
-                        </div>
-                      </div> <!-- Fin - 2ra fila -->
-                      <br>
-
-                      <!-- Inicio - 3ra fila -->
-                      <div class="row">
-
-                        <!-- Botón - Redacción -->
-                        <div class="col section1 text-center">
-                          <button id="redaccion" class="rounded-circle btn" style="background: #B62C21; width: 87px; height: 87px;" type="button" name="button"><ion-icon name="create"></ion-icon></button>
-                          <br><label class="mt-2" style="text-align: center;"><small>Redacción</small></label>
-                        </div>
-                      </div> <!-- Fin - 3ra fila -->
                     </div> <!-- Inicio - Div de las filas y columas -->
                   </div> <!-- Fin - Cuerpo del modal -->
                 </div> <!-- Fin - Contenido del modal -->
@@ -159,7 +112,7 @@ $stmt->execute(array());
           <br>
 
           <!-- Publicación 1 - Inicio. -->
-          <?php foreach ($stmt as $row) { ?>
+
           <div class="card shadow container bg-light p-4">
             <br>
             <div class="row">
@@ -168,9 +121,9 @@ $stmt->execute(array());
               <div class="col-md-4 col-lg-4 item align-self-center texto">
 
                 <!-- Foto del empleo -->
-                <img class="card shadow img-thumbnail mx-auto d-block" style="height: 190px; width: 290px;" src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($row['foto']); ?>">
+                <img class="card shadow img-thumbnail mx-auto d-block" style="height: 190px; width: 290px;" src="data:image/jpg;charset=utf8;base64,">
                 <!-- Nombre del empleo -->
-                <label class="form-control-plaintext texto pt-3" type="text" value="" readonly style="text-align: center;"><strong><?php echo $row['nombre'] ?></strong></label>
+                <label class="form-control-plaintext texto pt-3" type="text" value="" readonly style="text-align: center;"><strong></strong></label>
 
                 <!-- Botón "Me interesa" -->
                 <div class="row py-3">
@@ -236,7 +189,7 @@ $stmt->execute(array());
                   <div class="row">
                     <div class="col">
                       <label  class="texto" for=""><strong>Empresa</strong></label>
-                      <label class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify;"><?php echo $row['empleador'];?></label>
+                      <label class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify;"></label>
                     </div>
                   </div>
                   <br>
@@ -245,7 +198,7 @@ $stmt->execute(array());
                   <div class="row">
                     <div class="col">
                       <label class="texto" for=""><strong>Descripción del empleo</strong></label>
-                      <textarea class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify; height:100px;"><?php echo $row['descripcion']; ?></textarea>
+                      <textarea class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify; height:100px;"></textarea>
                     </div>
                   </div>
                   <br>
@@ -254,14 +207,13 @@ $stmt->execute(array());
                   <div class="row">
                     <div class="col">
                       <label class="texto" for=""><strong>Ubicación</strong></label>
-                      <textarea class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify; height:100px;"><?php echo $row['ubi']; ?></textarea>
+                      <textarea class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify; height:100px;"></textarea>
                     </div>
                   </div>
               </div>
             </div>
           <br>
         </div><!-- Publicación 1 - Fin. -->
-      <?php } ?>
         <br><br>
       </div>
     </div>
@@ -293,56 +245,6 @@ $stmt->execute(array());
       } // end if
     </script>
 
-    <!--Cambia los colores de los fondos-->
-    <script>
-        $(document).ready(() =>{
-
-          /*  Categoría: Administración y traducción */
-          $("#bussiness").click(function() {
-            event.preventDefault();
-            // $("body").css('background-color', '#2D5543');
-            // $("#navbar_top").css('background-color', '#2D5543');
-            $("#fondo").css('background-image', 'url(assets/img/lines/linea_verde_p.png)');
-            $("#cierra").click();
-          });
-
-          /*  Diseño y áreas creativas  */
-          $("#diseno").click(function() {
-            event.preventDefault();
-            // $("body").css('background-color', '#E4AF4D');
-            // $("#navbar_top").css('background-color', '#E4AF4D');
-            $("#fondo").css('background-image', 'url(assets/img/lines/linea_dorada_p.png)');
-            $("#cierra").click();
-          });
-
-          /*  Ingeniría en TIC´s  */
-          $("#tics").click(function() {
-            event.preventDefault();
-            // $("body").css('background-color', '#D5D3D1');
-            // $("#navbar_top").css('background-color', '#D5D3D1');
-            $("#fondo").css('background-image', 'url(assets/img/lines/linea_gris_p.png)');
-            $("#cierra").click();
-          });
-
-          /*  Marketing y ventas  */
-          $("#ventas").click(function() {
-            event.preventDefault();
-            // $("body").css('background-color', '#6F3B17');
-            // $("#navbar_top").css('background-color', '#6F3B17');
-            $("#fondo").css('background-image', 'url(assets/img/lines/linea_cafe_p.png)');
-            $("#cierra").click();
-          });
-
-          /*  Redacción  */
-          $("#redaccion").click(function() {
-            event.preventDefault();
-            // $("body").css('background-color', '#B62C21');
-            // $("#navbar_top").css('background-color', '#B62C21');
-            $("#fondo").css('background-image', 'url(assets/img/lines/linea_roja_p.png)');
-            $("#cierra").click();
-          });
-        });
-    </script>
     <script type="text/javascript">
       $(document).ready(function(){
         $("#inicia").click(function(){

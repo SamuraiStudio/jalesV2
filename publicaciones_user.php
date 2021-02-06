@@ -12,7 +12,6 @@ if(!isset($_SESSION['usuario']))
       <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
       <link rel="icon" type="image/png" href="assets/img/Logo/color.png">
       <title>Mis publicaciones</title>
-      <!--<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Raleway" /> Fuente Raleway-->
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css">
       <!--Iconos - Estrellas + puerta-->
       <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
@@ -68,28 +67,5 @@ if(!isset($_SESSION['usuario']))
         });
       } // end if
     </script>
-
-    <!--Nos redirecciona a la página = Botón Editar-->
-    <script type="text/javascript">
-    /*
-      $(document).ready(function(){
-        $("#editarP").click(function(){
-          event.preventDefault();
-          $(location).attr('href', 'edit_empleo.php');
-        });
-      });*/
-    </script>
-
-    <!--Nos redirecciona a la página = Botón Interesados-->
-    <script type="text/javascript">
-    /*
-      $(document).ready(function(){
-        $("#interesados").click(function(){
-          event.preventDefault();
-          $(location).attr('href', 'interesados.php');
-        });
-      });*/
-    </script>
-
   </body>
 </html>

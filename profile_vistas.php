@@ -9,7 +9,6 @@ if(!isset($_SESSION['usuario'])){
   // Conecta a la bd
   $db = new DB();
   $pdo = $db->connect();
-  //$username = $_SESSION['usuario']['id'];
   $username = (int)$_GET['idu'];
   $sesion = $_SESSION['usuario']['id'];
   if($username == $sesion)

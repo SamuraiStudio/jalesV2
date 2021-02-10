@@ -1,6 +1,10 @@
+<?php
+  require('assets/php/Consultas.php');
+  $consultas = new Consultas();
+  $areas = $consultas->GetAreas();
+ ?>
 <!--  SITIO - EMPLEOS DISPONIBLES PARA MIRONES. EL USUARIO PUEDE VISUALIZAR SIN MUCHOS DETALLES LOS EMPLEOS DISPONIBLES PUBLICADOS Y EN CASO DE POSTULACIÓN LA REDIRECCIONARA AL LOGIN-->
 <html>
-
   <!-- ENCABEZADO -->
   <head>
       <meta charset="utf-8">
@@ -90,18 +94,17 @@
 
                     <!--Inicio - Div de las filas y columas-->
                     <div class="container">
-
+                      <?php foreach ($areas as $a) {  ?>
                       <!--Inicio - 1ra fila-->
                       <div class="row">
 
                         <!-- Botón - Administración y traducción -->
                         <div class="col section1 text-center">
-                          <button id="bussiness" class="rounded-circle btn section1 text-center" style="background: #44745E; width: 87px; height: 87px;" type="button" name="button"><ion-icon name="document-text"></ion-icon>
-                          </button>
-                          <br><label class="mt-2" style="text-align: center;"><small>Administración <br> y traducción</small></label>
+                          <button id="bussiness" class="rounded-circle btn section1 text-center" style="background: #44745E; width: 87px; height: 87px;" type="button" name="button"><img class="rounded-circle mb-3 mt-4" src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($a['data']); ?>" width="50" height="50"></button>
+                          <br><label class="mt-2" style="text-align: center;"><small><?php echo ($a['nombre']); ?></small></label>
                         </div>
-
                       </div> <!-- Fin - 1ra fila -->
+                    <?php } ?>
                       <br>
                     </div> <!-- Inicio - Div de las filas y columas -->
                   </div> <!-- Fin - Cuerpo del modal -->
@@ -168,7 +171,7 @@
 
                                     <hr>
                                   </div>
-                                  <!--Botón para regresar-->
+                                  <!--Botón para registrarse-->
                                   <div class="col-sm-6">
                                       <button href="register_user.php" class="btn btn-block text-white texto" role="button" id="registra" style="background: #EF5A10;border-radius: 50px; text-align: center; height: 45px;">Registrarse</button>
                                     <hr>
@@ -258,5 +261,6 @@
         });
       });
     </script>
+
   </body>
 </html>

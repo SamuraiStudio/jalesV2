@@ -19,7 +19,7 @@ class Consultas
     public function GetAreas()
     {
         $TABLE = 'area';
-        $sql = "SELECT * FROM $TABLE";
+        $sql = "SELECT * FROM $TABLE INNER JOIN imagen WHERE imgar = idimg";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
 
@@ -70,5 +70,9 @@ class Consultas
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$idUser]);
         return $stmt->fetch();
+    }
+
+    public function getAllJobs(){
+      $sql = "SELECT * FROM trabajos ";
     }
 }

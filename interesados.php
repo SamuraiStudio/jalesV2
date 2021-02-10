@@ -9,6 +9,11 @@ if(!isset($_SESSION['usuario'])){
   $db = new DB();
   $pdo = $db->connect();
   $trabajo = (int)$_GET['trabajo'];
+  $sql1 = "SELECT * FROM interesado WHERE trabid = $trabajo";
+  $stmt1 = $pdo->prepare($sql1);
+  $stmt1->execute();
+  $arr1 = $stmt1->fetchAll(PDO::FETCH_ASSOC);
+
   $username = $_SESSION['usuario']['id'];
   $VIEW = 'view_profile_privado';
   $query = "SELECT view_profile_privado.apodo, view_profile_privado.arnom, view_profile_privado.esp, view_profile_privado.telefono, view_profile_privado.foto, interesado.userid
@@ -56,6 +61,7 @@ if(!isset($_SESSION['usuario'])){
       <div class="py-2"></div>
 
       <?php
+      if($arr1){
       foreach ($stmt as $result) {
       ?>
       <!--Fila 1- Inicio. Usuario interesado-->
@@ -124,7 +130,47 @@ if(!isset($_SESSION['usuario'])){
           </div>
         </div> <!--Fila 1 - Fin. Usuario interesado-->
         <br>
-          <?php } ?>
+        <?php
+          }
+        }else{
+          ?>
+          <style>
+            .section-generar-trabajo{
+              display:flex;
+              justify-content: center;
+              align-items:center;
+              flex-wrap:wrap;
+            }
+
+            .section-generar-trabajo p{
+              margin:0;
+              margin-right:2rem;
+            }
+
+            .section-generar-trabajo a{
+              display: inline-block;
+              color: white;
+              background-color: #2a4eff;
+              padding: 0.5rem;
+              border-radius: 0.5em;
+              text-decoration:none;
+              transition: ease-in-out 0.2s;
+            }
+
+            .section-generar-trabajo a:hover{
+              background-color: #4a4eff;
+              box-shadow:0rem 0rem 0.2rem black;
+            }
+
+
+          </style>
+            <section class="section-generar-trabajo">
+              <p class="texto">Aún no tienes interesados. Regresa más tarde.</p>
+              <a class="texto" href="publicaciones_user.php">Mis publicaciones</a>
+            </section>
+          <?php
+        }
+        ?>
 
         <br>
       </div>

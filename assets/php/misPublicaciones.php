@@ -157,14 +157,14 @@ if($arr1){
 
     .section-generar-trabajo a:hover{
       background-color: #4a4eff;
-      box-shadow:0rem 0rem 0.2rem black; 
+      box-shadow:0rem 0rem 0.2rem black;
     }
 
-    
+
   </style>
     <section class="section-generar-trabajo">
-      <p>Aun no has registrado alguna publicacion. Por favor ingresa alguna.</p>
-      <a href="register_empleo.php">Ir a Generar Trabajo</a>
+      <p class="texto">Aún no has registrado alguna publicación. Por favor ingresa alguna.</p>
+      <a class="texto" href="register_empleo.php">Ir a Generar Trabajo</a>
     </section>
   <?php
 }

@@ -183,3 +183,11 @@ empleos_usuarios, emplos_publicos, */
   font-variant: Thin;
   line-height: 17px;
 }
+
+.section-generar-trabajo a{
+    display: inline-block;
+    color: white;
+    background-color: #2a4eff;
+    padding: 0.5rem;
+    border-radius: 0.5em;
+}

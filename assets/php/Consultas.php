@@ -82,4 +82,25 @@ class Consultas
       $stmt->execute();
       return $stmt->fetchAll();
     }
+
+    public function ComentariosVista($Userdir)
+    {
+        $query = "SELECT comentario, calif, apodo, uscoment.created_at AS fecha
+            FROM uscoment
+            JOIN usuario ON usiddo = usuario.id
+            WHERE usiddir = ?";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute([$Userdir]);
+        return $stmt->fetchAll();
+    }
+
+    public function UsuarioVista($Uservista)
+    {
+        // datos del usuario
+        $VIEW = 'view_profile_privado';
+        $query = "SELECT * FROM $VIEW WHERE usid = ?";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute([$Uservista]);
+        return $stmt->fetch();
+    }
 }

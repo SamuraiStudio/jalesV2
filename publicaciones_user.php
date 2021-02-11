@@ -19,7 +19,7 @@ if(!isset($_SESSION['usuario']))
   </head>
 
   <!---------------------------------------------------MENÚ / BARRA DE NAVEGACIÓN -------------------------------------------------->
-  <?php include "_header.php"; ?>
+  <?php include "_header2.php"; ?>
 
   <!-- CUERPO -->
   <body style="background: #E6E1E1;"> <br>

@@ -19,7 +19,7 @@ if (!isset($_SESSION['usuario']))
 </head>
 
 <?php
-include "_header.php";
+include "_header2.php";
 require('assets/php/Consultas.php');
 
 // variables

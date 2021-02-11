@@ -60,7 +60,7 @@ if (!isset($_SESSION['usuario']))
 </style>
 
 <!-- ENCABEZADO -->
-<?php include "_header.php";
+<?php include "_header2.php";
 
 require('assets/php/Consultas.php');
 

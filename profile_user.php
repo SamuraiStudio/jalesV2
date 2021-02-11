@@ -481,7 +481,7 @@ $cardComentarios = $consultas->ComentariosUsuario($idUsuario);
     $(document).ready(function() {
       $("#cerrarSesion").click(function() {
         event.preventDefault();
-        $(location).attr('href', 'empleos_publico.php');
+        $(location).attr('href', 'assets/php/logout.php');
       });
     });
   </script>

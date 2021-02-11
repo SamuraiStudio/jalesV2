@@ -42,10 +42,7 @@
           <div class="collapse navbar-collapse texto" id="main_nav">
               <ul class="navbar-nav mr-auto">
                 <!--Buscador-->
-                <li class="nav-item">
-                  <form class="form-inline my-2 my-lg-0">
-                      <input class="form-control mr-sm-2" type="search" placeholder="Busca un empleo" aria-label="Search"  style= "border-radius: 50px;">
-                </li>
+
               </ul>
               <ul class="navbar-nav">
                 <li class="nav-item"><a class="nav-link" href="register_user.php">Registrarse</a></li>
@@ -73,7 +70,13 @@
 
           <!--Botón para abrir el modal (Nos permitirá visualizar las CATEGORÍAS)-->
           <div class="row p-3"> <!--justify-content-center-->
-            <button type="button" class="btn btn-outline-secondary btn-lg" style="border-radius: 50px; text-align: center;" data-toggle="modal" data-target="#myModal">Categorías</button>
+            <table>
+                <tr>
+                    <td style=""><input class="form-control mr-sm-2" type="search" placeholder="Busca un empleo" aria-label="Search" style="border-radius: 50px;"></td>
+
+                      <td> <button type="button" class="btn btn-secondary btn-lg" style="border-radius: 50px; text-align: center;" data-toggle="modal" data-target="#myModal">Categorías</button></td>
+                </tr>
+            </table>
           </div>
 
           <!-- Modal -->

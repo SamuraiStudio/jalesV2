@@ -3,7 +3,7 @@ session_start();
 if(!isset($_SESSION['usuario']))
   Header("Location: login.php");
 
-  
+
 ?>
 <!--  SITIO PUBLICACION DE EMPLEO DISPONIBLES, EL USUARIO REGISTRADO PUEDE ACCEDER A ELLOS SE LE DA UNA Descripción DETALLADA -->
 <html>
@@ -24,7 +24,7 @@ if(!isset($_SESSION['usuario']))
   <!-- CUERPO -->
   <body style="background-color: #E6E1E1;">
 
-  <?php include "_header.php";?>
+  <?php include "_header2.php";?>
 
     <!--------------------------------------------------------------------- Publicaciones - Usuarios  -------------------------------------------------------->
 
@@ -42,9 +42,13 @@ if(!isset($_SESSION['usuario']))
       <div class="container texto">
 
         <!-- Botón para abrir el modal (Nos permitirá visualizar las categorías) -->
-        <div class="row p-3"> <!--justify-content-center-->
-          <button type="button" class="btn btn-outline-secondary btn-lg" style="border-radius: 50px; text-align: center;" data-toggle="modal" data-target="#myModal">Categorías</button>
-        </div>
+        <table>
+            <tr>
+                <td style=""><input class="form-control mr-sm-2" type="search" placeholder="Busca un empleo" aria-label="Search" style="border-radius: 50px;"></td><!--Buscador-->
+
+                  <td> <button type="button" class="btn btn-secondary btn-lg" style="border-radius: 50px; text-align: center;" data-toggle="modal" data-target="#myModal">Categorías</button></td>
+            </tr>
+        </table>
 
         <!-- Modal -->
         <div id="myModal" class="modal fade" role="dialog">

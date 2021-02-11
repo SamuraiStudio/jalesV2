@@ -76,7 +76,9 @@ $cardComentarios = $consultas->ComentariosUsuario($idUsuario);
             <!--Contenedor de la sección-->
             <div class="card-body" style="height:333px; overflow: scroll;">
               <!-- Sección de comentario(s)-->
-              <?php foreach ($cardComentarios as $coment) { ?>
+              <?php
+              if($cardComentarios){
+              foreach ($cardComentarios as $coment) { ?>
                 <div class="row bg-light mb-4">
                   <!-- apodo del comentador -->
                   <div class="col texto" style="text-align: left;">
@@ -107,7 +109,44 @@ $cardComentarios = $consultas->ComentariosUsuario($idUsuario);
                     </p>
                   </div>
                 </div>
-              <?php } ?>
+              <?php }
+            }else{ ?>
+              <style>
+                .section-generar-trabajo{
+                  display:flex;
+                  justify-content: center;
+                  align-items:center;
+                  flex-wrap:wrap;
+                }
+
+                .section-generar-trabajo p{
+                  margin:0;
+                  margin-right:2rem;
+                }
+
+                .section-generar-trabajo a{
+                  display: inline-block;
+                  color: white;
+                  background-color: #2a4eff;
+                  padding: 0.5rem;
+                  border-radius: 0.5em;
+                  text-decoration:none;
+                  transition: ease-in-out 0.2s;
+                }
+
+                .section-generar-trabajo a:hover{
+                  background-color: #4a4eff;
+                  box-shadow:0rem 0rem 0.2rem black;
+                }
+
+
+              </style>
+                <section class="section-generar-trabajo">
+                  <p class="texto"><br><br>Todavía no tienes comentarios, regresa después</p>
+                </section>
+              <?php
+            }
+            ?>
             </div>
             <br>
 
@@ -145,7 +184,9 @@ $cardComentarios = $consultas->ComentariosUsuario($idUsuario);
                       <div class="container">
 
                          <!-- Sección de comentario(s)-->
-                        <?php foreach ($cardComentarios as $coment) { ?>
+                        <?php
+                        if($cardComentarios){
+                        foreach ($cardComentarios as $coment) { ?>
                           <div class="row bg-light mb-4">
                             <!-- apodo del comentador -->
                             <div class="col texto" style="text-align: left;">
@@ -176,8 +217,44 @@ $cardComentarios = $consultas->ComentariosUsuario($idUsuario);
                               </p>
                             </div>
                           </div>
-                        <?php } ?>
+                        <?php }
+                          }else{ ?>
+                            <style>
+                              .section-generar-trabajo{
+                                display:flex;
+                                justify-content: center;
+                                align-items:center;
+                                flex-wrap:wrap;
+                              }
 
+                              .section-generar-trabajo p{
+                                margin:0;
+                                margin-right:2rem;
+                              }
+
+                              .section-generar-trabajo a{
+                                display: inline-block;
+                                color: white;
+                                background-color: #2a4eff;
+                                padding: 0.5rem;
+                                border-radius: 0.5em;
+                                text-decoration:none;
+                                transition: ease-in-out 0.2s;
+                              }
+
+                              .section-generar-trabajo a:hover{
+                                background-color: #4a4eff;
+                                box-shadow:0rem 0rem 0.2rem black;
+                              }
+
+
+                            </style>
+                              <section class="section-generar-trabajo">
+                                <p class="texto"><br><br>Todavía no tienes comentarios, regresa después</p>
+                              </section>
+                            <?php
+                          }
+                          ?>
                       </div>
                     </div>
                   </div>

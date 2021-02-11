@@ -59,7 +59,7 @@
 
     <!---------------------------------------------------MENÚ / BARRA DE NAVEGACIÓN -------------------------------------------------->
     <?php include "_header2.php"; ?>
-    
+
     <!--CUERPO-->
     <body style="background: #E6E1E1;"> <!-- Background gris-->
 
@@ -148,7 +148,7 @@
                         <select class="form-control form-control" name="empArea" id="empArea" style="border-radius: 50px;">
                           <optgroup class="labelchiquita" label="This is a group">
                             <!--Nombre del área del empleo-->
-                            <?php 
+                            <?php
                               include 'assets/php/empleos.php'
                             ?>
                           </optgroup>
@@ -362,6 +362,7 @@
                 success: function (data) {
                   if(data == true){
                     toastr["success"]("Felicidades, el trabajo se agrego correctamente.", "Trabajo agregado.");
+                    $(location).attr('href','publicaciones_user.php');
                   }else{
                     toastr["error"]("Lo siento, algo a salido mal y no se agrego el trabajo.", "Error.");
                   }

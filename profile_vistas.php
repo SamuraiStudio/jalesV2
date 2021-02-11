@@ -46,7 +46,7 @@ if(!isset($_SESSION['usuario'])){
   <body style="background: #E6E1E1;">
 
     <!---------------------------------------------------MENÚ / BARRA DE NAVEGACIÓN -------------------------------------------------->
-    <?php include "_header.php"; ?>
+    <?php include "_header2.php"; ?>
 
     <!---------------------------------------------------- PERFIL -------------------------------------------------------->
 
@@ -90,6 +90,7 @@ if(!isset($_SESSION['usuario'])){
                       <!--Contenedor de la sección-->
                       <div class="card-body" style="height:315px; overflow: scroll;">
                         <?php
+                        if($comentarios){
                         foreach ($comentarios as $result) {
 
                         ?>
@@ -129,7 +130,14 @@ if(!isset($_SESSION['usuario'])){
                               </div>
                           </div>
 
-                          <?php } ?>
+                          <?php }
+                        }else{?>
+
+                          <p class="texto"><br><br>Este usuario aún no tiene comentarios</p>
+
+                      <?php
+                    }
+                    ?>
                       </div>
                       <br>
                       <!-- Botones - Crear y Más comentario(s) -->
@@ -232,7 +240,9 @@ if(!isset($_SESSION['usuario'])){
 
                                             <!--Contenedor de la sección-->
                                             <div class="card-body">
-                                              <?php foreach ($comentarios as $hola) {
+                                              <?php
+                                              if($comentarios){
+                                              foreach ($comentarios as $hola) {
 
                                               ?>
                                               <div class="container">
@@ -266,7 +276,11 @@ if(!isset($_SESSION['usuario'])){
                                                   </div>
                                                 </div>
                                               </div>
-                                              <?php  } ?>
+                                              <?php  }
+                                            }else{
+                                            ?>
+                                              <p class="texto"><br><br>Este usuario aún no tiene comentarios</p>
+                                          <?php } ?>
                                             </div>
                                           </div>
                                       </div>

@@ -111,39 +111,7 @@ $cardComentarios = $consultas->ComentariosUsuario($idUsuario);
                 </div>
               <?php }
             }else{ ?>
-              <style>
-                .section-generar-trabajo{
-                  display:flex;
-                  justify-content: center;
-                  align-items:center;
-                  flex-wrap:wrap;
-                }
-
-                .section-generar-trabajo p{
-                  margin:0;
-                  margin-right:2rem;
-                }
-
-                .section-generar-trabajo a{
-                  display: inline-block;
-                  color: white;
-                  background-color: #2a4eff;
-                  padding: 0.5rem;
-                  border-radius: 0.5em;
-                  text-decoration:none;
-                  transition: ease-in-out 0.2s;
-                }
-
-                .section-generar-trabajo a:hover{
-                  background-color: #4a4eff;
-                  box-shadow:0rem 0rem 0.2rem black;
-                }
-
-
-              </style>
-                <section class="section-generar-trabajo">
                   <p class="texto"><br><br>Todavía no tienes comentarios, regresa después</p>
-                </section>
               <?php
             }
             ?>
@@ -219,39 +187,7 @@ $cardComentarios = $consultas->ComentariosUsuario($idUsuario);
                           </div>
                         <?php }
                           }else{ ?>
-                            <style>
-                              .section-generar-trabajo{
-                                display:flex;
-                                justify-content: center;
-                                align-items:center;
-                                flex-wrap:wrap;
-                              }
-
-                              .section-generar-trabajo p{
-                                margin:0;
-                                margin-right:2rem;
-                              }
-
-                              .section-generar-trabajo a{
-                                display: inline-block;
-                                color: white;
-                                background-color: #2a4eff;
-                                padding: 0.5rem;
-                                border-radius: 0.5em;
-                                text-decoration:none;
-                                transition: ease-in-out 0.2s;
-                              }
-
-                              .section-generar-trabajo a:hover{
-                                background-color: #4a4eff;
-                                box-shadow:0rem 0rem 0.2rem black;
-                              }
-
-
-                            </style>
-                              <section class="section-generar-trabajo">
                                 <p class="texto"><br><br>Todavía no tienes comentarios, regresa después</p>
-                              </section>
                             <?php
                           }
                           ?>

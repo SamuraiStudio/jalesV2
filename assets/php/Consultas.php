@@ -73,6 +73,13 @@ class Consultas
     }
 
     public function getAllJobs(){
-      $sql = "SELECT * FROM trabajos ";
+      $sql = "SELECT * FROM trabajos INNER JOIN imagen WHERE foto = idimg";
+      if(isset($_POST['busqueda'])){
+        $bus = $_POST['busqueda'];
+        $sql.="AND trabajos.nombre LIKE = $bus";
+      }
+      $stmt = $this->pdo->prepare($sql);
+      $stmt->execute();
+      return $stmt->fetchAll();
     }
 }

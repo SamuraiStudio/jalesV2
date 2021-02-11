@@ -2,6 +2,7 @@
   require('assets/php/Consultas.php');
   $consultas = new Consultas();
   $areas = $consultas->GetAreas();
+  $trabajos = $consultas->getAllJobs();
  ?>
 <!--  SITIO - EMPLEOS DISPONIBLES PARA MIRONES. EL USUARIO PUEDE VISUALIZAR SIN MUCHOS DETALLES LOS EMPLEOS DISPONIBLES PUBLICADOS Y EN CASO DE POSTULACIÓN LA REDIRECCIONARA AL LOGIN-->
 <html>
@@ -15,6 +16,9 @@
       <link rel="stylesheet" href="assets/css/styles.css"><!--Estilo de la fuente e íconos (color y tamaño)-->
       <!--Iconos - Puerta-->
       <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js"></script>
+      <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script> <!--Íconos-->
   </head>
 
   <!-- CUERPO -->
@@ -100,8 +104,7 @@
 
                         <!-- Botón - Administración y traducción -->
                         <div class="col section1 text-center">
-                          <button id="bussiness" class="rounded-circle btn section1 text-center" style="background: #44745E; width: 87px; height: 87px;" type="button" name="button"><img class="rounded-circle mb-3 mt-4" src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($a['data']); ?>" width="50" height="50"></button>
-                          <br><label class="mt-2" style="text-align: center;"><small><?php echo ($a['nombre']); ?></small></label>
+                          <input type="checkbox" id="busqueda" value="<?php echo $a['nombre']; ?>"><?php echo $a['nombre']; ?></input>
                         </div>
                       </div> <!-- Fin - 1ra fila -->
                     <?php } ?>
@@ -115,19 +118,16 @@
           <br>
 
           <!-- Publicación 1 - Inicio. -->
-
+          <?php foreach ($trabajos as $trabajo) { ?>
           <div class="card shadow container bg-light p-4">
             <br>
             <div class="row">
-
               <!-- Columna lado izquierdo (Foto + botón) -->
               <div class="col-md-4 col-lg-4 item align-self-center texto">
-
                 <!-- Foto del empleo -->
-                <img class="card shadow img-thumbnail mx-auto d-block" style="height: 190px; width: 290px;" src="data:image/jpg;charset=utf8;base64,">
+                <img class="card shadow img-thumbnail mx-auto d-block" style="height: 190px; width: 290px;" src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($trabajo['data']); ?>">
                 <!-- Nombre del empleo -->
                 <label class="form-control-plaintext texto pt-3" type="text" value="" readonly style="text-align: center;"><strong></strong></label>
-
                 <!-- Botón "Me interesa" -->
                 <div class="row py-3">
                   <div class="col align-self-center section1 text-center">
@@ -192,7 +192,7 @@
                   <div class="row">
                     <div class="col">
                       <label  class="texto" for=""><strong>Empresa</strong></label>
-                      <label class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify;"></label>
+                      <label class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify;"><?php echo $trabajo['empleador']; ?></label>
                     </div>
                   </div>
                   <br>
@@ -201,7 +201,7 @@
                   <div class="row">
                     <div class="col">
                       <label class="texto" for=""><strong>Descripción del empleo</strong></label>
-                      <textarea class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify; height:100px;"></textarea>
+                      <textarea class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify; height:100px;"><?php echo $trabajo['descripcion']; ?></textarea>
                     </div>
                   </div>
                   <br>
@@ -210,13 +210,14 @@
                   <div class="row">
                     <div class="col">
                       <label class="texto" for=""><strong>Ubicación</strong></label>
-                      <textarea class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify; height:100px;"></textarea>
+                      <textarea class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify; height:100px;"><?php echo  $trabajo['ubi']; ?></textarea>
                     </div>
                   </div>
               </div>
             </div>
           <br>
-        </div><!-- Publicación 1 - Fin. -->
+          </div><!-- Publicación 1 - Fin. -->
+        <?php } ?>
         <br><br>
       </div>
     </div>
@@ -231,9 +232,6 @@
     </footer>
 
     <!--Scripts-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js"></script>
-    <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script> <!--Íconos-->
     <script type="text/javascript">
       if ($(window).width() > 992) {
         $(window).scroll(function(){

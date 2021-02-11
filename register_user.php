@@ -709,7 +709,7 @@ $areas = $consultas->GetAreas();
       });
 
       function AnalizaDuplicado(valor, divObject, operacion) {
-        divObject.html('<p> Toy cargando </p>').fadeOut(1000);
+        divObject.html('<p> Cargando... </p>').fadeOut(1000);
         $.ajax({
           type: "POST",
           url: "assets/php/callbacks.php",

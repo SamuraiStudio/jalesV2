@@ -5,23 +5,12 @@ if(!isset($_SESSION['usuario'])){
   Header("Location: login.php");
 }else {
   include('assets/php/conection.php');
-  // Conecta a la bd
-  $db = new DB();
-  $pdo = $db->connect();
-  $trabajo = (int)$_GET['trabajo'];
-  $sql1 = "SELECT * FROM interesado WHERE trabid = $trabajo";
-  $stmt1 = $pdo->prepare($sql1);
-  $stmt1->execute();
-  $arr1 = $stmt1->fetchAll(PDO::FETCH_ASSOC);
+  require('assets/php/Consultas.php');
 
-  $username = $_SESSION['usuario']['id'];
-  $VIEW = 'view_profile_privado';
-  $query = "SELECT view_profile_privado.apodo, view_profile_privado.arnom, view_profile_privado.esp, view_profile_privado.telefono, view_profile_privado.foto, interesado.userid
-              FROM view_profile_privado
-              JOIN interesado ON view_profile_privado.usid = interesado.userid
-              WHERE interesado.trabid = '$trabajo'";
-  $stmt = $pdo -> prepare($query);
-  $stmt -> execute(array());//Para sacar los comentarios en la seccion principal
+  $consultas = new Consultas();
+   $username = $_SESSION['usuario']['id'];
+  $trabajo = (int)$_GET['trabajo'];
+  $interesados = $consultas->VerInteresados($trabajo);
  ?>
 <!--  SITIO - LISTA DE INTERESADOS EN ALGUNA PUBLICACIÓN DEL USUARIO.  -->
 
@@ -46,7 +35,7 @@ if(!isset($_SESSION['usuario'])){
   <body  class="justify-content-center" style="background: #E6E1E1;">
 
     <!---------------------------------------------------MENÚ / BARRA DE NAVEGACIÓN -------------------------------------------------->
-    <?php include "_header.php"; ?>
+    <?php include "_header2.php"; ?>
 
     <!---------------------------------------------------- INTERESADOS -------------------------------------------------------->
 
@@ -61,8 +50,8 @@ if(!isset($_SESSION['usuario'])){
       <div class="py-2"></div>
 
       <?php
-      if($arr1){
-      foreach ($stmt as $result) {
+      if($interesados){
+      foreach ($interesados as $result) {
       ?>
       <!--Fila 1- Inicio. Usuario interesado-->
       <div class="card shadow container">
@@ -164,8 +153,9 @@ if(!isset($_SESSION['usuario'])){
 
 
           </style>
+          <center><i class="fas fa-sad-tear" style="font-size: 50px;"></i></center><br>
+            <p class="texto text-center">Aún no tienes interesados. Regresa más tarde.</p>
             <section class="section-generar-trabajo">
-              <p class="texto">Aún no tienes interesados. Regresa más tarde.</p>
               <a class="texto" href="publicaciones_user.php">Mis publicaciones</a>
             </section>
           <?php

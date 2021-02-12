@@ -111,4 +111,15 @@ class Consultas
         $stmt->execute([$Uservista]);
         return $stmt->fetch();
     }
+
+    public function VerInteresados($idTrabajo)
+    {
+      $query = "SELECT apodo, arnom, esp, telefono, foto, interesado.userid
+                FROM view_profile_privado
+                JOIN interesado ON usid = interesado.userid
+                WHERE interesado.trabid = ?";
+      $stmt = $this->pdo -> prepare($query);
+      $stmt -> execute([$idTrabajo]);
+      return $stmt->fetchAll();
+    }
 }

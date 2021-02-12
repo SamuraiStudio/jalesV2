@@ -111,7 +111,9 @@ $cardComentarios = $consultas->ComentariosUsuario($idUsuario);
                 </div>
               <?php }
             }else{ ?>
-                  <p class="texto"><br><br>Todavía no tienes comentarios, regresa después</p>
+                  <p class="pchiquito text-center"><br><br>Todavía no tienes comentarios, muy pronto los tendrás</p>
+                    <span class="fa fa-frown-o"></span>
+                    <center><i class="fas fa-sad-tear" style="font-size: 50px;"></i></center>
               <?php
             }
             ?>
@@ -129,7 +131,7 @@ $cardComentarios = $consultas->ComentariosUsuario($idUsuario);
               </div>
 
               <!--2. Creación de la ventana del modal -->
-              <div id="myModal" class="modal fade" role="dialog"">
+              <div id="myModal" class="modal fade" role="dialog">
 
                   <!--3. Permite ver el contenido del modal -->
                   <!-- <div class=" modal-dialog" style="height:450px; overflow: scroll"> -->
@@ -187,7 +189,8 @@ $cardComentarios = $consultas->ComentariosUsuario($idUsuario);
                           </div>
                         <?php }
                           }else{ ?>
-                                <p class="texto"><br><br>Todavía no tienes comentarios, regresa después</p>
+                                <p class="pchiquito text-center"><br><br>Todavía no tienes comentarios, muy pronto los tendrás</p>
+                                  <center><i class="fas fa-sad-tear" style="font-size: 50px;"></i></center>
                             <?php
                           }
                           ?>

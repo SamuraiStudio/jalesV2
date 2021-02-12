@@ -133,7 +133,8 @@ if(!isset($_SESSION['usuario'])){
                           <?php }
                         }else{?>
 
-                          <p class="texto"><br><br>Este usuario aún no tiene comentarios</p>
+                          <p class="pchiquito text-center"><br><br>Este usuario aún no tiene comentarios</p>
+                            <center><i class="fas fa-sad-tear" style="font-size: 50px;"></i></center>
 
                       <?php
                     }
@@ -279,7 +280,8 @@ if(!isset($_SESSION['usuario'])){
                                               <?php  }
                                             }else{
                                             ?>
-                                              <p class="texto"><br><br>Este usuario aún no tiene comentarios</p>
+                                              <p class="pchiquito text-center"><br><br>Este usuario aún no tiene comentarios</p>
+                                                <center><i class="fas fa-sad-tear" style="font-size: 50px;"></i></center>
                                           <?php } ?>
                                             </div>
                                           </div>

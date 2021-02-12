@@ -72,6 +72,14 @@ class Consultas
         return $stmt->fetch();
     }
 
+    public function GetForaneasTrabajo($idTrabajo)
+    {
+        $sql = "SELECT arid, usid, foto  FROM trabajos WHERE idetrab = ?";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$idTrabajo]);
+        return $stmt->fetch();
+    }
+
     public function getAllJobs(){
       $sql = "SELECT * FROM trabajos INNER JOIN imagen WHERE foto = idimg";
       if(isset($_POST['busqueda'])){

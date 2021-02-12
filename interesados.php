@@ -50,7 +50,7 @@ if(!isset($_SESSION['usuario'])){
       <div class="py-2"></div>
 
       <?php
-      //if($verInteresados){
+      if($interesados){
       foreach ($interesados as $result) {
       ?>
       <!--Fila 1- Inicio. Usuario interesado-->
@@ -121,9 +121,8 @@ if(!isset($_SESSION['usuario'])){
         <br>
         <?php
           }
-        //}else{
+        }else{
           ?>
-          <!--
           <style>
             .section-generar-trabajo{
               display:flex;
@@ -154,14 +153,14 @@ if(!isset($_SESSION['usuario'])){
 
 
           </style>
+          <br>
+            <p class="texto text-center">Aún no tienes interesados. Regresa más tarde.</p>
             <section class="section-generar-trabajo">
-              <p class="texto">Aún no tienes interesados. Regresa más tarde.</p>
               <a class="texto" href="publicaciones_user.php">Mis publicaciones</a>
             </section>
-
-          <//?php
+          <?php
         }
-        ?>  -->
+        ?>
 
         <br>
       </div>

@@ -1,13 +1,16 @@
 <?php 
+    const TRABAJOS_IMG_DEFAULT = 1;
+
     session_start();
     $usid = $_SESSION['usuario']['id'];
 
-    include('conection.php');
+    include('Consultas.php');
 
+    $consultas = new Consultas();
     $db = new DB();
     $pdo = $db->connect();
 
-    // echo 'hola';
+
     
     $empleo = $_POST['empleo'];
     $empleador = $_POST['empleador'];
@@ -19,14 +22,19 @@
     $empDescripcion = $_POST['empDescripcion'];
     $empRequisitos = $_POST['empRequisitos'];
     $idTrabajo = $_POST['idTrabajo'];
-    
-    if($_FILES['inpFile']['name']){
+    // obtiene la id de imagen del registro (atributo foto)
+    $idImagen = $consultas->GetForaneasTrabajo($idTrabajo)['foto'];
+
+    if ($_FILES['inpFile']['name']) {
         require('ImageHandler.php');
         $imageHandler = new ImageHandler($_FILES['inpFile']);
-        $imageHandler->insertImagen();
-        $idImagen = $imageHandler->getId();
-    }else{
-        $idImagen = 2;
+        // analiza si insertar o actualizar
+        if ($idImagen == TRABAJOS_IMG_DEFAULT) {
+            $imageHandler->insertImagen();
+            $idImagen = $imageHandler->getId();
+        } else {
+            $imageHandler->updateImagen($idImagen);
+        }
     }
 
     $data = [
@@ -56,6 +64,3 @@
     }else{
         echo false;
     }
-
-
-?>

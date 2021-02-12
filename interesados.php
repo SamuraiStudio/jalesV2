@@ -153,7 +153,7 @@ if(!isset($_SESSION['usuario'])){
 
 
           </style>
-          <br>
+          <center><i class="fas fa-sad-tear" style="font-size: 50px;"></i></center><br>
             <p class="texto text-center">Aún no tienes interesados. Regresa más tarde.</p>
             <section class="section-generar-trabajo">
               <a class="texto" href="publicaciones_user.php">Mis publicaciones</a>

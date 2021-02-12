@@ -162,7 +162,7 @@ if($arr1){
 
 
   </style>
-  <br>
+  <center><i class="fas fa-sad-tear" style="font-size: 50px;"></i></center><br>
   <p class="texto text-center">Aún no has registrado alguna publicación. Por favor ingresa alguna.</p>
     <section class="section-generar-trabajo">
       <a class="texto" href="register_empleo.php">Ir a Generar Trabajo</a>

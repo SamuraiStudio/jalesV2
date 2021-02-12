@@ -15,7 +15,7 @@
             <div class="collapse navbar-collapse texto" id="main_nav">
                  <ul class="navbar-nav mr-auto">
 
-                    Buscador   -->
+              
                     <!-- <li class="nav-item">
                         <form class="form-inline my-2 my-lg-0">
                             <input class="form-control mr-sm-2" type="search" placeholder="Busca un empleo" aria-label="Search" style="border-radius: 50px;">

@@ -1,4 +1,6 @@
 <?php
+const USER_IMG_DEFAULT = 2;
+
 include('Consultas.php');
 require('ImageHandler.php');
 // Conecta a la bd
@@ -46,7 +48,7 @@ try {
         */
         if (is_uploaded_file($_FILES['inpFile']['tmp_name'])) {
             $imageHandler = new ImageHandler($_FILES['inpFile']);
-            if ($idimg == 2) {
+            if ($idimg == USER_IMG_DEFAULT) {
                 $imageHandler->insertImagen();
                 $idimg = $imageHandler->getId();
             } else {

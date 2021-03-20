@@ -3,7 +3,10 @@ session_start();
 if(!isset($_SESSION['usuario']))
   Header("Location: login.php");
 
-
+  require('assets/php/Consultas.php');
+  $consultas = new Consultas();
+  $areas = $consultas->GetAreas();
+  $trabajos = $consultas->getAllJobs();
 ?>
 <!--  SITIO PUBLICACION DE EMPLEO DISPONIBLES, EL USUARIO REGISTRADO PUEDE ACCEDER A ELLOS SE LE DA UNA Descripción DETALLADA -->
 <html>
@@ -123,14 +126,13 @@ if(!isset($_SESSION['usuario']))
         </div> <!-- Fin del modal -->
       </div><!-- Fin - Div Texto -->
       <br>
-
+<?php foreach ($trabajos as $trabajo) {?>
       <div class="card shadow container bg-light p-4"> <br> <!--Fila 1 - Inicio. Publicación 1-->
         <div class="row">
-
           <!--Columna lado izquierdo-->
           <div class="col-md-4 col-lg-4 item align-self-center texto">
-            <img class="card shadow img-thumbnail mx-auto d-block" style="height: 190px; width: 290px;" src="assets/img/empleos/empleo1.jpg">
-            <label class="form-control-plaintext texto pt-3" type="text" value="" readonly style="text-align: center;"><strong>Nombre del empleo</strong></label>
+            <img class="card shadow img-thumbnail mx-auto d-block" style="height: 190px; width: 290px;" src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($trabajo['data']); ?>">
+            <label class="form-control-plaintext texto pt-3" type="text" value="" readonly style="text-align: center;"><strong><?php echo $trabajo['nomta']; ?></strong></label>
 
             <!--Botones-->
             <div class="row pt-5"> <!--Editar-->
@@ -147,7 +149,7 @@ if(!isset($_SESSION['usuario']))
               <div class="row">
                 <div class="col">
                   <label  class="texto" for=""><strong>Usuario o empresa</strong></label>
-                  <label class="form-control-plaintext subtitulo" type="text" value="" readonly style="border-bottom-color:#ada2a2; text-align: justify;">Nike</label>
+                  <label class="form-control-plaintext subtitulo" type="text" value="" readonly style="border-bottom-color:#ada2a2; text-align: justify;"><?php echo $trabajo['empleador']; ?></label>
                 </div>
               </div>
               <br>
@@ -156,11 +158,11 @@ if(!isset($_SESSION['usuario']))
               <div class="row">
                 <div class="col pb-2">
                   <label class="texto"for=""><strong>Área</strong></label>
-                  <label class="form-control-plaintext subtitulo" type="text" value="" readonly style="border-bottom-color:#ada2a2; text-align: justify;">Administración</label>
+                  <label class="form-control-plaintext subtitulo" type="text" value="" readonly style="border-bottom-color:#ada2a2; text-align: justify;"><?php echo $trabajo['nombre']; ?></label>
                 </div>
                 <div class="col pb-2">
                   <label class="texto"for=""><strong>Especialidad</strong></label>
-                  <label class="form-control-plaintext subtitulo" type="text" value="" readonly style="border-bottom-color:#ada2a2; text-align: justify;">Ventas</label>
+                  <label class="form-control-plaintext subtitulo" type="text" value="" readonly style="border-bottom-color:#ada2a2; text-align: justify;"><?php echo $trabajo['espec']; ?></label>
                 </div>
               </div><br>
 
@@ -168,11 +170,11 @@ if(!isset($_SESSION['usuario']))
               <div class="row">
                 <div class="col">
                   <label class="texto" for=""><strong>Jornada</strong></label>
-                  <label class="form-control-plaintext subtitulo" type="text" value="" readonly style="border-bottom-color:#ada2a2; text-align: justify;">Completa</label>
+                  <label class="form-control-plaintext subtitulo" type="text" value="" readonly style="border-bottom-color:#ada2a2; text-align: justify;"><?php echo $trabajo['tipojor']; ?></label>
                 </div>
                 <div class="col">
                   <label class="texto" for=""><strong>Salario</strong></label>
-                  <label class="form-control-plaintext subtitulo" type="text" value="" readonly style="border-bottom-color:#ada2a2; text-align: justify;">$5000 al mes</label>
+                  <label class="form-control-plaintext subtitulo" type="text" value="" readonly style="border-bottom-color:#ada2a2; text-align: justify;"><?php echo $trabajo['sal']; ?></label>
                 </div>
               </div><br>
 
@@ -180,7 +182,7 @@ if(!isset($_SESSION['usuario']))
               <div class="row pb-3">
                 <div class="col">
                   <label class="texto" for=""><strong>Ubicación</strong></label>
-                  <textarea class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify; height:100px;">Autopista México-Puebla Km. 115 Adelante De Planta Armadora Volkswagen, 72680 San Francisco Ocotlán, Pue.</textarea>
+                  <textarea class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify; height:100px;"><?php echo $trabajo['ubi']; ?></textarea>
                 </div>
               </div>
 
@@ -188,7 +190,7 @@ if(!isset($_SESSION['usuario']))
               <div class="row">
                 <div class="col">
                   <label class="texto" for=""><strong>Descripción del empleo</strong></label>
-                  <textarea class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify; height:100px;">Estamos buscamos al mejor talento para desempeñarse como Vendedores/as en nuestra tienda de Nike Factory Store Puebla.</textarea>
+                  <textarea class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify; height:100px;"><?php echo $trabajo['descripcion']; ?></textarea>
                 </div>
               </div><br>
 
@@ -196,173 +198,14 @@ if(!isset($_SESSION['usuario']))
               <div class="row">
                 <div class="col">
                   <label class="texto" for=""><strong>Requisitos del personal</strong></label>
-                  <textarea class="form-control-plaintext subtitulo" type="text" value="" style="text-align: justify; height:100px;" readonly>Edad: de 25 a 50 años, género indistinto, escolaridad bachillerato (mínimo).Que tenga experiencia alrededor de 2 años en instituciones financieras haciendo promoción en campo.
+                  <textarea class="form-control-plaintext subtitulo" type="text" value="" style="text-align: justify; height:100px;" readonly><?php echo $trabajo['requisitos']; ?>
                   </textarea>
                 </div>
               </div>
             </div>
           </div>
         </div><br><!--Fila 1 - Fin. Publicación 1-->
-
-        <div class="card shadow container bg-light p-4"> <br> <!--Fila 2 - Inicio. Publicación 2-->
-          <div class="row">
-
-            <!--Columna lado izquierdo-->
-            <div class="col-md-4 col-lg-4 item align-self-center texto">
-              <img class="card shadow img-thumbnail mx-auto d-block" style="height: 190px; width: 290px;" src="assets/img/empleos/empleo2.jpg">
-              <label class="form-control-plaintext texto pt-3" type="text" value="" readonly style="text-align: center;"><strong>Nombre del empleo</strong></label>
-
-              <!--Botones-->
-              <div class="row pt-5"> <!--Editar-->
-                <div class="col align-self-center section1 text-center">
-                  <button class="btn text-white" id="meInteresa" type="button" style="background: #23B439; border-radius: 50px; width: 160px; height: 45px;">Me interesa</button>
-                </div>
-              </div>
-            </div>
-
-            <!--Columna lado derecho-->
-            <div class="col-md-8 col-lg-8 pr-5 pt-3 item align-self-center">
-
-                <!--Fila del empleador-->
-                <div class="row">
-                  <div class="col">
-                    <label  class="texto" for=""><strong>Usuario o empresa</strong></label>
-                    <label class="form-control-plaintext subtitulo" type="text" value="" readonly style="border-bottom-color:#ada2a2; text-align: justify;">Nike</label>
-                  </div>
-                </div>
-                <br>
-
-                <!--Fila de área y especialidad-->
-                <div class="row">
-                  <div class="col pb-2">
-                    <label class="texto"for=""><strong>Área</strong></label>
-                    <label class="form-control-plaintext subtitulo" type="text" value="" readonly style="border-bottom-color:#ada2a2; text-align: justify;">Administración</label>
-                  </div>
-                  <div class="col pb-2">
-                    <label class="texto"for=""><strong>Especialidad</strong></label>
-                    <label class="form-control-plaintext subtitulo" type="text" value="" readonly style="border-bottom-color:#ada2a2; text-align: justify;">Ventas</label>
-                  </div>
-                </div><br>
-
-                <!--Jornada y sueldo-->
-                <div class="row">
-                  <div class="col">
-                    <label class="texto" for=""><strong>Jornada</strong></label>
-                    <label class="form-control-plaintext subtitulo" type="text" value="" readonly style="border-bottom-color:#ada2a2; text-align: justify;">Completa</label>
-                  </div>
-                  <div class="col">
-                    <label class="texto" for=""><strong>Salario</strong></label>
-                    <label class="form-control-plaintext subtitulo" type="text" value="" readonly style="border-bottom-color:#ada2a2; text-align: justify;">$5000 al mes</label>
-                  </div>
-                </div><br>
-
-                <!--Fila de Ubicación-->
-                <div class="row pb-3">
-                  <div class="col">
-                    <label class="texto" for=""><strong>Ubicación</strong></label>
-                    <textarea class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify; height:100px;">Autopista México-Puebla Km. 115 Adelante De Planta Armadora Volkswagen, 72680 San Francisco Ocotlán, Pue.</textarea>
-                  </div>
-                </div>
-
-                <!--Fila de descripcion-->
-                <div class="row">
-                  <div class="col">
-                    <label class="texto" for=""><strong>Descripción del empleo</strong></label>
-                    <textarea class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify; height:100px;">Estamos buscamos al mejor talento para desempeñarse como Vendedores/as en nuestra tienda de Nike Factory Store Puebla.</textarea>
-                  </div>
-                </div><br>
-
-                <!--Fila de Requisitos-->
-                <div class="row">
-                  <div class="col">
-                    <label class="texto" for=""><strong>Requisitos del personal</strong></label>
-                    <textarea class="form-control-plaintext subtitulo" type="text" value="" readonly style="height: 75px; text-align: justify; height:100px;">Edad: de 25 a 50 años, género indistinto, escolaridad bachillerato (mínimo).Que tenga experiencia alrededor de 2 años en instituciones financieras haciendo promoción en campo.
-                    </textarea>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div><br><!-- Fila 2 - Fin. Publicación 2 -->
-
-          <div class="card shadow container bg-light p-4"> <br> <!--Fila 3 - Inicio. Publicación 3 -->
-            <div class="row">
-
-              <!--Columna lado izquierdo-->
-              <div class="col-md-4 col-lg-4 item align-self-center texto">
-                <img class="card shadow img-thumbnail mx-auto d-block" style="height: 190px; width: 290px;" src="assets/img/empleos/empleo3.jpg">
-                <label class="form-control-plaintext texto pt-3" type="text" value="" readonly style="text-align: center;"><strong>Nombre del empleo</strong></label>
-
-                <!--Botones-->
-                <div class="row pt-5"> <!--Editar-->
-                  <div class="col align-self-center section1 text-center">
-                    <button class="btn text-white" id="meInteresa" type="button" style="background: #23B439; border-radius: 50px; width: 160px; height: 45px;">Me interesa</button>
-                  </div>
-                </div>
-              </div>
-
-              <!--Columna lado derecho-->
-              <div class="col-md-8 col-lg-8 pr-5 pt-3 item align-self-center">
-
-                <!--Fila del empleador-->
-                <div class="row">
-                  <div class="col">
-                    <label  class="texto" for=""><strong>Usuario o empresa</strong></label>
-                    <label class="form-control-plaintext subtitulo" type="text" value="" readonly style="border-bottom-color:#ada2a2; text-align: justify;">Nike</label>
-                  </div>
-                </div>
-                <br>
-
-                <!--Fila de área y especialidad-->
-                <div class="row">
-                  <div class="col pb-2">
-                    <label class="texto"for=""><strong>Área</strong></label>
-                    <label class="form-control-plaintext subtitulo" type="text" value="" readonly style="border-bottom-color:#ada2a2; text-align: justify;">Administración</label>
-                  </div>
-                  <div class="col pb-2">
-                    <label class="texto"for=""><strong>Especialidad</strong></label>
-                    <label class="form-control-plaintext subtitulo" type="text" value="" readonly style="border-bottom-color:#ada2a2; text-align: justify;">Ventas</label>
-                  </div>
-                </div><br>
-
-                <!--Jornada y sueldo-->
-                <div class="row">
-                  <div class="col">
-                    <label class="texto" for=""><strong>Jornada</strong></label>
-                    <label class="form-control-plaintext subtitulo" type="text" value="" style="border-bottom-color:#ada2a2; text-align: justify;" readonly >Completa</label>
-                  </div>
-                  <div class="col">
-                    <label class="texto" for=""><strong>Salario</strong></label>
-                    <label class="form-control-plaintext subtitulo" type="text" value="" style="border-bottom-color:#ada2a2; text-align: justify;" readonly>$5000 al mes</label>
-                  </div>
-                </div><br>
-
-                <!--Fila de Ubicación-->
-                <div class="row pb-3">
-                  <div class="col">
-                    <label class="texto" for=""><strong>Ubicación</strong></label>
-                    <textarea class="form-control-plaintext subtitulo" type="text" value="" style="text-align: justify; height:100px;" readonly>Autopista México-Puebla Km. 115 Adelante De Planta Armadora Volkswagen, 72680 San Francisco Ocotlán, Pue.</textarea>
-                  </div>
-                </div>
-
-                <!--Fila de descripcion-->
-                <div class="row">
-                  <div class="col">
-                    <label class="texto" for=""><strong>Descripción del empleo</strong></label>
-                    <textarea class="form-control-plaintext subtitulo" type="text" value="" style="text-align: justify; height:100px;" readonly>Estamos buscamos al mejor talento para desempeñarse como Vendedores/as en nuestra tienda de Nike Factory Store Puebla.</textarea>
-                  </div>
-                </div><br>
-
-                <!--Fila de Requisitos-->
-                <div class="row">
-                  <div class="col">
-                    <label class="texto" for=""><strong>Requisitos del personal</strong></label>
-                    <textarea class="form-control-plaintext subtitulo" type="text" value="" readonly style="height: 75px; text-align: justify; height:100px;">Edad: de 25 a 50 años, género indistinto, escolaridad bachillerato (mínimo).Que tenga experiencia alrededor de 2 años en instituciones financieras haciendo promoción en campo.
-                    </textarea>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div><br><!--Fila 3 - Fin. Publicación 3-->
+      <?php } ?>
     </div>  <!-- Div principal - Fin -->
     <br>
 

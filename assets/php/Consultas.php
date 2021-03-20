@@ -81,7 +81,7 @@ class Consultas
     }
 
     public function getAllJobs(){
-      $sql = "SELECT * FROM trabajos INNER JOIN imagen WHERE foto = idimg";
+      $sql = "SELECT * FROM trabajos INNER JOIN imagen, area WHERE foto = idimg AND arid = area.id";
       if(isset($_POST['busqueda'])){
         $bus = $_POST['busqueda'];
         $sql.="AND trabajos.nombre LIKE = $bus";

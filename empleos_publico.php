@@ -2,7 +2,9 @@
   require('assets/php/Consultas.php');
   $consultas = new Consultas();
   $areas = $consultas->GetAreas();
-  $trabajos = $consultas->getAllJobs();
+  //require('assets/php/consulta_GetAllJobs.php');
+  //$trabajos = new Consultas_GAJ();
+  //$trabajos = $consultas->getAllJobs('');
  ?>
 <!--  SITIO - EMPLEOS DISPONIBLES PARA MIRONES. EL USUARIO PUEDE VISUALIZAR SIN MUCHOS DETALLES LOS EMPLEOS DISPONIBLES PUBLICADOS Y EN CASO DE POSTULACIÓN LA REDIRECCIONARA AL LOGIN-->
 <html>
@@ -19,6 +21,8 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js"></script>
       <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script> <!--Íconos-->
+      <script src="request_publico.js"></script> <!--Request ajax empleos_publico-->
+      
   </head>
 
   <!-- CUERPO -->
@@ -72,8 +76,8 @@
           <div class="row p-3"> <!--justify-content-center-->
             <table>
                 <tr>
-                    <td style=""><input class="form-control mr-sm-2" type="search" placeholder="Busca un empleo" aria-label="Search" style="border-radius: 50px;"></td>
-
+                    <td style=""><input class="form-control mr-sm-2" type="search" name="search" id="search" placeholder="Busca un empleo" aria-label="Search" style="border-radius: 50px;"></td>
+                    
                       <td> <button type="button" class="btn btn-secondary btn-lg" style="border-radius: 50px; text-align: center;" data-toggle="modal" data-target="#myModal">Categorías</button></td>
                 </tr>
             </table>
@@ -105,123 +109,36 @@
                       <!--Inicio - 1ra fila-->
                       <div class="row">
 
-                        <!-- Botón - Administración y traducción -->
+                        <!-- Checkboxes - Todas las cetegorias -->
                         <div class="col section1 text-center">
-                          <input type="checkbox" id="busqueda" value="<?php echo $a['nombre']; ?>"><?php echo $a['nombre']; ?></input>
+                          <input type="checkbox" class="common-selector categoria"  value="<?php echo $a['nombre']; ?>"><?php echo $a['nombre']; ?></input>
+                          
                         </div>
                       </div> <!-- Fin - 1ra fila -->
                     <?php } ?>
                       <br>
-                    </div> <!-- Inicio - Div de las filas y columas -->
+                    </div> <!-- Fin - Div de las filas y columas -->
                   </div> <!-- Fin - Cuerpo del modal -->
                 </div> <!-- Fin - Contenido del modal -->
               </div> <!-- Fin - Modal dialog -->
             </div> <!-- Fin del modal -->
           </div><!-- Fin - Div Texto -->
           <br>
-
+          <!-- TODO EL CONTENIDO VA AQUI --> 
+          <!-- Image loader -->
+          <div id='loader' class="text-center">
+            <img src='assets/img/loading.gif'  width='112px' height='112px'>
+          </div>
+          <!-- Image loader -->
           <!-- Publicación 1 - Inicio. -->
-          <?php foreach ($trabajos as $trabajo) { ?>
-          <div class="card shadow container bg-light p-4">
-            <br>
-            <div class="row">
-              <!-- Columna lado izquierdo (Foto + botón) -->
-              <div class="col-md-4 col-lg-4 item align-self-center texto">
-                <!-- Foto del empleo -->
-                <img class="card shadow img-thumbnail mx-auto d-block" style="height: 190px; width: 290px;" src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($trabajo['data']); ?>">
-                <!-- Nombre del empleo -->
-                <label class="form-control-plaintext texto pt-3" type="text" value="" readonly style="text-align: center;"><strong></strong></label>
-                <!-- Botón "Me interesa" -->
-                <div class="row py-3">
-                  <div class="col align-self-center section1 text-center">
-                    <button class="btn text-white" id="meInteresa" style="background: #23B439; border-radius: 50px; width: 160px; height: 45px;" data-toggle="modal" data-target="#myModal2">Me interesa</button>
-                  </div>
-                </div>
-              </div>
-              <!--Modal-->
-              <div id="myModal2" class="modal fade" role="dialog">
+          <div id="card-data">
 
-                  <!--3. Permite ver el contenido del modal -->
-                  <div class="modal-dialog" style="height:450px;">
-
-                    <!--4. Aquí se coloca en condenido del modal-->
-                    <div class="modal-content">
-
-                      <!--5. Cabecera del modal-->
-                      <div class="modal-header texto">
-                        <h5 class="modal-title"><strong>Recuerda</strong></h5>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      </div>
-
-                      <!--6. Cuerpo del modal-->
-                      <div class="modal-body">
-
-                        <!--Contenedor de la sección-->
-                        <!--div class="card-body"-->
-                          <div class="container">
-
-                            <!--Comentario 1-->
-                            <div class="row bg-light">
-                              <!--Nombre de quién realiza el comentario-->
-                                <div class=" texto" style="text-align: justify;">
-                                  <p class="pchiquito p-3" style="text-align: justify;">Para poder acceder a más información es necesario <strong>Iniciar sesión</strong> o <strong>Registrarse</strong> en caso de no pertenecer a "El jale"</p>
-                                  <br>
-                                </div>
-
-                                  <!--Botón para iniciar sesión-->
-                                  <div class="col-sm-6">
-                                    <button href="login.php" class="btn btn-block texto text-white" role="button" id="inicia" style="background: #23B4A0; border-radius: 50px;text-align: center; height: 45px;">Iniciar Sesión</button>
-
-                                    <hr>
-                                  </div>
-                                  <!--Botón para registrarse-->
-                                  <div class="col-sm-6">
-                                      <button href="register_user.php" class="btn btn-block text-white texto" role="button" id="registra" style="background: #EF5A10;border-radius: 50px; text-align: center; height: 45px;">Registrarse</button>
-                                    <hr>
-                                  </div>
-
-                            </div>
-                          </div>
-                        <!--/div-->
-                      </div>
-                    </div>
-                  </div>
-              </div>
-
-              <!-- Columna lado derecho -->
-              <div class="col-md-8 col-lg-8 pr-5 pt-3 item align-self-center">
-
-                  <!-- Fila - Nombre del usuario o empresa -->
-                  <div class="row">
-                    <div class="col">
-                      <label  class="texto" for=""><strong>Empresa</strong></label>
-                      <label class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify;"><?php echo $trabajo['empleador']; ?></label>
-                    </div>
-                  </div>
-                  <br>
-
-                  <!-- Fila - Descripcion del empleo -->
-                  <div class="row">
-                    <div class="col">
-                      <label class="texto" for=""><strong>Descripción del empleo</strong></label>
-                      <textarea class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify; height:100px;"><?php echo $trabajo['descripcion']; ?></textarea>
-                    </div>
-                  </div>
-                  <br>
-
-                  <!-- Fila - Ubicación -->
-                  <div class="row">
-                    <div class="col">
-                      <label class="texto" for=""><strong>Ubicación</strong></label>
-                      <textarea class="form-control-plaintext subtitulo" type="text" value="" readonly style="text-align: justify; height:100px;"><?php echo  $trabajo['ubi']; ?></textarea>
-                    </div>
-                  </div>
-              </div>
-            </div>
-          <br>
-          </div><!-- Publicación 1 - Fin. -->
-        <?php } ?>
-        <br><br>
+          </div><!-- FIN Publicación 1 - Inicio. -->
+         <!-- 
+          </div>   
+        </div>
+        <br> -->
+        </br>
       </div>
     </div>
 
@@ -250,17 +167,14 @@
     </script>
 
     <script type="text/javascript">
-      $(document).ready(function(){
-        $("#inicia").click(function(){
-        event.preventDefault();
-        $(location).attr('href', 'login.php');
-      });
+      //code moved to request.js
+    </script>
+      
+    <!--Script search -->
+    <script>
 
-      $("#registra").click(function(){
-        event.preventDefault();
-        $(location).attr('href', 'register_user.php');
-        });
-      });
+      
+
     </script>
 
   </body>
